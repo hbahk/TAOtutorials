@@ -16,6 +16,11 @@ from matplotlib import pyplot as plt
 
 from exgalcosutils.from_legacy_survey import dr2_rgb, dr10_griz_rgb
 
+# plt.rcParams["figure.figsize"] = (7, 5)
+plt.rcParams["font.family"] = 'Times New Roman'
+plt.rcParams["font.size"] = 15
+plt.rcParams["text.usetex"] = False
+plt.rcParams["mathtext.fontset"] = 'cm'
 #%%
 cra, cdec = 92.8804, -69.1214
 
@@ -53,6 +58,9 @@ elif h['BANDS'] == 'griz':
                            bands=['g','r','i','z'])
 
 #%%
+cmap = 'gray'
+minpad = 0.3
+
 interval = ZScaleInterval()
 gn, gx = interval.get_limits(gimg)
 rn, rx = interval.get_limits(rimg)
@@ -65,20 +73,29 @@ ax1 = fig.add_subplot(142, projection=wcs, slices=('x','y',0))
 ax2 = fig.add_subplot(143, projection=wcs, slices=('x','y',0))
 ax3 = fig.add_subplot(144, projection=wcs, slices=('x','y',0))
 ax0.imshow(rgbimg)
-ax1.imshow(gimg, vmin=gn, vmax=gx)
-ax2.imshow(rimg, vmin=rn, vmax=rx)
-ax3.imshow(zimg, vmin=zn, vmax=zx)
+ax1.imshow(gimg, vmin=gn, vmax=gx, cmap=cmap)
+ax2.imshow(rimg, vmin=rn, vmax=rx, cmap=cmap)
+ax3.imshow(zimg, vmin=zn, vmax=zx, cmap=cmap)
 
 fig.subplots_adjust(wspace=0.0)
 
 lon = ax0.coords['ra']
 lat = ax0.coords['dec']
-lon.set_axislabel('RA')
+lon.set_axislabel('RA', minpad=minpad)
 lat.set_axislabel('Dec')
 
-for ax in [ax1, ax2, ax3]:
+bbox = dict(boxstyle='round', facecolor='w', alpha=0.9)
+
+for ax, band in zip([ax1, ax2, ax3], ['g','r','z']):
     lon = ax.coords['ra']
     lat = ax.coords['dec']
     lat.set_ticks_visible(False)
     lat.set_ticklabel_visible(False)
-    lon.set_axislabel('RA')
+    lon.set_axislabel('RA', minpad=minpad)
+    
+    ax.text(0.98, 0.02, f'${band}$-band', transform=ax.transAxes,
+            va='bottom', ha='right', c='k', bbox=bbox)
+
+ax0.text(0.98, 0.02, f'$grz$ false color', transform=ax0.transAxes,
+        va='bottom', ha='right', c='k', bbox=bbox)
+fig.suptitle('NGC 2210 - DESI Legacy Survey $grz$ image')
