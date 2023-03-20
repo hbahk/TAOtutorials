@@ -53,4 +53,8 @@ cd astroalign && git pull && pip install -e . && cd ..
 
 4. Set the python path of your own kernels/editors with this environments
 
-cf) For Spyder users, install `spyder-kernels` for your version of Spyder following the table in this link [Common Illnesses &#8212; Spyder 5 documentation](https://docs.spyder-ide.org/current/troubleshooting/common-illnesses.html#spyder-kernels-not-installed-incompatible).
+cf) For Spyder users, install `spyder-kernels` for your version of Spyder following the table in this link [Common Illnesses &#8212; Spyder 5 documentation](https://docs.spyder-ide.org/current/troubleshooting/common-illnesses.html#spyder-kernels-not-installed-incompatible). In my case, the version of my Spyder is 5.2.2, so I had to install `spyder-kernels=2.2.1`.
+
+```shell
+conda install spyder‑kernels=2.2.1
+```
