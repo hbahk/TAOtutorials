@@ -32,7 +32,7 @@ conda activate tao23
 2. Install packages via conda
 
 ```shell
-conda install -c conda-forge astropy sep
+conda install -c conda-forge astropy sep tqdm
 conda install -c conda-forge photutils scikit-learn-intelex
 conda install -c astropy ccdproc astroscrappy specutils
 ```
