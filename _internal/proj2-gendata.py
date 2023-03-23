@@ -26,9 +26,11 @@ plt.rcParams["font.size"] = 15
 plt.rcParams["text.usetex"] = False
 plt.rcParams["mathtext.fontset"] = 'cm'
 #%%
-cra, cdec = 92.8804, -69.1214
+# cra, cdec = 92.8804, -69.1214
+cra, cdec = 92.8290, -69.1046
 
-size = 2*u.arcmin
+# size = 2*u.arcmin
+size = 1*u.arcmin
 pix_scale = 0.262
 
 if type(size) == u.quantity.Quantity:
@@ -111,7 +113,7 @@ import numpy as np
 from time import time, ctime
 import warnings
 from astropy.table import Table
-from astropy.modeling.fitting import LevMarLSQFitter
+from astropy.modeling.fitting import LevMarLSQFitter, LMLSQFitter
 from astropy.stats import sigma_clipped_stats, gaussian_fwhm_to_sigma
 from astropy.table import Table, vstack, hstack
 from astropy.nddata import NDData, CCDData, Cutout2D
@@ -123,7 +125,7 @@ from photutils.psf import extract_stars, EPSFBuilder
 from photutils.psf import IterativelySubtractedPSFPhotometry
 from photutils.psf import DAOPhotPSFPhotometry, BasicPSFPhotometry
 from photutils.detection import IRAFStarFinder
-from photutils.psf import DAOGroup, IntegratedGaussianPRF
+from photutils.psf import DAOGroup, DBSCANGroup, IntegratedGaussianPRF
 from photutils.background import MMMBackground, MADStdBackgroundRMS
 from photutils.segmentation import make_source_mask
 from scipy.optimize import curve_fit
@@ -144,7 +146,7 @@ def zscale_imshow(ax, img, vmin=None, vmax=None, **kwargs):
             vmin = _vmin
         if vmax==None:
             vmax = _vmax
-    im = ax.imshow(img, vmin=vmin, vmax=vmax, **kwargs)
+    im = ax.imshow(img, vmin=vmin, vmax=vmax, origin='lower', **kwargs)
     
     return im
 
@@ -219,14 +221,18 @@ def background_substraction(img, box=100, filt=3, show=True):
     return bkgsub_sep
 #%%
 
-ccd, ccd_raw = read_sci_data(DATADIR/'NGC2210.grz.fits')
+ccd, ccd_raw = read_sci_data(DATADIR/'NGC2210.grz.fits',bkgsubtract=True)
 
 #%%
+bands = ['g', 'r', 'z']
 i = 0
+band = bands[i]
 data = ccd.data[i]
 mask = ccd.mask[i]
 find_mask = np.zeros_like(data, dtype=bool)
-find_mask[250:650, 250:650] = True
+# find_mask[250:650, 250:650] = True
+ll, hh = 0, 200
+find_mask[ll:hh, ll:hh] = True
 peaks_tbl = find_peaks(data, threshold=0.05, mask=find_mask)
 peaks_tbl['peak_value'].info.format = '%.8g'
 
@@ -247,9 +253,12 @@ bx, by = x[bbmask], y[bbmask]
 isolated = [False if np.count_nonzero(np.sqrt((bx-xi)**2+(by-yi)**2)<size) > 1
             else True for xi, yi in zip(bx, by)]
 
+mask_stars = isolated
+mask_stars = np.ones_like(bx, dtype=bool)
+
 stars_tbl = Table()
-stars_tbl['x'] = bx[isolated]  
-stars_tbl['y'] = by[isolated]
+stars_tbl['x'] = bx[mask_stars]  
+stars_tbl['y'] = by[mask_stars]
 
 print(stars_tbl)
 
@@ -259,8 +268,8 @@ nddata = NDData(data=data, mask=ccd.mask[i])
 fig, ax = plt.subplots(1, 1, figsize=(10, 10))
 im = zscale_imshow(ax, data, cmap='gray')
 ax.plot(stars_tbl['x'], stars_tbl['y'], '.r')
-rect = patches.Rectangle((250,250), 400, 400, ec='tab:red', ls='--', hatch='/',
-                         fc='none', lw=1)
+rect = patches.Rectangle((ll,ll), hh-ll, hh-ll, ec='tab:red', ls='--',
+                         hatch='/', fc='none', lw=1)
 ax.add_patch(rect)
 
 #%%
@@ -331,63 +340,80 @@ epsf = get_epsf(stars, 'g')
 #%%
 
 def get_psfphot(data, mask, psf_model, fwhm, psf_size, sigma_thres=3.,
-                peakmax=None):
+                peakmax=None, psf_class='basic'):
     bkgrms = MADStdBackgroundRMS()
     std = bkgrms(data)
     
     threshold = sigma_thres * std
     crit_separation = 2.0 * fwhm
     
-    iraffind = IRAFStarFinder(threshold=threshold,
-                              fwhm=fwhm, #sigma_psf * gaussian_sigma_to_fwhm,
-                              minsep_fwhm=0.01, roundhi=5.0, roundlo=-5.0,
-                              sharplo=0.0, sharphi=2.0, peakmax=peakmax)
     daogroup = DAOGroup(crit_separation)
+    # daogroup = DBSCANGroup(crit_separation)
     mmm_bkg = MMMBackground()
+    # fitter = LMLSQFitter()
     fitter = LevMarLSQFitter()
     
     fsize = int(np.ceil(psf_size))
     fitshape = fsize if fsize%2 == 1 else fsize +1
-    photometry = BasicPSFPhotometry(finder=iraffind,
-                                    group_maker=daogroup,
-                                    bkg_estimator=mmm_bkg,
-                                    psf_model=psf_model,
-                                    fitter=fitter,
-                                    aperture_radius=1.5*fwhm,
-                                    # niters=1,
-                                    fitshape=fitshape)
     
-    daophot = DAOPhotPSFPhotometry(crit_separation, threshold=threshold,
-                                   fwhm=fwhm, psf_model=psf_model,
-                                   fitshape=fitshape,
-                                   aperture_radius=1.5*fwhm,
-                                   roundhi=5.0, roundlo=-5.0,
-                                   sharplo=0.0, sharphi=2.0)
+    if psf_class == 'basic':
+        iraffind = IRAFStarFinder(threshold=threshold,
+                                  fwhm=fwhm, #sigma_psf * gaussian_sigma_to_fwhm,
+                                  minsep_fwhm=0.01, roundhi=5.0, roundlo=-5.0,
+                                  sharplo=0.0, sharphi=2.0, peakmax=peakmax)
+        stars = iraffind(data, mask=mask)
+        
+        photometry = BasicPSFPhotometry(finder=iraffind,
+                                        group_maker=daogroup,
+                                        bkg_estimator=mmm_bkg,
+                                        psf_model=psf_model,
+                                        fitter=fitter,
+                                        aperture_radius=1.5*fwhm,
+                                        # niters=1,
+                                        fitshape=fitshape)
+    elif psf_class == 'daophot':
+        daofind = DAOStarFinder(threshold=threshold,
+                                fwhm=fwhm, #sigma_psf * gaussian_sigma_to_fwhm,
+                                roundhi=5.0, roundlo=-5.0,
+                                sharplo=0.0, sharphi=2.0, peakmax=peakmax)
+        stars = daofind(data, mask=mask)
+    
+        photometry = DAOPhotPSFPhotometry(crit_separation, threshold=threshold,
+                                           fwhm=fwhm, psf_model=psf_model,
+                                           fitshape=fitshape,
+                                           aperture_radius=1.5*fwhm,
+                                           roundhi=5.0, roundlo=-5.0,
+                                           sharplo=0.0, sharphi=2.0)
+    
+    stars.rename_columns(['xcentroid','ycentroid','flux'],
+                         ['x_0', 'y_0', 'flux_0'])
     
     start = time()
     print('start time -', ctime(start))
     
-    result_tab = photometry.do_photometry(image=data, mask=mask, progress_bar=True)
+    result_tab = photometry.do_photometry(image=data, mask=mask,
+                                          init_guesses=stars,
+                                          progress_bar=True)
     residual_image = photometry.get_residual_image()
     
-    after_basic = time()
-    print('after basic -', ctime(after_basic))
-    print(f'elapsed time - {(after_basic-start)/60:.2f} min')
+    finish = time()
+    print('finish time -', ctime(finish))
+    print(f'elapsed time - {(finish-start)/60:.2f} min')
     
-    result_tab_dao = daophot(image=data, progress_bar=True)
-    residual_image_dao = daophot.get_residual_image()
+    # result_tab_dao = daophot(image=data, progress_bar=True)
+    # residual_image_dao = daophot.get_residual_image()
     
-    after_dao = time()
-    print('after dao -', ctime(after_dao))
-    print(f'elapsed time - {(after_dao-after_basic)/60:.2f} min')
-    print(f'total elapsed time - {(after_dao-start)/60:.2f} min')
+    # after_dao = time()
+    # print('after dao -', ctime(after_dao))
+    # print(f'elapsed time - {(after_dao-after_basic)/60:.2f} min')
+    # print(f'total elapsed time - {(after_dao-start)/60:.2f} min')
 
     shape = data.shape
     result_tab = discard_stars_outside(shape, result_tab)
-    result_tab_dao = discard_stars_outside(shape, result_tab_dao)
-    result_tab_dao = result_tab_dao[result_tab_dao['flux_fit'] > 0]
+    # result_tab_dao = discard_stars_outside(shape, result_tab_dao)
+    # result_tab_dao = result_tab_dao[result_tab_dao['flux_fit'] > 0]
 
-    return result_tab, residual_image, result_tab_dao, residual_image_dao
+    return result_tab, photometry
 
 
 def discard_stars_outside(shape, result_tab):
@@ -405,10 +431,28 @@ sigma_psf = fwhm * gaussian_fwhm_to_sigma
 # psf_model = IntegratedGaussianPRF(sigma=sigma_psf)
 psf_model = epsf
 psf_size = fwhm * 4
+sigma_thres = 5.
+peakmax=10.0
 
-res = get_psfphot(data, mask, psf_model, fwhm, psf_size, sigma_thres=3.,
-                  peakmax=10.)
+res = get_psfphot(data, mask, psf_model, fwhm, psf_size,
+                  sigma_thres=sigma_thres, peakmax=peakmax, psf_class='basic')
 
+result_tab, photometry = res
+residual_image = photometry.get_residual_image()
+
+res = get_psfphot(data, mask, psf_model, fwhm, psf_size,
+                  sigma_thres=sigma_thres, peakmax=peakmax,
+                  psf_class='daophot')
+
+result_tab_dao, photometry_dao = res
+residual_image_dao = photometry_dao.get_residual_image()
+
+hdu = fits.PrimaryHDU(residual_image)
+hdu_dao = fits.PrimaryHDU(residual_image_dao)
+hdu.writeto(DATADIR/f'res_{band}_{sigma_thres:.1f}.fits', overwrite=True)
+hdu_dao.writeto(DATADIR/f'res_{band}_{sigma_thres:.1f}_dao.fits', overwrite=True)
+result_tab.writeto(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}.csv', format='csv')
+result_tab_dao.writeto(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}_dao.csv', format='csv')
 #%%
 def show_psfphot_result(data, band, result_tab, residual_image,
                         result_tab_dao, residual_image_dao):
@@ -440,3 +484,8 @@ def show_psfphot_result(data, band, result_tab, residual_image,
         ax.axis('off')
     
     plt.tight_layout()
+    
+show_psfphot_result(data, band, result_tab, residual_image,
+                        result_tab_dao, residual_image_dao)
+
+#%%
