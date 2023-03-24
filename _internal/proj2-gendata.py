@@ -109,6 +109,8 @@ fig.suptitle('NGC 2210 - DESI Legacy Survey $grz$ image')
 
 #%%
 
+import copy
+from pathlib import Path
 import numpy as np
 from time import time, ctime
 import warnings
@@ -124,8 +126,11 @@ from photutils.detection import DAOStarFinder, find_peaks
 from photutils.psf import extract_stars, EPSFBuilder
 from photutils.psf import IterativelySubtractedPSFPhotometry
 from photutils.psf import DAOPhotPSFPhotometry, BasicPSFPhotometry
-from photutils.detection import IRAFStarFinder
 from photutils.psf import DAOGroup, DBSCANGroup, IntegratedGaussianPRF
+from photutils.psf.epsf_stars import EPSFStars
+from photutils.psf.utils import _extract_psf_fitting_names
+from photutils.psf.utils import get_grouped_psf_model, subtract_psf
+from photutils.detection import IRAFStarFinder
 from photutils.background import MMMBackground, MADStdBackgroundRMS
 from photutils.segmentation import make_source_mask
 from scipy.optimize import curve_fit
@@ -229,14 +234,17 @@ i = 0
 band = bands[i]
 data = ccd.data[i]
 mask = ccd.mask[i]
+
+bkgrms = MADStdBackgroundRMS()
+std = bkgrms(data)
+thres = 3*std
+
 find_mask = np.zeros_like(data, dtype=bool)
 # find_mask[250:650, 250:650] = True
 ll, hh = 0, 200
 find_mask[ll:hh, ll:hh] = True
-peaks_tbl = find_peaks(data, threshold=0.05, mask=find_mask)
+peaks_tbl = find_peaks(data, threshold=thres, mask=find_mask)
 peaks_tbl['peak_value'].info.format = '%.8g'
-
-print(peaks_tbl)
 
 # select stars within the cutout of specified size
 size = 25
@@ -335,7 +343,57 @@ def get_epsf(stars, band,
         
     return epsf
 
-epsf = get_epsf(stars, 'g')
+#%%
+
+epsf0 = get_epsf(stars, band)
+
+#%%
+# substar procedure
+# subtract adjacent star profiles using the epsf model we obtained.
+
+def get_substars(stars, psf_model, thres, fwhm, band, peakmax=None,
+            show=True, ncols=10, figsize=(10, 6)):
+    substars_list = []
+    for star in stars:
+        finder = DAOStarFinder(threshold=thres, fwhm=fwhm,
+                               roundhi=5.0, roundlo=-5.0,
+                               sharplo=0.0, sharphi=2.0, peakmax=peakmax)
+        found = finder(star.data)
+        found.rename_columns(['xcentroid', 'ycentroid', 'flux'],
+                             ['x_0', 'y_0', 'flux_0'])
+        if len(found) > 1:
+            fitter = LevMarLSQFitter()
+            y, x = np.indices(star.shape)
+            xname, yname, fluxname = _extract_psf_fitting_names(psf_model)
+            pars_to_set = {'x_0': xname, 'y_0': yname, 'flux_0': fluxname}
+            group_psf = get_grouped_psf_model(psf_model, found, pars_to_set)
+            fit_model = fitter(group_psf, x, y, star.data)
+            
+            if hasattr(star, 'cutout_center'):
+                xc, yc = star.cutout_center
+            elif hasattr(star, 'cutout_center_flat'):
+                xc, yc = star.cutout_center_flat[0]
+            else:
+                raise AttributeError
+            idx = np.argmin((found['x_0']-xc)**2+(found['y_0']-yc)**2) # crude
+            cent_model = fit_model[idx]
+            
+            substar = copy.deepcopy(star)
+            substar._data = star.data - fit_model(x, y) + cent_model(x, y)
+        else:
+            substar = star
+            
+        substars_list.append(substar)
+    
+    substars = EPSFStars(substars_list)
+    return substars
+
+#%%    
+substars = get_substars(stars, epsf0, 2*std, fwhm_mean, band)
+epsf1 = get_epsf(substars, band)
+#%%
+substars2 = get_substars(substars, epsf0, 1*std, fwhm_mean, band)
+epsf2 = get_epsf(substars2, band)
 
 #%%
 
@@ -429,7 +487,7 @@ sys.setrecursionlimit(10**7)
 fwhm = fwhm_med
 sigma_psf = fwhm * gaussian_fwhm_to_sigma
 # psf_model = IntegratedGaussianPRF(sigma=sigma_psf)
-psf_model = epsf
+psf_model = epsf2
 psf_size = fwhm * 4
 sigma_thres = 5.
 peakmax=10.0
@@ -451,8 +509,8 @@ hdu = fits.PrimaryHDU(residual_image)
 hdu_dao = fits.PrimaryHDU(residual_image_dao)
 hdu.writeto(DATADIR/f'res_{band}_{sigma_thres:.1f}.fits', overwrite=True)
 hdu_dao.writeto(DATADIR/f'res_{band}_{sigma_thres:.1f}_dao.fits', overwrite=True)
-result_tab.writeto(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}.csv', format='csv')
-result_tab_dao.writeto(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}_dao.csv', format='csv')
+result_tab.write(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}.csv', format='csv', overwrite=True)
+result_tab_dao.write(DATADIR/f'result_tab_{band}_{sigma_thres:.1f}_dao.csv', format='csv', overwrite=True)
 #%%
 def show_psfphot_result(data, band, result_tab, residual_image,
                         result_tab_dao, residual_image_dao):
@@ -484,6 +542,8 @@ def show_psfphot_result(data, band, result_tab, residual_image,
         ax.axis('off')
     
     plt.tight_layout()
+    
+    return fig
     
 show_psfphot_result(data, band, result_tab, residual_image,
                         result_tab_dao, residual_image_dao)
