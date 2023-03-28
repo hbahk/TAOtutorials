@@ -64,6 +64,8 @@ elif h['BANDS'] == 'griz':
                            bands=['g','r','i','z'])
 
 img_hdu.writeto(DATADIR/'NGC2210.grz.fits', overwrite=True)
+rgb_hdu = fits.PrimaryHDU(rgbimg)
+rgb_hdu.writeto(DATADIR/'NGC2210.grz.rgb.fits', overwrite=True)
 #%%
 cmap = 'gray'
 minpad = 0.3
@@ -106,6 +108,7 @@ for ax, band in zip([ax1, ax2, ax3], ['g','r','z']):
 ax0.text(0.98, 0.02, '$grz$ false color', transform=ax0.transAxes,
          va='bottom', ha='right', c='k', bbox=bbox)
 fig.suptitle('NGC 2210 - DESI Legacy Survey $grz$ image')
+fig.savefig(DATADIR/'NGC2210.grz.png', dpi=300, bbox_inches='tight')
 
 #%%
 
