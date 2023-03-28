@@ -112,6 +112,7 @@ fig.suptitle('NGC 2210 - DESI Legacy Survey $grz$ image')
 import copy
 from pathlib import Path
 import numpy as np
+import sys
 from time import time, ctime
 import warnings
 from astropy.table import Table
@@ -138,6 +139,8 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import patches
 import sep
 
+
+sys.setrecursionlimit(10**7)
 warnings.simplefilter('ignore', category=AstropyWarning)
 
 HOME = Path.home()
@@ -481,8 +484,6 @@ def discard_stars_outside(shape, result_tab):
     isin = np.logical_and(xin, yin)
     return result_tab[isin]
 
-import sys
-sys.setrecursionlimit(10**7)
 
 fwhm = fwhm_med
 sigma_psf = fwhm * gaussian_fwhm_to_sigma
