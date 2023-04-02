@@ -7,7 +7,7 @@ Data makeup for TAO tutorial - PSF photometry
 
 @author: Hyeonguk Bahk
 """
-
+#%%
 from pathlib import Path
 
 from astropy import units as u
@@ -26,11 +26,11 @@ plt.rcParams["font.size"] = 15
 plt.rcParams["text.usetex"] = False
 plt.rcParams["mathtext.fontset"] = 'cm'
 #%%
-# cra, cdec = 92.8804, -69.1214
-cra, cdec = 92.8290, -69.1046
+cra, cdec = 92.8804, -69.1214
+# cra, cdec = 92.8290, -69.1046
 
-# size = 2*u.arcmin
-size = 1*u.arcmin
+size = 2*u.arcmin
+# size = 1*u.arcmin
 pix_scale = 0.262
 
 if type(size) == u.quantity.Quantity:
