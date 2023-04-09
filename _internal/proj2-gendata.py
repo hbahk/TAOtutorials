@@ -553,3 +553,161 @@ show_psfphot_result(data, band, result_tab, residual_image,
                         result_tab_dao, residual_image_dao)
 
 #%%
+
+import numpy as np
+from astropy.table import Table
+from photutils.datasets import (make_gaussian_sources_image,
+                                make_noise_image)
+plt.rcParams["font.size"] = 12
+sigma_psf = 4.0
+sources = Table()
+sources['flux'] = [7000, 9000, 8000, 6000, 5000, 1000, 1300, 1200, 8000]
+sources['x_mean'] = [5, 25, 35, 22, 13, 25, 35, 5, 45]
+sources['y_mean'] = [5, 25, 15, 35, 20, 5, 30, 40, 45]
+sources['x_stddev'] = sigma_psf * np.ones(9)
+sources['y_stddev'] = sources['x_stddev']
+sources['theta'] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+sources['id'] = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+tshape = (50, 50)
+image = (make_gaussian_sources_image(tshape, sources) +
+         make_noise_image(tshape, distribution='poisson', mean=6.0,
+                          seed=123) +
+         make_noise_image(tshape, distribution='gaussian', mean=0.0,
+                          stddev=2.0, seed=123))
+
+#%%
+plt.imshow(image, cmap='viridis', aspect=1, interpolation='nearest',
+           origin='lower')  
+plt.title('Data')  
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.08)
+plt.tight_layout()
+plt.savefig(DATADIR/'figs'/'sim_data.png', dpi=300)
+  
+# %%
+from astropy.modeling.fitting import LevMarLSQFitter
+from astropy.stats import gaussian_sigma_to_fwhm
+from photutils.background import MADStdBackgroundRMS, MMMBackground
+from photutils.detection import IRAFStarFinder
+from photutils.psf import (DAOGroup, IntegratedGaussianPRF,
+                           IterativelySubtractedPSFPhotometry)
+bkgrms = MADStdBackgroundRMS()
+std = bkgrms(image)
+iraffind = IRAFStarFinder(threshold=5.0*std,
+                          fwhm=sigma_psf * gaussian_sigma_to_fwhm,
+                          minsep_fwhm=0.01, roundhi=5.0, roundlo=-5.0,
+                          sharplo=0.0, sharphi=2.0)
+daogroup = DAOGroup(2.0 * sigma_psf * gaussian_sigma_to_fwhm)
+mmm_bkg = MMMBackground()
+fitter = LevMarLSQFitter()
+psf_model = IntegratedGaussianPRF(sigma=sigma_psf)
+photometry = IterativelySubtractedPSFPhotometry(finder=iraffind,
+                                                group_maker=daogroup,
+                                                bkg_estimator=mmm_bkg,
+                                                psf_model=psf_model,
+                                                fitter=LevMarLSQFitter(),
+                                                niters=1, fitshape=(21, 21))
+result_tab = photometry(image=image)
+residual_image = photometry.get_residual_image()
+model_image = image - residual_image
+
+#%%
+plt.gca().set_prop_cycle(color=['red', 'blue', 'green', 'yellow'])
+
+plt.imshow(image, cmap='viridis', aspect=1, interpolation='nearest',
+           origin='lower')
+groups = result_tab.group_by('group_id')
+for group in groups.groups:
+    plt.scatter(group['x_fit'], group['y_fit'], marker='o',
+                s=1000, lw=1.5, fc='none',
+                ec=plt.gca()._get_lines.get_next_color(),
+                label=f'Group {group["group_id"][0]}')
+lgnd = plt.legend(loc='lower right', fontsize=12)
+lgnd.legendHandles[0]._sizes = [100]
+lgnd.legendHandles[1]._sizes = [100]
+# plt.title('Data')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.08)
+plt.tight_layout()
+plt.savefig(DATADIR/'figs'/'sim_group_1st.png', dpi=300)
+# %%
+plt.subplot(1, 3, 1)
+plt.imshow(image, cmap='viridis', aspect=1, interpolation='nearest',
+           origin='lower')
+plt.title('Data')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.subplot(1, 3, 2)
+plt.imshow(model_image, cmap='viridis', aspect=1,
+           interpolation='nearest', origin='lower')
+plt.title('Model Image')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.subplot(1, 3, 3)
+plt.imshow(residual_image, cmap='viridis', aspect=1,
+           interpolation='nearest', origin='lower')
+plt.title('Residual Image')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.savefig(DATADIR/'figs'/'sim_1st_iter.png', dpi=300)
+plt.show()
+# %%
+bkgrms = MADStdBackgroundRMS()
+std = bkgrms(residual_image)
+iraffind = IRAFStarFinder(threshold=3.0*std,
+                          fwhm=sigma_psf * gaussian_sigma_to_fwhm,
+                          minsep_fwhm=0.01, roundhi=5.0, roundlo=-5.0,
+                          sharplo=0.0, sharphi=2.0)
+daogroup = DAOGroup(2.0 * sigma_psf * gaussian_sigma_to_fwhm)
+mmm_bkg = MMMBackground()
+fitter = LevMarLSQFitter()
+psf_model = IntegratedGaussianPRF(sigma=sigma_psf)
+photometry = IterativelySubtractedPSFPhotometry(finder=iraffind,
+                                                group_maker=daogroup,
+                                                bkg_estimator=mmm_bkg,
+                                                psf_model=psf_model,
+                                                fitter=LevMarLSQFitter(),
+                                                niters=1, fitshape=(21, 21))
+result_tab = photometry(image=residual_image)
+rresidual_image = photometry.get_residual_image()
+rmodel_image = residual_image - rresidual_image
+
+#%%
+plt.gca().set_prop_cycle(color=['red', 'green', 'blue', 'yellow'])
+
+plt.imshow(residual_image, cmap='viridis', aspect=1, interpolation='nearest',
+           origin='lower')
+groups = result_tab.group_by('group_id')
+for group in groups.groups:
+    plt.scatter(group['x_fit'], group['y_fit'], marker='o',
+                s=1000, lw=1.5, fc='none',
+                ec=plt.gca()._get_lines.get_next_color(),
+                label=f'Group {group["group_id"][0]}')
+lgnd = plt.legend(loc='lower right', fontsize=12)
+lgnd.legendHandles[0]._sizes = [100]
+lgnd.legendHandles[1]._sizes = [100]
+lgnd.legendHandles[2]._sizes = [100]
+# plt.title('Data')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.08)
+plt.tight_layout()
+plt.savefig(DATADIR/'figs'/'sim_group_2st.png', dpi=300)
+# %%
+plt.subplot(1, 3, 1)
+plt.imshow(residual_image, cmap='viridis', aspect=1, interpolation='nearest',
+           origin='lower')
+plt.title('1st Residual')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.subplot(1, 3, 2)
+plt.imshow(rmodel_image, cmap='viridis', aspect=1,
+           interpolation='nearest', origin='lower')
+plt.title('Model Image')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.subplot(1, 3, 3)
+plt.imshow(rresidual_image, cmap='viridis', aspect=1,
+           interpolation='nearest', origin='lower')
+plt.title('2nd Residual')
+plt.axis('off')
+plt.colorbar(orientation='horizontal', fraction=0.046, pad=0.01)
+plt.savefig(DATADIR/'figs'/'sim_2nd_iter.png', dpi=300)
+plt.show()
+# %%
