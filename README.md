@@ -18,6 +18,8 @@ git clone https://github.com/hbahk/TAO23.git
 
 ### 1.2. Software installations
 
+#### 1.2.1 Python packages
+
 * Useful links
   
   [SNU_AOclass/00-3_Prepare_Python.md at master · ysBach/SNU_AOclass · GitHub](https://github.com/ysBach/SNU_AOclass/blob/master/Notebooks/00-3_Prepare_Python.md)
@@ -61,3 +63,17 @@ cf) For Spyder users, install `spyder-kernels` for your version of Spyder follow
 ```shell
 conda install spyder‑kernels=2.2.1
 ```
+
+#### 1.2.2 Source Extractor
+
+* **For Linux (or Window) users**, please refer to the official documentation:
+[Installing the software](https://sextractor.readthedocs.io/en/latest/Installing.html)
+(or maybe you can find some easier way to install SExtractor with some package
+manergers... If you find out, then let me know...)
+
+
+* **For Mac users**, using Homebrew is easiest way, I suppose.
+  ```shell
+  brew install sextractor
+  ```
+  If you don't have Homebrew intalled yet, then [give that a try!](https://brew.sh)
