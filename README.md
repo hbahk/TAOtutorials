@@ -70,7 +70,7 @@ conda install spyder‑kernels=2.2.1
   [Installing the software](https://sextractor.readthedocs.io/en/latest/Installing.html)
   For Ubuntu users, for example, simple command will do:
   ```shell
-  sudo apt-get sextractor
+  sudo apt-get install sextractor
   ```
 
 
