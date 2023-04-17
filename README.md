@@ -69,7 +69,7 @@ conda install spyder‑kernels=2.2.1
 * **For Linux (or Window) users**, please refer to the official documentation:
 [Installing the software](https://sextractor.readthedocs.io/en/latest/Installing.html)
 (or maybe you can find some easier way to install SExtractor with some package
-manergers... If you find out, then let me know...)
+manergers... If you find out, then please let me know...)
 
 
 * **For Mac users**, using Homebrew is easiest way, I suppose.
