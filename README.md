@@ -66,13 +66,13 @@ conda install spyder‑kernels=2.2.1
 
 #### 1.2.2 Source Extractor
 
-* **For Linux (or Window) users**, please refer to the official documentation:
-  [Installing the software](https://sextractor.readthedocs.io/en/latest/Installing.html).
-  
+* **For Linux (or Window) users**, please refer to the official documentation: [Installing the software](https://sextractor.readthedocs.io/en/latest/Installing.html).
+
   For Ubuntu users, for example, simple command will do:
   ```shell
   sudo apt-get install sextractor
   ```
+
 
 
 * **For Mac users**, using Homebrew is easiest way, I suppose.
@@ -80,3 +80,12 @@ conda install spyder‑kernels=2.2.1
   brew install sextractor
   ```
   If you don't have Homebrew intalled yet, then [give that a try!](https://brew.sh)
+
+* You can check whether SExtractor is installed or not with the command of:
+  ```shell
+  sex
+  ```
+  Or if you installed with the `apt-get` (and other possible distributors) then try
+  ```shell
+  sextractor
+  ```
