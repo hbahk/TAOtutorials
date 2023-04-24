@@ -3,7 +3,8 @@
 Tutorials for Techniques in Astronomical Observation, 2023A semester, Seoul National University.
 
 ## Tutorials
-* Tutorial 1: [PSF photometry](https://nbviewer.org/github/hbahk/TAO23/blob/main/tutorials/PSF_photometry.ipynb)
+* Tutorial 1: [PSF photometry](https://nbviewer.org/github/hbahk/TAO23/blob/main/tutorials/PSF_photometry.ipynb) (written by Hyeonguk Bahk)
+* Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAO23/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jae-Hong Jeong)
 
 ## 1. Preparation
 
