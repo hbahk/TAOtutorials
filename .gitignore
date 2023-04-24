@@ -1,5 +1,9 @@
 # Custom
 .DS_Store
+figs/
+NGC2210.grz.rgb.fits
+res_*.fits
+result_tab*.csv
 #_internal/
 
 # Byte-compiled / optimized / DLL files
