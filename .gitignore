@@ -6,6 +6,8 @@ res_*.fits
 result_tab*.csv
 frame*.fits
 frame*.fits.bz2
+J1329*.fits
+default.swarp
 #_internal/
 
 # Byte-compiled / optimized / DLL files
