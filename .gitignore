@@ -6,7 +6,13 @@ res_*.fits
 result_tab*.csv
 frame*.fits
 frame*.fits.bz2
-J1329*.fits
+*J1329*.fits
+*J1329*.cat
+*J1329*.psf
+output.param
+psfex.xml
+config.psfex
+default.sex
 default.swarp
 #_internal/
 
