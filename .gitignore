@@ -9,11 +9,14 @@ frame*.fits.bz2
 *J1329*.fits
 *J1329*.cat
 *J1329*.psf
+*J1329*.constrain
+*J1329*.feedme
 output.param
 psfex.xml
 config.psfex
 default.sex
 default.swarp
+default.param
 #_internal/
 
 # Byte-compiled / optimized / DLL files

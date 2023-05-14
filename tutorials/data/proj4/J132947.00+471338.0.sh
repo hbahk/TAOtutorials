@@ -296,8 +296,8 @@ PROJECTION_ERR         0.001           # Maximum projection error (in output
 CENTER_TYPE            MANUAL          # MANUAL, ALL or MOST
 CENTER                       202.4465216670,       47.2273441667 # Image Center
 PIXELSCALE_TYPE        MANUAL          # MANUAL,FIT,MIN,MAX or MEDIAN
-PIXEL_SCALE            0.396000  # Pixel scale
-IMAGE_SIZE             2727,2727 # scale = 0.396127 arcsec/pixel
+PIXEL_SCALE            3.960000  # Pixel scale
+IMAGE_SIZE             272,272 # scale = 0.396127 arcsec/pixel
 
 #-------------------------------- Resampling ----------------------------------
 
