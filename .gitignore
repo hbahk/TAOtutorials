@@ -17,6 +17,7 @@ config.psfex
 default.sex
 default.swarp
 default.param
+galfit.0[0-9]
 #_internal/
 
 # Byte-compiled / optimized / DLL files
