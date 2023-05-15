@@ -18,6 +18,7 @@ default.sex
 default.swarp
 default.param
 galfit.0[0-9]
+backup_[0-9].fits
 #_internal/
 
 # Byte-compiled / optimized / DLL files
