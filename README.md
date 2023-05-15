@@ -5,7 +5,7 @@ Tutorials for Techniques in Astronomical Observation, 2023A semester, Seoul Nati
 ## Tutorials
 * Tutorial 1: [PSF photometry](https://nbviewer.org/github/hbahk/TAO23/blob/main/tutorials/PSF_photometry.ipynb) (written by Hyeonguk Bahk)
 * Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAO23/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jae-Hong Jeong)
-* Tutorial 3: [Surface Photometry Using GALFIT](https://github.com/hbahk/TAO23/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb)
+* Tutorial 3: [Surface Photometry Using GALFIT](https://github.com/hbahk/TAO23/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb) (written by Hyeonguk Bahk)
 
 ## 1. Preparation
 
