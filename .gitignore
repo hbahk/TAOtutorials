@@ -19,6 +19,8 @@ default.swarp
 default.param
 galfit.0[0-9]
 backup_[0-9].fits
+reduc
+raw
 #_internal/
 
 # Byte-compiled / optimized / DLL files
