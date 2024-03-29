@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 @Author: Hyeonguk Bahk
@@ -27,11 +26,12 @@ from ccdproc import combine
 from matplotlib import pyplot as plt
 
 
-def make_summary_table(rawdir):
+def make_summary_table(rawdir, suffix='.fits'):
     """Make a summary table of the raw data in the directory.
 
     Args:
         rawdir (pathlib.Path): The directory containing the raw data.
+        suffix (str, optional): The suffix of the raw data files. Defaults to '.fits'.
 
     Returns:
         stab (astropy.table.Table): The summary table of the raw data in the directory.
@@ -39,7 +39,7 @@ def make_summary_table(rawdir):
     """
     # making a summary table
     summary = []
-    for f in rawdir.glob('*.fit'):
+    for f in rawdir.glob('*'+suffix):
         hdr = fits.getheader(f)
         
         # getting the filter information from the header
