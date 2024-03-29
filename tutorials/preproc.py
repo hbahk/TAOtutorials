@@ -73,7 +73,7 @@ def make_summary_table(rawdir):
                         hdr['IMAGETYP'], hdr['EXPTIME'], X, filt])
         
     # creating the summary table
-    stab = Table(summary,
+    stab = Table(rows=summary,
                  names=['filename', 'date-obs', 'object', 'ra', 'dec', 'imagetyp',
                         'exptime', 'airmass', 'filter'],
                  dtype=['U50', 'U50', 'U50', 'U50', 'U50', 'U50', 'f8', 'f8', 'U50'])
@@ -103,8 +103,10 @@ def combine_bias(biaslist, outdir, outname, unit='adu'):
                     sigma_clip_func=np.ma.median, sigma_clip_dev_func=mad_std)
 
     # calculating the readout noise
-    gain = bias[0].header['GAIN']  # gain in e-/ADU
-    rdnoise = np.std(bias[0].data - bias[1].data) / np.sqrt(2) * gain  # in e-
+    gain = bias[0].header['EGAIN']  # gain in e-/ADU
+    bias1 = bias[0].data.astype('int16')
+    bias2 = bias[1].data.astype('int16')
+    rdnoise = np.std(bias1 - bias2) / np.sqrt(2) * gain  # in e-
 
     # writing the readout noise to the header
     mbias.header['RDNOISE'] = (rdnoise, 'Readout noise in e-')
