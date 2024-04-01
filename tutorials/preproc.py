@@ -255,7 +255,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
     return mflat
 
 def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
-            rdnoise=None, insert_ivar=False, verbose=True):
+            rdnoise=None, insert_ivar=False, prefix='p', verbose=True):
     """ Preprocesses a list of science images by performing bias subtraction, dark
     subtraction, and flat fielding.
 
@@ -274,6 +274,8 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
             be extracted from the master bias frame header.
         insert_ivar (bool, optional): Whether to insert the inverse variance map into
             the extension of the preprocessed image. Defaults to False.
+        prefix (str, optional): Prefix to prepend to the output file name. Defaults to
+            'p'.
         verbose (bool, optional): Whether to print progress messages. Defaults to True.
 
     Returns:
@@ -310,7 +312,7 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
             
         # saving preprocessed image to a fits file
         if outname is None:
-            outname = f"p{sci_path.stem}.fits"
+            outname = f"{prefix}{sci_path.stem}.fits"
         phdu = fits.PrimaryHDU(data=sci_data, header=sci_hdr)
         if insert_ivar:
             ihdu = fits.ImageHDU(data=ivar, name='IVAR')
