@@ -254,7 +254,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
         
     return mflat
 
-def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
+def preproc(sci_list, outdir, mbias=None, mdark=None, mflat=None,
             rdnoise=None, insert_ivar=False, prefix='p', verbose=True):
     """ Preprocesses a list of science images by performing bias subtraction, dark
     subtraction, and flat fielding.
@@ -262,8 +262,6 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
     Args:
         sci_list (list[Path]): List of paths to science images.
         outdir (Path): Output directory to save the preprocessed images.
-        outname (str, optional): Output file name for the preprocessed images. If not
-            provided, a default name will be prepended with 'p'. Defaults to None.
         mbias (Path, optional): Path to the master bias frame. If not provided, bias
             subtraction will not be performed.
         mdark (Path, optional): Path to the master dark frame. If not provided, dark
@@ -311,12 +309,11 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
         sci_hdr['HISTORY'] = 'Preprocessed at ' + now
             
         # saving preprocessed image to a fits file
-        if outname is None:
-            if sci_path.stem.endswith('.gz'):
-                name = sci_path.stem[:-3]
-            else:
-                name = sci_path.stem
-                outname = f"{prefix}{name}.fits"
+        if sci_path.stem.endswith('.gz'):
+            name = sci_path.stem[:-3]
+        else:
+            name = sci_path.stem
+            outname = f"{prefix}{name}.fits"
         phdu = fits.PrimaryHDU(data=sci_data, header=sci_hdr)
         if insert_ivar:
             ihdu = fits.ImageHDU(data=ivar, name='IVAR')
