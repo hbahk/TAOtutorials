@@ -8,6 +8,10 @@ Tutorials for Techniques in Astronomical Observation, 2023A semester, Seoul Nati
 * Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAO23/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jae-Hong Jeong)
 * Tutorial 3: [Surface Photometry Using GALFIT](https://github.com/hbahk/TAO23/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb) (written by Hyeonguk Bahk)
 * Tutorial 4: [Optical Spectroscopy Using `specutils`](https://github.com/hbahk/TAO23/blob/main/tutorials/Optical%20Spectroscopy.ipynb) (written by Jae-Hong Jeong)
+
+
+* Tutorial A1: [Spectroscopic Data Reduction for SNUO 1m](https://github.com/hbahk/TAO23/blob/main/tutorials/SAO-Spectroscopic-Data-Reduction.ipynb) (Fall 2022, written by Hyeonguk Bahk, originally prepared by Jooyeon Geem)
+
 ## 1. Preparation
 
 ### 1.1. Clone this repository
