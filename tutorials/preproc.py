@@ -190,7 +190,7 @@ def make_master_dark(dark_list, outdir, outname=None, mbias=None, verbose=True):
 
 
 def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
-                     unit='adu', verbose=True):
+                     unit='adu', verbose=True, filter_key='FILTER'):
     """Combine and process a list of flat frames to create a master flat frame.
 
     Args:
@@ -205,6 +205,8 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
         unit (str, optional): The unit of the CCD data to pass to the CCDData object.
             Defaults to 'adu'.
         verbose (bool, optional): Whether to print verbose output. Defaults to True.
+        filter_key (str, optional): The header keyword for the filter information.
+            This is only used when the outname is not provided. Defaults to 'FILTER'.
 
     Returns:
         CCDData: The master flat frame.
@@ -226,7 +228,6 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
     flat_stack = []   
     for i, flat_file in enumerate(flat_list):
         flat_data, flat_hdr = fits.getdata(flat_file, header=True)  
-        filter_now = flat_hdr['FILTER']     # specifying current filter
         # bias and dark subtraction
         flat_bd = (flat_data - mbias_data - mdark_data)
         # flat scaling (with relative sensitivity=1 at the maximum)
@@ -244,6 +245,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
     #         need to modify the filename.
     flat_hdr['NFRAMES'] = len(flat_list)
     if outname is None:
+        filter_now = flat_hdr['FILTER']     # specifying current filter
         outname = f"MFlat{filter_now}.fits"
     fits.writeto(outdir / outname, mflat.data, header=flat_hdr, overwrite=True)
         
