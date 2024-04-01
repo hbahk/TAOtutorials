@@ -41,7 +41,7 @@ conda activate tao23
 
 ```shell
 conda install -c conda-forge astropy sep tqdm
-conda install -c conda-forge photutils scikit-learn-intelex
+conda install -c conda-forge photutils
 conda install -c astropy ccdproc astroscrappy specutils
 ```
 
