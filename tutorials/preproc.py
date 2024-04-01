@@ -312,7 +312,11 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
             
         # saving preprocessed image to a fits file
         if outname is None:
-            outname = f"{prefix}{sci_path.stem}.fits"
+            if sci_path.stem.endswith('.gz'):
+                name = sci_path.stem[:-3]
+            else:
+                name = sci_path.stem
+                outname = f"{prefix}{name}.fits"
         phdu = fits.PrimaryHDU(data=sci_data, header=sci_hdr)
         if insert_ivar:
             ihdu = fits.ImageHDU(data=ivar, name='IVAR')
