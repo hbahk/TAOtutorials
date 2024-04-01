@@ -21,6 +21,7 @@ galfit.0[0-9]
 backup_[0-9].fits
 reduc
 raw
+out
 #_internal/
 
 # Byte-compiled / optimized / DLL files
