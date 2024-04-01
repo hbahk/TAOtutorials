@@ -189,8 +189,8 @@ def make_master_dark(dark_list, outdir, outname=None, mbias=None, verbose=True):
     return mdark
 
 
-def make_mflat(flat_list, outdir, outname=None, mbias=None, mdark=None,
-               unit='adu', verbose=True):
+def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
+                     unit='adu', verbose=True):
     """Combine and process a list of flat frames to create a master flat frame.
 
     Args:
