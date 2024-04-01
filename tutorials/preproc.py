@@ -313,7 +313,7 @@ def preproc(sci_list, outdir, mbias=None, mdark=None, mflat=None,
             name = sci_path.stem[:-5]
         else:
             name = sci_path.stem
-            outname = f"{prefix}{name}.fits"
+        outname = f"{prefix}{name}.fits"
         phdu = fits.PrimaryHDU(data=sci_data, header=sci_hdr)
         if insert_ivar:
             ihdu = fits.ImageHDU(data=ivar, name='IVAR')
@@ -323,4 +323,4 @@ def preproc(sci_list, outdir, mbias=None, mdark=None, mflat=None,
             
         hdul.writeto(outdir / outname, overwrite=True)
         if verbose:
-            print(f"Done: {sci_path.stem}")
+            print(f"Done: {outname}")
