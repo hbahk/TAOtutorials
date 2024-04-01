@@ -104,7 +104,12 @@ def combine_bias(biaslist, outdir, outname, unit='adu'):
                     sigma_clip_func=np.ma.median, sigma_clip_dev_func=mad_std)
 
     # calculating the readout noise
-    gain = bias[0].header['EGAIN']  # gain in e-/ADU
+    if 'EGAIN' in bias[0].header:
+        gain = bias[0].header['EGAIN'] # gain in e-/ADU
+    elif 'GAIN' in bias[0].header:
+        gain = bias[0].header['GAIN'] # gain in e-/ADU
+    else:
+        raise ValueError('Gain not found in the header.')
     bias1 = bias[0].data.astype('int16')
     bias2 = bias[1].data.astype('int16')
     rdnoise = np.std(bias1 - bias2) / np.sqrt(2) * gain  # in e-
