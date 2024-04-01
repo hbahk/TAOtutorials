@@ -26,8 +26,9 @@ from ccdproc import combine
 from matplotlib import pyplot as plt
 
 
-def make_summary_table_sao(rawdir, suffix='.fit'):
-    """Make a summary table of the raw data in the directory.
+def make_summary_table_sao_port1(rawdir, suffix='.fit'):
+    """Make a summary table of the raw data in the directory. This function is
+    specifically designed for the data taken with the SAO 1m Telscope Port1.
 
     Args:
         rawdir (pathlib.Path): The directory containing the raw data.
