@@ -309,8 +309,8 @@ def preproc(sci_list, outdir, mbias=None, mdark=None, mflat=None,
         sci_hdr['HISTORY'] = 'Preprocessed at ' + now
             
         # saving preprocessed image to a fits file
-        if sci_path.stem.endswith('.gz'):
-            name = sci_path.stem[:-3]
+        if sci_path.stem.endswith('.fits'):
+            name = sci_path.stem[:-5]
         else:
             name = sci_path.stem
             outname = f"{prefix}{name}.fits"
