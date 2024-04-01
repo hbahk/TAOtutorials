@@ -255,7 +255,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
     return mflat
 
 def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
-            rdnoise=None, verbose=True):
+            rdnoise=None, insert_ivar=False, verbose=True):
     """ Preprocesses a list of science images by performing bias subtraction, dark
     subtraction, and flat fielding.
 
@@ -272,6 +272,8 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
             fielding will not be performed.
         rdnoise (float, optional): Readout noise in electrons. If not provided, it will
             be extracted from the master bias frame header.
+        insert_ivar (bool, optional): Whether to insert the inverse variance map into
+            the extension of the preprocessed image. Defaults to False.
         verbose (bool, optional): Whether to print progress messages. Defaults to True.
 
     Returns:
@@ -292,17 +294,30 @@ def preproc(sci_list, outdir, outname=None, mbias=None, mdark=None, mflat=None,
         sci_data -= mdark_data   # Dark subtraction
         sci_data /= mflat_data    # Flat fielding
         
-        # recording preprocessing history
-        now = time.strftime("%Y-%m-%d %H:%M:%S (GMT%z)")
         if rdnoise is None:
             mbias_hdr = fits.getheader(mbias)
             rdnoise = mbias_hdr['RDNOISE']
+            
+        if insert_ivar:
+            # inserting the inverse variance map into the extension
+            ivar = 1 / (rdnoise**2 + np.abs(sci_data))
+            sci_hdr['HISTORY'] = 'Inverse variance map inserted.'
+        
+        # recording preprocessing history
+        now = time.strftime("%Y-%m-%d %H:%M:%S (GMT%z)")
         sci_hdr['RDNOISE'] = (rdnoise, 'Readout noise in e-')
         sci_hdr['HISTORY'] = 'Preprocessed at ' + now
             
         # saving preprocessed image to a fits file
         if outname is None:
             outname = f"p{sci_path.stem}.fits"
-        fits.writeto(outdir / outname, sci_data, sci_hdr, overwrite=True)
+        phdu = fits.PrimaryHDU(data=sci_data, header=sci_hdr)
+        if insert_ivar:
+            ihdu = fits.ImageHDU(data=ivar, name='IVAR')
+            hdul = fits.HDUList([phdu, ihdu])
+        else:
+            hdul = fits.HDUList([phdu])
+            
+        hdul.writeto(outdir / outname, overwrite=True)
         if verbose:
             print(f"Done: {sci_path.stem}")
