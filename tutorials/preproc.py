@@ -236,6 +236,8 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
         flat_stack.append(CCDData(data=flat_bdn, unit=unit))
             
     # sigma clipping
+    if verbose:
+        print(f"\nCombining flat frames with sigma clipping... {len(flat_list)} frames")
     mflat = combine(flat_stack, sigma_clip=True,
                     sigma_clip_low_thresh=3, sigma_clip_high_thresh=3,
                     sigma_clip_func=np.ma.median, sigma_clip_dev_func=mad_std)
