@@ -26,7 +26,7 @@ from ccdproc import combine
 from matplotlib import pyplot as plt
 
 
-def make_summary_table(rawdir, suffix='.fits'):
+def make_summary_table_sao(rawdir, suffix='.fit'):
     """Make a summary table of the raw data in the directory.
 
     Args:
