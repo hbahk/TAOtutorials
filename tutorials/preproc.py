@@ -206,7 +206,8 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
             Defaults to 'adu'.
         verbose (bool, optional): Whether to print verbose output. Defaults to True.
         filter_key (str, optional): The header keyword for the filter information.
-            This is only used when the outname is not provided. Defaults to 'FILTER'.
+            This is used when the verbose option is True or when the output name is
+            not provided. Defaults to 'FILTER'.
 
     Returns:
         CCDData: The master flat frame.
@@ -217,7 +218,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
         for i, flat_file in enumerate(flat_list):
             flat_hdr = fits.getheader(flat_file)
             print(f"\nFlat frame {i+1:d}")
-            for key in ['DATE-OBS', 'EXPTIME', 'FILTER']:
+            for key in ['DATE-OBS', 'EXPTIME', filter_key]:
                 print(f"  {key} = {flat_hdr[key]}")
     
     # reading the master bias and dark frames
@@ -245,7 +246,7 @@ def make_master_flat(flat_list, outdir, outname=None, mbias=None, mdark=None,
     #         need to modify the filename.
     flat_hdr['NFRAMES'] = len(flat_list)
     if outname is None:
-        filter_now = flat_hdr['FILTER']     # specifying current filter
+        filter_now = flat_hdr[filter_key]     # specifying current filter
         outname = f"MFlat{filter_now}.fits"
     fits.writeto(outdir / outname, mflat.data, header=flat_hdr, overwrite=True)
         
