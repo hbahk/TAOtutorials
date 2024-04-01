@@ -32,7 +32,7 @@ def make_summary_table_sao_port1(rawdir, suffix='.fit'):
 
     Args:
         rawdir (pathlib.Path): The directory containing the raw data.
-        suffix (str, optional): The suffix of the raw data files. Defaults to '.fits'.
+        suffix (str, optional): The suffix of the raw data files. Defaults to '.fit'.
 
     Returns:
         stab (astropy.table.Table): The summary table of the raw data in the directory.
