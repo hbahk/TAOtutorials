@@ -1,6 +1,6 @@
 # TAO Tutorials
 
-Tutorials for Techniques in Astronomical Observation, 2023A semester, Seoul National University.
+Tutorials for Techniques in Astronomical Observation, Seoul National University.
 
 ## Tutorials
 * Tutorial 0: [Preprocessing](https://nbviewer.org/github/hbahk/TAOTutorials/blob/main/tutorials/Preprocessing.ipynb) (written by Hyeonguk Bahk)
