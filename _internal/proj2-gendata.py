@@ -120,7 +120,7 @@ from time import time, ctime
 import warnings
 from astropy.table import Table
 from astropy.modeling.fitting import LevMarLSQFitter, LMLSQFitter
-from astropy.stats import sigma_clipped_stats, gaussian_fwhm_to_sigma
+from astropy.stats import sigma_clipped_stats, gaussian_fwhm_to_sigma, SigmaClip
 from astropy.table import Table, vstack, hstack
 from astropy.nddata import NDData, CCDData, Cutout2D
 from astropy.utils.exceptions import AstropyWarning
@@ -136,7 +136,8 @@ from photutils.psf.utils import _extract_psf_fitting_names
 from photutils.psf.utils import get_grouped_psf_model, subtract_psf
 from photutils.detection import IRAFStarFinder
 from photutils.background import MMMBackground, MADStdBackgroundRMS
-from photutils.segmentation import make_source_mask
+from photutils.segmentation import detect_threshold, detect_sources
+from photutils.utils import circular_footprint
 from scipy.optimize import curve_fit
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib import patches
@@ -203,7 +204,11 @@ def read_sci_data(fpath, show=True, newbyteorder=False, bkgsubtract=False):
     return ccd, ccd_raw
 
 def background_substraction(img, box=100, filt=3, show=True):
-    mask = make_source_mask(img, nsigma=2, npixels=1, dilate_size=3)
+    sigma_clip = SigmaClip(sigma=3.0, maxiters=10)
+    threshold = detect_threshold(img, nsigma=3.0, sigma_clip=sigma_clip)
+    segment_img = detect_sources(img, threshold, npixels=10)
+    footprint = circular_footprint(radius=1)
+    mask = segment_img.make_source_mask(footprint=footprint)
     bkg_sep = sep.Background(img.byteswap().newbyteorder(), 
                              mask=mask, bw=box, bh=box, fw=filt, fh=filt)
     bkgsub_sep = img - bkg_sep.back()
@@ -247,7 +252,7 @@ thres = 3*std
 
 find_mask = np.zeros_like(data, dtype=bool)
 # find_mask[250:650, 250:650] = True
-ll, hh = 0, 200
+ll, hh = 250, 650
 find_mask[ll:hh, ll:hh] = True
 peaks_tbl = find_peaks(data, threshold=thres, mask=find_mask)
 peaks_tbl['peak_value'].info.format = '%.8g'
