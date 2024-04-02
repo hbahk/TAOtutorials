@@ -273,7 +273,7 @@ isolated = [False if np.count_nonzero(np.sqrt((bx-xi)**2+(by-yi)**2)<size) > 1
             else True for xi, yi in zip(bx, by)]
 
 mask_stars = isolated
-mask_stars = np.ones_like(bx, dtype=bool)
+# mask_stars = np.ones_like(bx, dtype=bool)
 
 stars_tbl = Table()
 stars_tbl['x'] = bx[mask_stars]  
