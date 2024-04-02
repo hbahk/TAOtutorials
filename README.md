@@ -1,4 +1,4 @@
-# TAO23
+# TAO Tutorials
 
 Tutorials for Techniques in Astronomical Observation, 2023A semester, Seoul National University.
 
@@ -37,8 +37,8 @@ git clone https://github.com/hbahk/TAO23.git
 1. Create a new conda environment (optional)
 
 ```shell
-conda create -n tao23 python numpy scipy pandas jupyter
-conda activate tao23
+conda create -n tao python numpy scipy pandas jupyter
+conda activate tao
 ```
 
 2. Install packages via conda
