@@ -1,7 +1,7 @@
 # Custom
 .DS_Store
 figs/
-NGC2210.grz.rgb.fits
+# NGC2210.grz.rgb.fits
 res_*.fits
 result_tab*.csv
 frame*.fits
