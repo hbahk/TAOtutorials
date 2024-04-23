@@ -18,7 +18,7 @@ Tutorials for Techniques in Astronomical Observation, Seoul National University.
 
 ```shell
 cd <PathToGitClone>
-git clone https://github.com/hbahk/TAO23.git
+git clone https://github.com/hbahk/TAOTutorials.git
 ```
 
 
