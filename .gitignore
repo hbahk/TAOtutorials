@@ -22,6 +22,9 @@ backup_[0-9].fits
 reduc
 raw
 out
+test_*.ipynb
+config.txt
+sephot.sh
 #_internal/
 
 # Byte-compiled / optimized / DLL files
