@@ -5,7 +5,7 @@ Tutorials for Techniques in Astronomical Observation, Seoul National University.
 ## Tutorials
 * Tutorial 0: [Preprocessing](https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/Preprocessing.ipynb) (under construction, written by Hyeonguk Bahk)
 * Tutorial 1: [PSF photometry](https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/PSF_photometry.ipynb) (written by Hyeonguk Bahk)
-* Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jae-Hong Jeong)
+* Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jeong Hwan Lee, edited by Jae-Hong Jeong and Hyeonguk Bahk)
 * Tutorial 3: [Surface Photometry Using GALFIT](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb) (written by Hyeonguk Bahk)
 * Tutorial 4: [Spectroscopic data reduction](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/Spectroscopic_data_reduction.ipynb) (under construction, written by Hyeonguk Bahk)
 
