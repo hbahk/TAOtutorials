@@ -25,6 +25,8 @@ out
 test_*.ipynb
 config.txt
 sephot.sh
+*.cat
+*_aper.fits
 #_internal/
 
 # Byte-compiled / optimized / DLL files
