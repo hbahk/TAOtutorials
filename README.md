@@ -96,6 +96,10 @@ conda install spyder‑kernels=2.2.1
   ```shell
   sextractor
   ```
+  or
+  ```shell
+  source-extractor
+  ```
 
 #### 1.2.3. PSF Extractor
 
