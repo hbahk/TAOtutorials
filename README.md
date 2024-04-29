@@ -1,4 +1,4 @@
-# TAO Tutorials
+# SNU TAO Tutorials
 
 Tutorials for Techniques in Astronomical Observation, Seoul National University.
 

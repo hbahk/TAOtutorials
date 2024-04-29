@@ -1,0 +1,18 @@
+html[data-theme="light"] {
+  --sbt-color-announcement: rgb(97, 97, 97);
+  --pst-color-primary: #176de8;
+  --pst-color-secondary: #1f4dab !important;
+}
+
+html[data-theme="dark"] {
+  --pst-color-primary: #528fe4;
+  --pst-color-secondary: #2b71fd !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.skip-link {
+    background-color: #ffff !important;
+}
