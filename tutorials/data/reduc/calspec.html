@@ -1,0 +1,659 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>&lt;no title&gt; &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/data/reduc/calspec';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Optical%20Spectroscopy.html">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/tutorials/data/reduc/calspec.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1><no title></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+
+<span class="n">calspec</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;calspec.dat&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii.no_header&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ra</span> <span class="o">=</span> <span class="n">calspec</span><span class="p">[</span><span class="s1">&#39;col2&#39;</span><span class="p">]</span>
+<span class="n">dec</span> <span class="o">=</span> <span class="n">calspec</span><span class="p">[</span><span class="s1">&#39;col3&#39;</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">calspec</span><span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">]</span>
+
+<span class="n">c</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">ra</span><span class="o">=</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="n">dec</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">hourangle</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">deg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_calspec</span> <span class="o">=</span> <span class="n">Table</span><span class="p">([</span><span class="n">c</span><span class="o">.</span><span class="n">ra</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="n">names</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;RA&#39;</span><span class="p">,</span> <span class="s1">&#39;Dec&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_calspec</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;calspec.csv&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calspec_mag</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;calspec_mag.dat&#39;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="n">calspec_mag</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">)</span>
+<span class="n">calspec_mag</span> <span class="o">=</span> <span class="n">calspec_mag</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calspec_mag</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calspec_mag</span><span class="p">[</span><span class="s1">&#39;V&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">calspec_mag</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s1">&#39;V&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">calspec_mag</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><i>Table length=118</i>
+<table id="table5656835712-647302" class="table-striped table-bordered table-condensed">
+<thead><tr><th>idx</th><th>Star name</th><th>Sp. T.</th><th>V</th><th>B-V</th><th>Name</th><th>Model</th><th>STIS**</th><th>Var (%)</th></tr></thead>
+<tr><td>0</td><td>SIRIUS</td><td>A1V</td><td>-1.46</td><td>0.00</td><td>sirius</td><td>_mod_005</td><td>_stis_005*</td><td>--</td></tr>
+<tr><td>1</td><td>ALPHA LYR</td><td>A0V</td><td>0.031</td><td>0.00</td><td>alpha_lyr</td><td>_mod_004</td><td>_stis_011*</td><td>--</td></tr>
+<tr><td>2</td><td>ETA UMA</td><td>B3V</td><td>1.85</td><td>-0.10</td><td>etauma</td><td>_mod_004</td><td>_stis_007</td><td>--</td></tr>
+<tr><td>3</td><td>109 VIR</td><td>A0III</td><td>3.73</td><td>-0.01</td><td>109vir</td><td>_mod_003</td><td>_stis_003</td><td>--</td></tr>
+<tr><td>4</td><td>SIGMA ORI</td><td>O9.5V+B0.2V</td><td>3.79</td><td>-0.21</td><td>sigori</td><td>--</td><td>_stis_001</td><td>--</td></tr>
+<tr><td>5</td><td>KSI2 CETI</td><td>B9III</td><td>4.28</td><td>-0.04</td><td>ksi2ceti</td><td>_mod_004</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>6</td><td>LAMBDA LEP</td><td>B0.5V</td><td>4.29</td><td>-0.25</td><td>lamlep</td><td>_mod_005</td><td>_stis_007</td><td>0.35</td></tr>
+<tr><td>7</td><td>DELTA UMI</td><td>A1V</td><td>4.34</td><td>0.03</td><td>delumi</td><td>_mod_004</td><td>_stis_004</td><td>0.04</td></tr>
+<tr><td>8</td><td>10 LAC</td><td>O9V</td><td>4.88</td><td>-0.21</td><td>10lac</td><td>_mod_005</td><td>_stis_007</td><td>&lt;0.23</td></tr>
+<tr><td>9</td><td>MU COL</td><td>O9.5V</td><td>5.18</td><td>-0.28</td><td>mucol</td><td>_mod_005</td><td>_stis_007</td><td>0.12</td></tr>
+<tr><td>10</td><td>18 SCO</td><td>G2V</td><td>5.5</td><td>0.65</td><td>18sco</td><td>_mod_005</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>11</td><td>ETA1 DOR</td><td>A0V</td><td>5.69</td><td>-0.01</td><td>eta1dor</td><td>_mod_004</td><td>_stis_004</td><td>0.18</td></tr>
+<tr><td>12</td><td>HD172728</td><td>A0V</td><td>5.74</td><td>-0.05</td><td>hd172728 ._mod_002</td><td>_stis_002</td><td>--</td><td>--</td></tr>
+<tr><td>13</td><td>HD128998</td><td>A1V</td><td>5.83</td><td>0.00</td><td>hd128998</td><td>_mod_003</td><td>_stis_003</td><td>0.05</td></tr>
+<tr><td>14</td><td>HD14943</td><td>A5V</td><td>5.91</td><td>0.19</td><td>hd14943</td><td>_mod_003</td><td>_stis_005</td><td>0.05</td></tr>
+<tr><td>15</td><td>16 CYG B</td><td>G3V</td><td>6.2</td><td>0.66</td><td>16cygb</td><td>_mod_004</td><td>_stis_004</td><td>&lt;0.21</td></tr>
+<tr><td>16</td><td>HD158485</td><td>A4V</td><td>6.5</td><td>0.13</td><td>hd158485</td><td>_mod_003</td><td>_stis_005</td><td>0.42</td></tr>
+<tr><td>17</td><td>HD159222</td><td>G1V</td><td>6.56</td><td>0.65</td><td>hd159222</td><td>_mod_006</td><td>_stis_008</td><td>--</td></tr>
+<tr><td>18</td><td>HD607537</td><td>B3IV</td><td>6.68</td><td>-0.09</td><td>hd60753</td><td>--</td><td>_stis_004</td><td>--</td></tr>
+<tr><td>19</td><td>HD205905</td><td>G2V</td><td>6.74</td><td>0.62</td><td>hd205905</td><td>_mod_007</td><td>_stis_009</td><td>0.26</td></tr>
+<tr><td>20</td><td>HD163466</td><td>A6V</td><td>6.85</td><td>0.19</td><td>hd163466</td><td>_mod_003</td><td>_stis_005</td><td>0.17</td></tr>
+<tr><td>21</td><td>HD1654595</td><td>A4V</td><td>6.86</td><td>0.13</td><td>hd165459</td><td>_mod_004</td><td>_stisnic_006</td><td>--</td></tr>
+<tr><td>22</td><td>HD93521</td><td>O9Vp</td><td>6.99</td><td>-0.27</td><td>hd93521</td><td>_mod_003</td><td>_stis_007*</td><td>--</td></tr>
+<tr><td>23</td><td>HD106252</td><td>G0</td><td>7.36</td><td>0.64</td><td>hd106252</td><td>_mod_006</td><td>_stis_008</td><td>--</td></tr>
+<tr><td>24</td><td>HD200775</td><td>B2Ve</td><td>7.43</td><td>0.33</td><td>hd200775</td><td>._stis_001</td><td>--</td><td>--</td></tr>
+<tr><td>25</td><td>HD2811</td><td>A3V</td><td>7.5</td><td>0.17</td><td>hd2811</td><td>_mod_004</td><td>_stis_004</td><td>--</td></tr>
+<tr><td>26</td><td>HD2094586</td><td>G0V</td><td>7.65</td><td>0.59</td><td>hd209458</td><td>_mod_003</td><td>_stisnic_008</td><td>--</td></tr>
+<tr><td>27</td><td>HD38949</td><td>G1V</td><td>7.8</td><td>0.57</td><td>hd38949</td><td>_mod_005</td><td>_stis_007</td><td>1.17</td></tr>
+<tr><td>28</td><td>HD37962</td><td>G2V</td><td>7.85</td><td>0.65</td><td>hd37962</td><td>_mod_008</td><td>_stis_010</td><td>&lt;0.09</td></tr>
+<tr><td>29</td><td>HD185975</td><td>G3V</td><td>8.1</td><td>0.68</td><td>hd185975</td><td>_mod_004</td><td>_stis_007</td><td>--</td></tr>
+<tr><td>30</td><td>HD101452</td><td>A2/3</td><td>8.2</td><td>-0.36</td><td>hd101452</td><td>_mod_003</td><td>_stis_003</td><td>&lt;0.09</td></tr>
+<tr><td>31</td><td>HD37725</td><td>A3V</td><td>8.31</td><td>-0.19</td><td>hd37725</td><td>_mod_005</td><td>_stiswfc_004</td><td>0.13</td></tr>
+<tr><td>32</td><td>HD116405</td><td>A0V</td><td>8.34</td><td>-0.07</td><td>hd116405</td><td>_mod_004</td><td>_stis_006</td><td>&lt;0.10</td></tr>
+<tr><td>33</td><td>HD111980</td><td>F7V</td><td>8.38</td><td>0.53</td><td>hd111980</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>34</td><td>HD160617</td><td>F</td><td>8.73</td><td>0.45</td><td>hd160617</td><td>_mod_002</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>35</td><td>HD142331</td><td>G5V</td><td>8.75</td><td>0.64</td><td>hd142331</td><td>_mod_005</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>36</td><td>HD009051</td><td>G7III</td><td>8.92</td><td>0.81</td><td>hd009051</td><td>_mod_004</td><td>_stis_007</td><td>--</td></tr>
+<tr><td>37</td><td>HD167060</td><td>G3V</td><td>8.92</td><td>0.64</td><td>hd167060</td><td>_mod_005</td><td>_stis_005</td><td>&lt;0.09</td></tr>
+<tr><td>38</td><td>HD200654</td><td>G</td><td>9.11</td><td>0.63</td><td>hd200654</td><td>_mod_004</td><td>_stis_007</td><td>--</td></tr>
+<tr><td>39</td><td>HD031128</td><td>F4V</td><td>9.14</td><td>0.41</td><td>hd031128</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>40</td><td>HD115169</td><td>G3V</td><td>9.2</td><td>0.69</td><td>hd115169</td><td>_mod_003</td><td>_stis_003</td><td>&lt;0.11</td></tr>
+<tr><td>41</td><td>BD+21 0607</td><td>F2</td><td>9.22</td><td>0.44</td><td>bd21d0607</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>42</td><td>HD55677</td><td>A4V</td><td>9.41</td><td>0.06</td><td>hd55677</td><td>_mod_004</td><td>_stis_004</td><td>0.24</td></tr>
+<tr><td>43</td><td>HD180609</td><td>A0V</td><td>9.42</td><td>0.15</td><td>hd180609</td><td>_mod_004</td><td>_stis_006</td><td>&lt;0.13</td></tr>
+<tr><td>44</td><td>BD+17 47083</td><td>sdF8</td><td>9.47</td><td>0.44</td><td>bd_17d4708</td><td>--</td><td>_stisnic_007</td><td>--</td></tr>
+<tr><td>45</td><td>BD+75 325</td><td>sdO5</td><td>9.55</td><td>-0.33</td><td>bd_75d325</td><td>--</td><td>_stis_006*</td><td>--</td></tr>
+<tr><td>46</td><td>BD+60 1753</td><td>A1V</td><td>9.65</td><td>0.07</td><td>bd60d1753</td><td>_mod_005</td><td>_stiswfc_004</td><td>&lt;0.17</td></tr>
+<tr><td>47</td><td>HD074000</td><td>sdF6</td><td>9.66</td><td>0.45</td><td>hd074000</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>48</td><td>BD+54 1216</td><td>sdF6</td><td>9.71</td><td>0.48</td><td>bd54d1216</td><td>_mod_002</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>49</td><td>BD+26 2606</td><td>A5</td><td>9.73</td><td>0.39</td><td>bd26d2606</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>50</td><td>BD+02 3375</td><td>A5</td><td>9.93</td><td>0.45</td><td>bd02d3375</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>51</td><td>BD+29 2091</td><td>F5</td><td>10.22</td><td>0.50</td><td>bd29d2091</td><td>_mod_003</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>52</td><td>FEIGE34</td><td>sdO</td><td>11.14</td><td>-0.23</td><td>feige34</td><td>--</td><td>_stis_006*</td><td>--</td></tr>
+<tr><td>53</td><td>BD-11 3759</td><td>M3.5V</td><td>11.32</td><td>1.60</td><td>bd11d3759</td><td>--</td><td>_stis_003</td><td>--</td></tr>
+<tr><td>54</td><td>1802271</td><td>A2V</td><td>11.53</td><td>0.02</td><td>1802271</td><td>_mod_005</td><td>_stiswfcnic_004</td><td>&lt;0.82</td></tr>
+<tr><td>55</td><td>HZ44</td><td>sdB</td><td>11.65</td><td>-0.23</td><td>hz44</td><td>--</td><td>_stis_006*</td><td>--</td></tr>
+<tr><td>56</td><td>1808347</td><td>A3V</td><td>11.69</td><td>0.49</td><td>1808347</td><td>_mod_005</td><td>_stiswfc_004</td><td>1.65</td></tr>
+<tr><td>57</td><td>G191B2B</td><td>DA.8</td><td>11.781</td><td>-0.33</td><td>g191b2b</td><td>_mod_012</td><td>_stiswfcnic_004*</td><td>&lt;0.74</td></tr>
+<tr><td>58</td><td>FEIGE110</td><td>sdO</td><td>11.83</td><td>-0.30</td><td>feige110</td><td>--</td><td>_stisnic_008*</td><td>--</td></tr>
+<tr><td>59</td><td>AGK+81 266</td><td>sdO</td><td>11.95</td><td>-0.36</td><td>agk_81d266</td><td>--</td><td>_stisnic_007*</td><td>--</td></tr>
+<tr><td>60</td><td>1757132</td><td>A3V</td><td>12.01</td><td>-0.10</td><td>1757132</td><td>_mod_005</td><td>_stiswfc_004</td><td>&lt;0.37</td></tr>
+<tr><td>61</td><td>1812095</td><td>A3V</td><td>12.01</td><td>-0.07</td><td>1812095</td><td>_mod_004</td><td>_stisnic_006</td><td>1.57</td></tr>
+<tr><td>62</td><td>P041C9</td><td>GOV</td><td>12.16</td><td>0.68</td><td>p041c</td><td>_mod_004</td><td>_stisnic_009*</td><td>&lt;0.44</td></tr>
+<tr><td>63</td><td>1805292</td><td>A4V</td><td>12.28</td><td>0.14</td><td>1805292</td><td>_mod_004</td><td>_stisnic_006</td><td>&lt;0.49</td></tr>
+<tr><td>64</td><td>GJ754.1A</td><td>DBQA5</td><td>12.29</td><td>0.05</td><td>gj7541a</td><td>_mod_001</td><td>_stis_004</td><td>--</td></tr>
+<tr><td>65</td><td>WD1327-083</td><td>DA3.5</td><td>12.34</td><td>0.06</td><td>wd1327_083</td><td>--</td><td>_stiswfc_004</td><td>--</td></tr>
+<tr><td>66</td><td>WD0148+467</td><td>DA3.6</td><td>12.46</td><td>0.06</td><td>wd0148_467</td><td>--</td><td>_stiswfc_001</td><td>--</td></tr>
+<tr><td>67</td><td>17403462</td><td>A6V</td><td>12.48</td><td>0.20</td><td>1740346</td><td>--</td><td>_stisnic_005</td><td>--</td></tr>
+<tr><td>68</td><td>1732526</td><td>A4V</td><td>12.53</td><td>0.12</td><td>1732526</td><td>_mod_005</td><td>_stisnic_007</td><td>1.40</td></tr>
+<tr><td>69</td><td>GRW+70 5824</td><td>DA2.4</td><td>12.6</td><td>-0.06</td><td>grw_70d5824</td><td>_mod_001</td><td>_stiswfcnic_003</td><td>--</td></tr>
+<tr><td>70</td><td>WD2149+021</td><td>DA2.8</td><td>12.74</td><td>-0.01</td><td>wd2149_021</td><td>--</td><td>_stiswfc_001</td><td>--</td></tr>
+<tr><td>71</td><td>WD0227+050</td><td>DA2.5</td><td>12.8</td><td>-0.05</td><td>wd0227_050</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>72</td><td>WD1544-377</td><td>DA4.8</td><td>12.8</td><td>0.30</td><td>wd1544_377</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>73</td><td>WD2117+539</td><td>DA3.4</td><td>12.81</td><td>--</td><td>wd2117_539</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>74</td><td>WD2126+734</td><td>DA3.1</td><td>12.83</td><td>-0.03</td><td>wd2126_734</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>75</td><td>WD1202-232</td><td>DA5.7</td><td>12.9</td><td>0.14</td><td>wd1202_232</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>76</td><td>HZ438</td><td>DA</td><td>12.91</td><td>-0.31</td><td>hz43</td><td>--</td><td>_stis_005*</td><td>--</td></tr>
+<tr><td>77</td><td>P330E</td><td>G2V</td><td>12.92</td><td>0.64</td><td>p330e</td><td>_mod_007</td><td>_stiswfcnic_006*</td><td>&lt;0.76</td></tr>
+<tr><td>78</td><td>WD2341+322</td><td>DA3.8</td><td>12.94</td><td>0.12</td><td>wd2341_322</td><td>--</td><td>_stiswfc_004</td><td>--</td></tr>
+<tr><td>79</td><td>WD1919+145</td><td>DA3.3</td><td>13.01</td><td>0.06</td><td>wd1919_145</td><td>--</td><td>_stiswfc_001</td><td>--</td></tr>
+<tr><td>80</td><td>GD71</td><td>DA1.5</td><td>13.032</td><td>-0.25</td><td>gd71</td><td>_mod_012</td><td>_stiswfcnic_004</td><td>&lt;1.90</td></tr>
+<tr><td>81</td><td>WD1105-048</td><td>DA3</td><td>13.06</td><td>0.04</td><td>wd1105_048</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>82</td><td>KF08T3</td><td>K0.5III</td><td>13.18</td><td>1.21</td><td>kf08t3</td><td>_mod_005</td><td>_stisnic_004</td><td>--</td></tr>
+<tr><td>83</td><td>WD1713+695</td><td>DA3.2</td><td>13.2</td><td>~0.2</td><td>wd1713_695</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>84</td><td>WD1911+536</td><td>DA</td><td>13.26</td><td>~-0.1</td><td>wd1911_536</td><td>--</td><td>_stiswfc_001</td><td>--</td></tr>
+<tr><td>85</td><td>WD2039-682</td><td>DA3.0</td><td>13.3</td><td>0.05</td><td>wd2039_682</td><td>--</td><td>_stiswfc_001</td><td>--</td></tr>
+<tr><td>86</td><td>GD153</td><td>DA1.2</td><td>13.349</td><td>-0.29</td><td>gd153</td><td>_mod_012</td><td>_stiswfcnic_004</td><td>&lt;2.44</td></tr>
+<tr><td>87</td><td>WD0809+177</td><td>DA</td><td>13.46</td><td>--</td><td>wd0809_177</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>88</td><td>P177D</td><td>G0V</td><td>13.49</td><td>0.60</td><td>p177d</td><td>_mod_005</td><td>_stisnic_010*</td><td>&lt;1.00</td></tr>
+<tr><td>89</td><td>1743045</td><td>A8III</td><td>13.52</td><td>0.28</td><td>1743045</td><td>_mod_005</td><td>_stisnic_007</td><td>&lt;1.32</td></tr>
+<tr><td>90</td><td>WD1105-340</td><td>DA3.6</td><td>13.63</td><td>0.16</td><td>wd1105_340</td><td>--</td><td>_stiswfc_002</td><td>--</td></tr>
+<tr><td>91</td><td>KF06T2</td><td>K1.5III</td><td>13.8</td><td>1.30</td><td>kf06t2</td><td>_mod_006</td><td>_stiswfcnic_005</td><td>--</td></tr>
+<tr><td>92</td><td>WD0308-565</td><td>sdB</td><td>14.07</td><td>-0.11</td><td>wd0308_565</td><td>_mod_007</td><td>_stis_009</td><td>--</td></tr>
+<tr><td>93</td><td>HZ43B8</td><td>M3Ve</td><td>14.3</td><td>...</td><td>hz43b</td><td>--</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>94</td><td>HZ4</td><td>DA3.4</td><td>14.51</td><td>0.09</td><td>hz4</td><td>--</td><td>_stis_008</td><td>--</td></tr>
+<tr><td>95</td><td>LDS749B</td><td>DBQ4</td><td>14.674</td><td>-0.04</td><td>lds749b</td><td>_mod_007</td><td>_stisnic_008</td><td>--</td></tr>
+<tr><td>96</td><td>WD1057+719</td><td>DA1.2</td><td>14.68</td><td>...</td><td>wd1057_719</td><td>_mod_009</td><td>_stisnic_011</td><td>&lt;6.05</td></tr>
+<tr><td>97</td><td>HZ21</td><td>DO2</td><td>14.69</td><td>-0.33</td><td>hz21</td><td>--</td><td>_stis_007</td><td>--</td></tr>
+<tr><td>98</td><td>NGC6681-11</td><td>...</td><td>15.65</td><td>0.22</td><td>NGC6681_11</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>99</td><td>NGC6681-1</td><td>...</td><td>15.77</td><td>0.18</td><td>NGC6681_1</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>100</td><td>NGC6681-9</td><td>...</td><td>15.8</td><td>0.18</td><td>NGC6681_9</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>101</td><td>NGC6681-7</td><td>...</td><td>16.05</td><td>1.24</td><td>NGC6681_7</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>102</td><td>WD1657+343</td><td>DA.9</td><td>16.1</td><td>...</td><td>wd1657_343</td><td>_mod_009</td><td>_stiswfcnic_006</td><td>&lt;37.88</td></tr>
+<tr><td>103</td><td>NGC6681-4</td><td>...</td><td>16.14</td><td>0.04</td><td>NGC6681_4</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>104</td><td>NGC6681-6</td><td>...</td><td>16.2</td><td>0.04</td><td>NGC6681_6</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>105</td><td>NGC6681-2</td><td>...</td><td>16.2</td><td>0.05</td><td>NGC6681_2</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>106</td><td>SNAP-2</td><td>G0-5</td><td>16.23</td><td>0.86</td><td>snap2</td><td>_mod_006</td><td>_stiswfcnic_005</td><td>--</td></tr>
+<tr><td>107</td><td>NGC6681-5</td><td>...</td><td>16.37</td><td>0.03</td><td>NGC6681_5</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>108</td><td>SDSSJ151421</td><td>DA1.8</td><td>16.5</td><td>0.89</td><td>sdss151421</td><td>_mod_004</td><td>_stis_005</td><td>--</td></tr>
+<tr><td>109</td><td>C26202</td><td>F8IV</td><td>16.64</td><td>0.26</td><td>c26202</td><td>_mod_006</td><td>_stiswfcnic_005</td><td>--</td></tr>
+<tr><td>110</td><td>SF1615+001A</td><td>G</td><td>16.75</td><td>0.49</td><td>sf1615_001a</td><td>_mod_005</td><td>_stisnic_010</td><td>--</td></tr>
+<tr><td>111</td><td>HS2027+0651</td><td>DO</td><td>16.9</td><td>...</td><td>hs2027</td><td>--</td><td>_stis_006</td><td>--</td></tr>
+<tr><td>112</td><td>NGC6681-3</td><td>...</td><td>16.9</td><td>0.03</td><td>NGC6681_3</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>113</td><td>VB8</td><td>M7V</td><td>16.92</td><td>1.8</td><td>vb8</td><td>--</td><td>_stiswfcnic_004</td><td>--</td></tr>
+<tr><td>114</td><td>NGC6681-8</td><td>...</td><td>17.01</td><td>-0.01</td><td>NGC6681_8</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>115</td><td>NGC6681-12</td><td>...</td><td>17.62</td><td>-0.08</td><td>NGC6681_12</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+<tr><td>116</td><td>NGC2506-G31</td><td>G1V</td><td>17.9</td><td>0.7</td><td>ngc2506g31</td><td>_mod_003</td><td>_stis_003</td><td>--</td></tr>
+<tr><td>117</td><td>NGC6681-10</td><td>...</td><td>19.14</td><td>-0.14</td><td>NGC6681_10</td><td>--</td><td>_stis_002</td><td>--</td></tr>
+</table><style>table.dataTable {clear: both; width: auto !important; margin: 0 !important;}
+.dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate{
+display: inline-block; margin-right: 1em; }
+.paginate_button { margin-right: 5px; }
+</style>
+<script>
+
+var astropy_sort_num = function(a, b) {
+    var a_num = parseFloat(a);
+    var b_num = parseFloat(b);
+
+    if (isNaN(a_num) && isNaN(b_num))
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    else if (!isNaN(a_num) && !isNaN(b_num))
+        return ((a_num < b_num) ? -1 : ((a_num > b_num) ? 1 : 0));
+    else
+        return isNaN(a_num) ? -1 : 1;
+}
+
+require.config({paths: {
+    datatables: 'https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min'
+}});
+require(["datatables"], function(){
+    console.log("$('#table5656835712-647302').dataTable()");
+    
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "optionalnum-asc": astropy_sort_num,
+    "optionalnum-desc": function (a,b) { return -astropy_sort_num(a, b); }
+});
+
+    $('#table5656835712-647302').dataTable({
+        order: [],
+        pageLength: 50,
+        lengthMenu: [[10, 25, 50, 100, 500, 1000, -1], [10, 25, 50, 100, 500, 1000, 'All']],
+        pagingType: "full_numbers",
+        columnDefs: [{targets: [0, 3], type: "optionalnum"}]
+    });
+});
+</script>
+</div></div>
+</div>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

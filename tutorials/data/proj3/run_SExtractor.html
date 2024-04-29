@@ -1,0 +1,2689 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>SExtractor Photometry of MACS 0717 &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../../../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/data/proj3/run_SExtractor';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Surface Photometry Using GALFIT" href="../../GALFIT-Surface_Photometry.html" />
+    <link rel="prev" title="PSF photometry of NGC 2210" href="../../PSF_photometry.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Optical%20Spectroscopy.html">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/tutorials/data/proj3/run_SExtractor.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>SExtractor Photometry of MACS 0717</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-source-extractor-sextractor">- What is Source Extractor (SExtractor)?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-sextractor">- Running SExtractor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-parameters">- Input parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-parameters">- Output parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-necessary-packages">0. Importing Necessary Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-input-files">1. Writing Input Files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-list">1) Image list</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-file">2) Configuration file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-parameter-file">3) Output parameter file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-input-parameters">4) Determining input parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-script-for-sextractor-photometry">5) Shell script for SExtractor photometry</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-dual-mode-photometry">- Importance of Dual-mode photometry</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-sextractor-in-dual-mode">- Running SExtractor in Dual mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2. Running SExtractor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-data">3. Reading the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-figures">4. Plotting the Figures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-image-apertures">0) Check image - APERTURES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#magnitude-magnitude-error-diagram">1) Magnitude - magnitude error diagram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#magnitude-stellarity-class-star-digram">2) Magnitude - stellarity (<code class="docutils literal notranslate"><span class="pre">CLASS_STAR</span></code>) digram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmds-of-galaxies-just-for-example">3) CMDs of galaxies (just for example!)</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="sextractor-photometry-of-macs-0717">
+<h1>SExtractor Photometry of MACS 0717<a class="headerlink" href="#sextractor-photometry-of-macs-0717" title="Link to this heading">#</a></h1>
+<p><strong>This TA class note is based on Jeong Hwan Lee’s <a class="reference external" href="https://github.com/joungh93/TAO_2022A/blob/main/run_SExtractor.ipynb">TAO-2022 TA class note</a>.</strong></p>
+<ul class="simple">
+<li><p>Purpose of this exercise: Let’s find sources in the images and plot a color-magnitude diagram</p>
+<ul>
+<li><p>Example galaxy cluster: <span class="math notranslate nohighlight">\(\color{blue}{\text{MACS J0717.5+3745}}\)</span> (z=0.545)</p></li>
+<li><p>Filters: HST/ACS F606W(V) and F814W(I)</p></li>
+<li><p>There are two FITS images: M0717_F606W.fits, M0717_F814W.fits
+</br></br></p></li>
+</ul>
+</li>
+<li><p>Process: Extract sources → classify stars &amp; galaxies → draw color-magnitude diagrams of the galaxies</p></li>
+</ul>
+<section id="what-is-source-extractor-sextractor">
+<h2>- What is Source Extractor (SExtractor)?<a class="headerlink" href="#what-is-source-extractor-sextractor" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A program for automated detection and photometry of sources in FITS image files (Bertin &amp; Arnouts 1996)</p>
+<ul>
+<li><p>webpage: <a class="reference external" href="https://www.astromatic.net/software/sextractor">https://www.astromatic.net/software/sextractor</a></p></li>
+</ul>
+</li>
+<li><p>Specialized for reduction of large-scale galaxy survey data but can perform reasonably well on moderately crowded star fields.</p></li>
+<li><p>Manuals:</p>
+<ul>
+<li><p>User’s Manual ver.2.13 - E. Bertin (difficult to follow for beginners)</p></li>
+<li><p>SExtractor for Dummies - B. Holwerda (a friendlier version)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="running-sextractor">
+<h2>- Running SExtractor<a class="headerlink" href="#running-sextractor" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Input files: FITS image, configuration file, parameter file</p></li>
+<li><p>Output files: source catalog, FITS check images</p></li>
+<li><p>running command: sextractor <span class="math notranslate nohighlight">\(\color{blue}{\text{[FITS image]}}\)</span> -c <span class="math notranslate nohighlight">\(\color{red}{\text{[configuration file]}}\)</span> -[output parameter1][value1] -[output parameter2][value2] …</p>
+<ul>
+<li><p>Ex) sextractor <span class="math notranslate nohighlight">\(\color{blue}{\text{M0717\_F814W.fits}}\)</span> -c <span class="math notranslate nohighlight">\(\color{red}{\text{config.txt}}\)</span> -CATALOG_NAME 814.cat (…)</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="input-parameters">
+<h2>- Input parameters<a class="headerlink" href="#input-parameters" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\color{blue}{\textbf{FITS image:}}\)</span> single extension or multi-extension</br></br></p></li>
+<li><p><span class="math notranslate nohighlight">\(\color{red}{\textbf{Configuration file:}}\)</span> list of parameters and their values given by the user</p>
+<ul>
+<li><p>example is given by ‘/usr/share/sextractor/default.sex’ (it is a default configuration file)</p></li>
+<li><p>Catalog:</p>
+<ul>
+<li><p>CATALOG_NAME: name of the output catalog (*.cat)</p></li>
+<li><p>PARAMETERS_NAME: name of the file containing catalog contents (*.param)</p></li>
+</ul>
+</li>
+<li><p>Extraction:</p>
+<ul>
+<li><p>DETECT_MINAREA: min. # of pixels above threshold → 5(default)</p></li>
+<li><p>DETECT_THRESH: 1.5<span class="math notranslate nohighlight">\(\sigma\)</span> (default)</p></li>
+<li><p>ANALYSIS_THRESH: 1.5<span class="math notranslate nohighlight">\(\sigma\)</span> (usually same as DETECT_THRESH)</p></li>
+</ul>
+</li>
+<li><p>Photometry:</p>
+<ul>
+<li><p>SATUR_LEVEL: pixel level above which it is considered saturated</p></li>
+<li><p>MAG_ZEROPOINT: magnitude zero point</p></li>
+<li><p>GAIN: effective gain [e-/ADU] (only affects the magnitude error)</p></li>
+<li><p>PIXEL_SCALE: [arcsec/pixel]</p></li>
+</ul>
+</li>
+<li><p>Star/Galaxy Separation:</p>
+<ul>
+<li><p>SEEING_FWHM: FWHM of stars in arcsec (use DAOPHOT/imexam to estimate)</p></li>
+</ul>
+</li>
+<li><p>Background:</p>
+<ul>
+<li><p>BACK_SIZE: set size of background mesh for background estimation [pixels]</p></li>
+</ul>
+</li>
+<li><p>Check Image:</p>
+<ul>
+<li><p>CHECKIMAGE_TYPE: types of check images to output (recommended: APERTURES)</p></li>
+<li><p>CHECKIMAGE_NAME: names of check images</br></br></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{Parameter file:}\)</span> list of parameters to extract to output catalog</p>
+<ul>
+<li><p>check ‘/usr/share/sextractor/default.param’ for explanations of each parameter (total 400 parameters)</p></li>
+<li><p>one column consisting of the parameter names</br>
+X_IMAGE</br>
+Y_IMAGE</br>
+NUMBER</br>
+MAG_AUTO</br>
+MAGERR_AUTO</br>
+…</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell tag_scroll-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read default configuration file: &#39;/usr/share/sextractor/default.sex&#39;</span>
+<span class="n">SEXDIR</span> <span class="o">=</span> <span class="s1">&#39;/opt/homebrew/opt/sextractor/share/sextractor/&#39;</span> <span class="c1"># put the path to your sextractor directory here</span>
+
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">SEXDIR</span><span class="o">+</span><span class="s1">&#39;default.sex&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># Default configuration file for SExtractor 2.12.4
+# EB 2010-10-10
+#
+
+#-------------------------------- Catalog ------------------------------------
+
+CATALOG_NAME     test.cat       # name of the output catalog
+CATALOG_TYPE     ASCII_HEAD     # NONE,ASCII,ASCII_HEAD, ASCII_SKYCAT,
+# ASCII_VOTABLE, FITS_1.0 or FITS_LDAC
+PARAMETERS_NAME  default.param  # name of the file containing catalog contents
+
+#------------------------------- Extraction ----------------------------------
+
+DETECT_TYPE      CCD            # CCD (linear) or PHOTO (with gamma correction)
+DETECT_MINAREA   3              # min. # of pixels above threshold
+
+DETECT_THRESH    1.5            # &lt;sigmas&gt; or &lt;threshold&gt;,&lt;ZP&gt; in mag.arcsec-2
+ANALYSIS_THRESH  1.5            # &lt;sigmas&gt; or &lt;threshold&gt;,&lt;ZP&gt; in mag.arcsec-2
+
+FILTER           Y              # apply filter for detection (Y or N)?
+FILTER_NAME      default.conv   # name of the file containing the filter
+
+DEBLEND_NTHRESH  32             # Number of deblending sub-thresholds
+DEBLEND_MINCONT  0.005          # Minimum contrast parameter for deblending
+
+CLEAN            Y              # Clean spurious detections? (Y or N)?
+CLEAN_PARAM      1.0            # Cleaning efficiency
+
+#-------------------------------- WEIGHTing ----------------------------------
+
+WEIGHT_TYPE      NONE           # type of WEIGHTing: NONE, BACKGROUND,
+# MAP_RMS, MAP_VAR or MAP_WEIGHT
+WEIGHT_IMAGE     weight.fits    # weight-map filename
+
+#-------------------------------- FLAGging -----------------------------------
+
+FLAG_IMAGE       flag.fits      # filename for an input FLAG-image
+FLAG_TYPE        OR             # flag pixel combination: OR, AND, MIN, MAX
+# or MOST
+
+#------------------------------ Photometry -----------------------------------
+
+PHOT_APERTURES   5              # MAG_APER aperture diameter(s) in pixels
+PHOT_AUTOPARAMS  2.5, 3.5       # MAG_AUTO parameters: &lt;Kron_fact&gt;,&lt;min_radius&gt;
+PHOT_PETROPARAMS 2.0, 3.5       # MAG_PETRO parameters: &lt;Petrosian_fact&gt;,
+# &lt;min_radius&gt;
+PHOT_AUTOAPERS   0.0,0.0        # &lt;estimation&gt;,&lt;measurement&gt; minimum apertures
+# for MAG_AUTO and MAG_PETRO
+
+SATUR_LEVEL      50000.0        # level (in ADUs) at which arises saturation
+SATUR_KEY        SATURATE       # keyword for saturation level (in ADUs)
+
+MAG_ZEROPOINT    0.0            # magnitude zero-point
+MAG_GAMMA        4.0            # gamma of emulsion (for photographic scans)
+GAIN             0.0            # detector gain in e-/ADU
+GAIN_KEY         GAIN           # keyword for detector gain in e-/ADU
+PIXEL_SCALE      1.0            # size of pixel in arcsec (0=use FITS WCS info)
+
+#------------------------- Star/Galaxy Separation ----------------------------
+
+SEEING_FWHM      1.2            # stellar FWHM in arcsec
+STARNNW_NAME     default.nnw    # Neural-Network_Weight table filename
+
+#------------------------------ Background -----------------------------------
+
+BACK_TYPE        AUTO           # AUTO or MANUAL
+BACK_VALUE       0.0            # Default background value in MANUAL mode
+BACK_SIZE        64             # Background mesh: &lt;size&gt; or &lt;width&gt;,&lt;height&gt;
+BACK_FILTERSIZE  3              # Background filter: &lt;size&gt; or &lt;width&gt;,&lt;height&gt;
+
+#------------------------------ Check Image ----------------------------------
+
+CHECKIMAGE_TYPE  NONE           # can be NONE, BACKGROUND, BACKGROUND_RMS,
+# MINIBACKGROUND, MINIBACK_RMS, -BACKGROUND,
+# FILTERED, OBJECTS, -OBJECTS, SEGMENTATION,
+# or APERTURES
+CHECKIMAGE_NAME  check.fits     # Filename for the check-image
+
+#--------------------- Memory (change with caution!) -------------------------
+
+MEMORY_OBJSTACK  3000           # number of objects in stack
+MEMORY_PIXSTACK  300000         # number of pixels in stack
+MEMORY_BUFSIZE   1024           # number of lines in buffer
+
+#------------------------------- ASSOCiation ---------------------------------
+
+ASSOC_NAME       sky.list       # name of the ASCII file to ASSOCiate
+ASSOC_DATA       2,3,4          # columns of the data to replicate (0=all)
+ASSOC_PARAMS     2,3,4          # columns of xpos,ypos[,mag]
+ASSOC_RADIUS     2.0            # cross-matching radius (pixels)
+ASSOC_TYPE       NEAREST        # ASSOCiation method: FIRST, NEAREST, MEAN,
+# MAG_MEAN, SUM, MAG_SUM, MIN or MAX
+ASSOCSELEC_TYPE  MATCHED        # ASSOC selection type: ALL, MATCHED or -MATCHED
+
+#----------------------------- Miscellaneous ---------------------------------
+
+VERBOSE_TYPE     NORMAL         # can be QUIET, NORMAL or FULL
+HEADER_SUFFIX    .head          # Filename extension for additional headers
+WRITE_XML        N              # Write XML file (Y/N)?
+XML_NAME         sex.xml        # Filename for XML output
+XSL_URL          file:///usr/local/share/sextractor/sextractor.xsl
+# Filename for XSL style-sheet
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_scroll-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># read parameter list file: &#39;/usr/share/sextractor/default.param&#39;</span>
+<span class="n">SEXDIR</span> <span class="o">=</span> <span class="s1">&#39;/opt/homebrew/opt/sextractor/share/sextractor/&#39;</span> <span class="c1"># put the path to your sextractor directory here</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">SEXDIR</span><span class="o">+</span><span class="s1">&#39;default.param&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>#NUMBER                   Running object number
+#EXT_NUMBER               FITS extension number
+#FLUX_ISO                 Isophotal flux                                            [count]
+#FLUXERR_ISO              RMS error for isophotal flux                              [count]
+#MAG_ISO                  Isophotal magnitude                                       [mag]
+#MAGERR_ISO               RMS error for isophotal magnitude                         [mag]
+#FLUX_ISOCOR              Corrected isophotal flux                                  [count]
+#FLUXERR_ISOCOR           RMS error for corrected isophotal flux                    [count]
+#MAG_ISOCOR               Corrected isophotal magnitude                             [mag]
+#MAGERR_ISOCOR            RMS error for corrected isophotal magnitude               [mag]
+#FLUX_APER                Flux vector within fixed circular aperture(s)             [count]
+#FLUXERR_APER             RMS error vector for aperture flux(es)                    [count]
+#MAG_APER                 Fixed aperture magnitude vector                           [mag]
+#MAGERR_APER              RMS error vector for fixed aperture mag.                  [mag]
+#FLUX_AUTO                Flux within a Kron-like elliptical aperture               [count]
+#FLUXERR_AUTO             RMS error for AUTO flux                                   [count]
+#MAG_AUTO                 Kron-like elliptical aperture magnitude                   [mag]
+#MAGERR_AUTO              RMS error for AUTO magnitude                              [mag]
+#FLUX_PETRO               Flux within a Petrosian-like elliptical aperture          [count]
+#FLUXERR_PETRO            RMS error for PETROsian flux                              [count]
+#MAG_PETRO                Petrosian-like elliptical aperture magnitude              [mag]
+#MAGERR_PETRO             RMS error for PETROsian magnitude                         [mag]
+#FLUX_BEST                Best of FLUX_AUTO and FLUX_ISOCOR                         [count]
+#FLUXERR_BEST             RMS error for BEST flux                                   [count]
+#MAG_BEST                 Best of MAG_AUTO and MAG_ISOCOR                           [mag]
+#MAGERR_BEST              RMS error for MAG_BEST                                    [mag]
+#FLUX_WIN                 Gaussian-weighted flux                                    [count]
+#FLUXERR_WIN              RMS error for WIN flux                                    [count]
+#MAG_WIN                  Gaussian-weighted magnitude                               [mag]
+#MAGERR_WIN               RMS error for MAG_WIN                                     [mag]
+#FLUX_SOMFIT              Flux derived from SOM fit                                 [count]
+#FLUXERR_SOMFIT           RMS error for SOMFIT flux                                 [count]
+#MAG_SOMFIT               Magnitude derived from SOM fit                            [mag]
+#MAGERR_SOMFIT            Magnitude error derived from SOM fit                      [mag]
+#ERROR_SOMFIT             Reduced Chi-square error of the SOM fit
+#VECTOR_SOMFIT            Position vector of the winning SOM node
+#KRON_RADIUS              Kron apertures in units of A or B
+#PETRO_RADIUS             Petrosian apertures in units of A or B
+#BACKGROUND               Background at centroid position                           [count]
+#THRESHOLD                Detection threshold above background                      [count]
+#FLUX_MAX                 Peak flux above background                                [count]
+#ISOAREA_IMAGE            Isophotal area above Analysis threshold                   [pixel**2]
+#ISOAREAF_IMAGE           Isophotal area (filtered) above Detection threshold       [pixel**2]
+#XMIN_IMAGE               Minimum x-coordinate among detected pixels                [pixel]
+#YMIN_IMAGE               Minimum y-coordinate among detected pixels                [pixel]
+#XMAX_IMAGE               Maximum x-coordinate among detected pixels                [pixel]
+#YMAX_IMAGE               Maximum y-coordinate among detected pixels                [pixel]
+#XPEAK_IMAGE              x-coordinate of the brightest pixel                       [pixel]
+#YPEAK_IMAGE              y-coordinate of the brightest pixel                       [pixel]
+#XPEAK_FOCAL              Focal-plane x coordinate of the brightest pixel
+#YPEAK_FOCAL              Focal-plane y coordinate of the brightest pixel
+#XPEAK_WORLD              World-x coordinate of the brightest pixel                 [deg]
+#YPEAK_WORLD              World-y coordinate of the brightest pixel                 [deg]
+#ALPHAPEAK_SKY            Right ascension of brightest pix (native)                 [deg]
+#DELTAPEAK_SKY            Declination of brightest pix (native)                     [deg]
+#ALPHAPEAK_J2000          Right ascension of brightest pix (J2000)                  [deg]
+#DELTAPEAK_J2000          Declination of brightest pix (J2000)                      [deg]
+#ALPHAPEAK_B1950          Right ascension of brightest pix (B1950)                  [deg]
+#DELTAPEAK_B1950          Declination of brightest pix (B1950)                      [deg]
+#X_IMAGE                  Object position along x                                   [pixel]
+#Y_IMAGE                  Object position along y                                   [pixel]
+#X_IMAGE_DBL              Object position along x (double precision)                [pixel]
+#Y_IMAGE_DBL              Object position along y (double precision)                [pixel]
+#X_FOCAL                  Barycenter position along focal-plane x axis
+#Y_FOCAL                  Barycenter position along focal-plane y axis
+#X_WORLD                  Barycenter position along world x axis                    [deg]
+#Y_WORLD                  Barycenter position along world y axis                    [deg]
+#X_MAMA                   Barycenter position along MAMA x axis                     [m**(-6)]
+#Y_MAMA                   Barycenter position along MAMA y axis                     [m**(-6)]
+#ALPHA_SKY                Right ascension of barycenter (native)                    [deg]
+#DELTA_SKY                Declination of barycenter (native)                        [deg]
+#ALPHA_J2000              Right ascension of barycenter (J2000)                     [deg]
+#DELTA_J2000              Declination of barycenter (J2000)                         [deg]
+#ALPHA_B1950              Right ascension of barycenter (B1950)                     [deg]
+#DELTA_B1950              Declination of barycenter (B1950)                         [deg]
+#X2_IMAGE                 Variance along x                                          [pixel**2]
+#Y2_IMAGE                 Variance along y                                          [pixel**2]
+#XY_IMAGE                 Covariance between x and y                                [pixel**2]
+#X2_WORLD                 Variance along X-WORLD (alpha)                            [deg**2]
+#Y2_WORLD                 Variance along Y-WORLD (delta)                            [deg**2]
+#XY_WORLD                 Covariance between X-WORLD and Y-WORLD                    [deg**2]
+#CXX_IMAGE                Cxx object ellipse parameter                              [pixel**(-2)]
+#CYY_IMAGE                Cyy object ellipse parameter                              [pixel**(-2)]
+#CXY_IMAGE                Cxy object ellipse parameter                              [pixel**(-2)]
+#CXX_WORLD                Cxx object ellipse parameter (WORLD units)                [deg**(-2)]
+#CYY_WORLD                Cyy object ellipse parameter (WORLD units)                [deg**(-2)]
+#CXY_WORLD                Cxy object ellipse parameter (WORLD units)                [deg**(-2)]
+#A_IMAGE                  Profile RMS along major axis                              [pixel]
+#B_IMAGE                  Profile RMS along minor axis                              [pixel]
+#THETA_IMAGE              Position angle (CCW/x)                                    [deg]
+#A_WORLD                  Profile RMS along major axis (world units)                [deg]
+#B_WORLD                  Profile RMS along minor axis (world units)                [deg]
+#THETA_WORLD              Position angle (CCW/world-x)                              [deg]
+#THETA_SKY                Position angle (east of north) (native)                   [deg]
+#THETA_J2000              Position angle (east of north) (J2000)                    [deg]
+#THETA_B1950              Position angle (east of north) (B1950)                    [deg]
+#ERRX2_IMAGE              Variance of position along x                              [pixel**2]
+#ERRY2_IMAGE              Variance of position along y                              [pixel**2]
+#ERRXY_IMAGE              Covariance of position between x and y                    [pixel**2]
+#ERRX2_WORLD              Variance of position along X-WORLD (alpha)                [deg**2]
+#ERRY2_WORLD              Variance of position along Y-WORLD (delta)                [deg**2]
+#ERRXY_WORLD              Covariance of position X-WORLD/Y-WORLD                    [deg**2]
+#ERRCXX_IMAGE             Cxx error ellipse parameter                               [pixel**(-2)]
+#ERRCYY_IMAGE             Cyy error ellipse parameter                               [pixel**(-2)]
+#ERRCXY_IMAGE             Cxy error ellipse parameter                               [pixel**(-2)]
+#ERRCXX_WORLD             Cxx error ellipse parameter (WORLD units)                 [deg**(-2)]
+#ERRCYY_WORLD             Cyy error ellipse parameter (WORLD units)                 [deg**(-2)]
+#ERRCXY_WORLD             Cxy error ellipse parameter (WORLD units)                 [deg**(-2)]
+#ERRA_IMAGE               RMS position error along major axis                       [pixel]
+#ERRB_IMAGE               RMS position error along minor axis                       [pixel]
+#ERRTHETA_IMAGE           Error ellipse position angle (CCW/x)                      [deg]
+#ERRA_WORLD               World RMS position error along major axis                 [deg]
+#ERRB_WORLD               World RMS position error along minor axis                 [deg]
+#ERRTHETA_WORLD           Error ellipse pos. angle (CCW/world-x)                    [deg]
+#ERRTHETA_SKY             Native error ellipse pos. angle (east of north)           [deg]
+#ERRTHETA_J2000           J2000 error ellipse pos. angle (east of north)            [deg]
+#ERRTHETA_B1950           B1950 error ellipse pos. angle (east of north)            [deg]
+#XWIN_IMAGE               Windowed position estimate along x                        [pixel]
+#YWIN_IMAGE               Windowed position estimate along y                        [pixel]
+#XWIN_FOCAL               Windowed position along focal-plane x axis
+#YWIN_FOCAL               Windowed position along focal-plane y axis
+#XWIN_WORLD               Windowed position along world x axis                      [deg]
+#YWIN_WORLD               Windowed position along world y axis                      [deg]
+#ALPHAWIN_SKY             Windowed right ascension  (native)                        [deg]
+#DELTAWIN_SKY             Windowed declination (native)                             [deg]
+#ALPHAWIN_J2000           Windowed right ascension (J2000)                          [deg]
+#DELTAWIN_J2000           windowed declination (J2000)                              [deg]
+#ALPHAWIN_B1950           Windowed right ascension (B1950)                          [deg]
+#DELTAWIN_B1950           Windowed declination (B1950)                              [deg]
+#X2WIN_IMAGE              Windowed variance along x                                 [pixel**2]
+#Y2WIN_IMAGE              Windowed variance along y                                 [pixel**2]
+#XYWIN_IMAGE              Windowed covariance between x and y                       [pixel**2]
+#X2WIN_WORLD              Windowed variance along X-WORLD (alpha)                   [deg**2]
+#Y2WIN_WORLD              Windowed variance along Y-WORLD (delta)                   [deg**2]
+#XYWIN_WORLD              Windowed covariance between X-WORLD and Y-WORLD           [deg**2]
+#CXXWIN_IMAGE             Windowed Cxx object ellipse parameter                     [pixel**(-2)]
+#CYYWIN_IMAGE             Windowed Cyy object ellipse parameter                     [pixel**(-2)]
+#CXYWIN_IMAGE             Windowed Cxy object ellipse parameter                     [pixel**(-2)]
+#CXXWIN_WORLD             Windowed Cxx object ellipse parameter (WORLD units)       [deg**(-2)]
+#CYYWIN_WORLD             Windowed Cyy object ellipse parameter (WORLD units)       [deg**(-2)]
+#CXYWIN_WORLD             Windowed Cxy object ellipse parameter (WORLD units)       [deg**(-2)]
+#AWIN_IMAGE               Windowed profile RMS along major axis                     [pixel]
+#BWIN_IMAGE               Windowed profile RMS along minor axis                     [pixel]
+#THETAWIN_IMAGE           Windowed position angle (CCW/x)                           [deg]
+#AWIN_WORLD               Windowed profile RMS along major axis (world units)       [deg]
+#BWIN_WORLD               Windowed profile RMS along minor axis (world units)       [deg]
+#THETAWIN_WORLD           Windowed position angle (CCW/world-x)                     [deg]
+#THETAWIN_SKY             Windowed position angle (east of north) (native)          [deg]
+#THETAWIN_J2000           Windowed position angle (east of north) (J2000)           [deg]
+#THETAWIN_B1950           Windowed position angle (east of north) (B1950)           [deg]
+#ERRX2WIN_IMAGE           Variance of windowed pos along x                          [pixel**2]
+#ERRY2WIN_IMAGE           Variance of windowed pos along y                          [pixel**2]
+#ERRXYWIN_IMAGE           Covariance of windowed pos between x and y                [pixel**2]
+#ERRX2WIN_WORLD           Variance of windowed pos along X-WORLD (alpha)            [deg**2]
+#ERRY2WIN_WORLD           Variance of windowed pos along Y-WORLD (delta)            [deg**2]
+#ERRXYWIN_WORLD           Covariance of windowed pos X-WORLD/Y-WORLD                [deg**2]
+#ERRCXXWIN_IMAGE          Cxx windowed error ellipse parameter                      [pixel**(-2)]
+#ERRCYYWIN_IMAGE          Cyy windowed error ellipse parameter                      [pixel**(-2)]
+#ERRCXYWIN_IMAGE          Cxy windowed error ellipse parameter                      [pixel**(-2)]
+#ERRCXXWIN_WORLD          Cxx windowed error ellipse parameter (WORLD units)        [deg**(-2)]
+#ERRCYYWIN_WORLD          Cyy windowed error ellipse parameter (WORLD units)        [deg**(-2)]
+#ERRCXYWIN_WORLD          Cxy windowed error ellipse parameter (WORLD units)        [deg**(-2)]
+#ERRAWIN_IMAGE            RMS windowed pos error along major axis                   [pixel]
+#ERRBWIN_IMAGE            RMS windowed pos error along minor axis                   [pixel]
+#ERRTHETAWIN_IMAGE        Windowed error ellipse pos angle (CCW/x)                  [deg]
+#ERRAWIN_WORLD            World RMS windowed pos error along major axis             [deg]
+#ERRBWIN_WORLD            World RMS windowed pos error along minor axis             [deg]
+#ERRTHETAWIN_WORLD        Windowed error ellipse pos. angle (CCW/world-x)           [deg]
+#ERRTHETAWIN_SKY          Native windowed error ellipse pos. angle (east of north)  [deg]
+#ERRTHETAWIN_J2000        J2000 windowed error ellipse pos. angle (east of north)   [deg]
+#ERRTHETAWIN_B1950        B1950 windowed error ellipse pos. angle (east of north)   [deg]
+#NITER_WIN                Number of iterations for WIN centering
+#MU_THRESHOLD             Detection threshold above background                      [mag * arcsec**(-2)]
+#MU_MAX                   Peak surface brightness above background                  [mag * arcsec**(-2)]
+#ISOAREA_WORLD            Isophotal area above Analysis threshold                   [deg**2]
+#ISOAREAF_WORLD           Isophotal area (filtered) above Detection threshold       [deg**2]
+#ISO0                     Isophotal area at level 0                                 [pixel**2]
+#ISO1                     Isophotal area at level 1                                 [pixel**2]
+#ISO2                     Isophotal area at level 2                                 [pixel**2]
+#ISO3                     Isophotal area at level 3                                 [pixel**2]
+#ISO4                     Isophotal area at level 4                                 [pixel**2]
+#ISO5                     Isophotal area at level 5                                 [pixel**2]
+#ISO6                     Isophotal area at level 6                                 [pixel**2]
+#ISO7                     Isophotal area at level 7                                 [pixel**2]
+#FLAGS                    Extraction flags
+#FLAGS_WEIGHT             Weighted extraction flags
+#FLAGS_WIN                Flags for WINdowed parameters
+#IMAFLAGS_ISO             FLAG-image flags OR&#39;ed over the iso. profile
+#NIMAFLAGS_ISO            Number of flagged pixels entering IMAFLAGS_ISO
+#NLOWWEIGHT_ISO           Nb of pixels with low weight over the iso. profile
+#NLOWDWEIGHT_ISO          Nb of pixels with low det. weight over the iso. profile
+#FWHM_IMAGE               FWHM assuming a gaussian core                             [pixel]
+#FWHM_WORLD               FWHM assuming a gaussian core                             [deg]
+#ELONGATION               A_IMAGE/B_IMAGE
+#ELLIPTICITY              1 - B_IMAGE/A_IMAGE
+#POLAR_IMAGE              (A_IMAGE^2 - B_IMAGE^2)/(A_IMAGE^2 + B_IMAGE^2)
+#POLAR_WORLD              (A_WORLD^2 - B_WORLD^2)/(A_WORLD^2 + B_WORLD^2)
+#POLARWIN_IMAGE           (AWIN^2 - BWIN^2)/(AWIN^2 + BWIN^2)
+#POLARWIN_WORLD           (AWIN^2 - BWIN^2)/(AWIN^2 + BWIN^2)
+#CLASS_STAR               S/G classifier output
+#VIGNET                   Pixel data around detection                               [count]
+#VIGNET_SHIFT             Pixel data around detection, corrected for shift          [count]
+#VECTOR_ASSOC             ASSOCiated parameter vector
+#NUMBER_ASSOC             Number of ASSOCiated IDs
+#THRESHOLDMAX             Maximum threshold possible for detection                  [count]
+#FLUX_GROWTH              Cumulated growth-curve                                    [count]
+#FLUX_GROWTHSTEP          Step for growth-curves                                    [pixel]
+#MAG_GROWTH               Cumulated magnitude growth-curve                          [mag]
+#MAG_GROWTHSTEP           Step for growth-curves                                    [pixel]
+#FLUX_RADIUS              Fraction-of-light radii                                   [pixel]
+#XPSF_IMAGE               X coordinate from PSF-fitting                             [pixel]
+#YPSF_IMAGE               Y coordinate from PSF-fitting                             [pixel]
+#XPSF_WORLD               PSF position along world x axis                           [deg]
+#YPSF_WORLD               PSF position along world y axis                           [deg]
+#ALPHAPSF_SKY             Right ascension of the fitted PSF (native)                [deg]
+#DELTAPSF_SKY             Declination of the fitted PSF (native)                    [deg]
+#ALPHAPSF_J2000           Right ascension of the fitted PSF (J2000)                 [deg]
+#DELTAPSF_J2000           Declination of the fitted PSF (J2000)                     [deg]
+#ALPHAPSF_B1950           Right ascension of the fitted PSF (B1950)                 [deg]
+#DELTAPSF_B1950           Declination of the fitted PSF (B1950)                     [deg]
+#FLUX_PSF                 Flux from PSF-fitting                                     [count]
+#FLUXERR_PSF              RMS flux error for PSF-fitting                            [count]
+#MAG_PSF                  Magnitude from PSF-fitting                                [mag]
+#MAGERR_PSF               RMS magnitude error from PSF-fitting                      [mag]
+#NITER_PSF                Number of iterations for PSF-fitting
+#CHI2_PSF                 Reduced chi2 from PSF-fitting
+#ERRX2PSF_IMAGE           Variance of PSF position along x                          [pixel**2]
+#ERRY2PSF_IMAGE           Variance of PSF position along y                          [pixel**2]
+#ERRXYPSF_IMAGE           Covariance of PSF position between x and y                [pixel**2]
+#ERRX2PSF_WORLD           Variance of PSF position along X-WORLD (alpha)            [deg**2]
+#ERRY2PSF_WORLD           Variance of PSF position along Y-WORLD (delta)            [deg**2]
+#ERRXYPSF_WORLD           Covariance of PSF position X-WORLD/Y-WORLD                [deg**2]
+#ERRCXXPSF_IMAGE          Cxx PSF error ellipse parameter                           [pixel**(-2)]
+#ERRCYYPSF_IMAGE          Cyy PSF error ellipse parameter                           [pixel**(-2)]
+#ERRCXYPSF_IMAGE          Cxy PSF error ellipse parameter                           [pixel**(-2)]
+#ERRCXXPSF_WORLD          Cxx PSF error ellipse parameter (WORLD units)             [deg**(-2)]
+#ERRCYYPSF_WORLD          Cyy PSF error ellipse parameter (WORLD units)             [deg**(-2)]
+#ERRCXYPSF_WORLD          Cxy PSF error ellipse parameter (WORLD units)             [deg**(-2)]
+#ERRAPSF_IMAGE            PSF RMS position error along major axis                   [pixel]
+#ERRBPSF_IMAGE            PSF RMS position error along minor axis                   [pixel]
+#ERRTHETAPSF_IMAGE        PSF error ellipse position angle (CCW/x)                  [deg]
+#ERRAPSF_WORLD            World PSF RMS position error along major axis             [pixel]
+#ERRBPSF_WORLD            World PSF RMS position error along minor axis             [pixel]
+#ERRTHETAPSF_WORLD        PSF error ellipse pos. angle (CCW/world-x)                [deg]
+#ERRTHETAPSF_SKY          Native PSF error ellipse pos. angle (east of north)       [deg]
+#ERRTHETAPSF_J2000        J2000 PSF error ellipse pos. angle (east of north)        [deg]
+#ERRTHETAPSF_B1950        B1950 PSF error ellipse pos. angle (east of north)        [deg]
+#DURATION_ANALYSIS        Duration of analysis for this source                      [s]
+#VECTOR_MODEL             Model-fitting coefficients
+#VECTOR_MODELERR          Model-fitting coefficient uncertainties
+#MATRIX_MODELERR          Model-fitting covariance matrix
+#CHI2_MODEL               Reduced Chi2 of the fit
+#FLAGS_MODEL              Model-fitting flags
+#NITER_MODEL              Number of iterations for model-fitting
+#FLUX_MODEL               Flux from model-fitting                                   [count]
+#FLUXERR_MODEL            RMS error on model-fitting flux                           [count]
+#MAG_MODEL                Magnitude from model-fitting                              [mag]
+#MAGERR_MODEL             RMS error on model-fitting magnitude                      [mag]
+#FLUX_MAX_MODEL           Peak model flux above background                          [count]
+#FLUX_EFF_MODEL           Effective model flux above background                     [count]
+#FLUX_MEAN_MODEL          Mean effective model flux above background                [count]
+#MU_MAX_MODEL             Peak model surface brightness above background            [mag * arcsec**(-2)]
+#MU_EFF_MODEL             Effective model surface brightness above background       [mag * arcsec**(-2)]
+#MU_MEAN_MODEL            Mean effective model surface brightness above background  [mag * arcsec**(-2)]
+#XMODEL_IMAGE             X coordinate from model-fitting                           [pixel]
+#YMODEL_IMAGE             Y coordinate from model-fitting                           [pixel]
+#XFOCAL_WORLD             Fitted position along focal-plane x axis
+#YFOCAL_WORLD             Fitted position along focal-plane y axis
+#XMODEL_WORLD             Fitted position along world x axis                        [deg]
+#YMODEL_WORLD             Fitted position along world y axis                        [deg]
+#ALPHAMODEL_SKY           Fitted position along right ascension  (native)           [deg]
+#DELTAMODEL_SKY           Fitted position along declination (native)                [deg]
+#ALPHAMODEL_J2000         Fitted position along right ascension (J2000)             [deg]
+#DELTAMODEL_J2000         Fitted position along declination (J2000)                 [deg]
+#ALPHAMODEL_B1950         Fitted position along right ascension (B1950)             [deg]
+#DELTAMODEL_B1950         Fitted position along declination (B1950)                 [deg]
+#ERRX2MODEL_IMAGE         Variance of fitted position along x                       [pixel**2]
+#ERRY2MODEL_IMAGE         Variance of fitted position along y                       [pixel**2]
+#ERRXYMODEL_IMAGE         Covariance of fitted position between x and y             [pixel**2]
+#ERRX2MODEL_WORLD         Variance of fitted position along X-WORLD (alpha)         [deg**2]
+#ERRY2MODEL_WORLD         Variance of fitted position along Y-WORLD (delta)         [deg**2]
+#ERRXYMODEL_WORLD         Covariance of fitted position X-WORLD/Y-WORLD             [deg**2]
+#ERRCXXMODEL_IMAGE        Cxx error ellipse parameter of fitted position            [pixel**(-2)]
+#ERRCYYMODEL_IMAGE        Cyy error ellipse parameter of fitted position            [pixel**(-2)]
+#ERRCXYMODEL_IMAGE        Cxy error ellipse parameter of fitted position            [pixel**(-2)]
+#ERRCXXMODEL_WORLD        Cxx fitted error ellipse parameter (WORLD units)          [deg**(-2)]
+#ERRCYYMODEL_WORLD        Cyy fitted error ellipse parameter (WORLD units)          [deg**(-2)]
+#ERRCXYMODEL_WORLD        Cxy fitted error ellipse parameter (WORLD units)          [deg**(-2)]
+#ERRAMODEL_IMAGE          RMS error of fitted position along major axis             [pixel]
+#ERRBMODEL_IMAGE          RMS error of fitted position along minor axis             [pixel]
+#ERRTHETAMODEL_IMAGE      Error ellipse pos.angle of fitted position (CCW/x)        [deg]
+#ERRAMODEL_WORLD          World RMS error of fitted position along major axis       [deg]
+#ERRBMODEL_WORLD          World RMS error of fitted position along minor axis       [deg]
+#ERRTHETAMODEL_WORLD      Error ellipse pos.angle of fitted position (CCW/world-x)  [deg]
+#ERRTHETAMODEL_SKY        Native fitted error ellipse pos. angle (east of north)    [deg]
+#ERRTHETAMODEL_J2000      J2000 fitted error ellipse pos. angle (east of north)     [deg]
+#ERRTHETAMODEL_B1950      B1950 fitted error ellipse pos. angle (east of north)     [deg]
+#X2MODEL_IMAGE            Variance along x from model-fitting                       [pixel**2]
+#Y2MODEL_IMAGE            Variance along y from model-fitting                       [pixel**2]
+#XYMODEL_IMAGE            Covariance between x and y from model-fitting             [pixel**2]
+#ELLIP1MODEL_IMAGE        Ellipticity component from model-fitting
+#ELLIP2MODEL_IMAGE        Ellipticity component from model-fitting
+#POLAR1MODEL_IMAGE        Ellipticity component (quadratic) from model-fitting
+#POLAR2MODEL_IMAGE        Ellipticity component (quadratic) from model-fitting
+#ELLIP1ERRMODEL_IMAGE     Ellipticity component std.error from model-fitting
+#ELLIP2ERRMODEL_IMAGE     Ellipticity component std.error from model-fitting
+#ELLIPCORRMODEL_IMAGE     Corr.coeff between ellip.components from model-fitting
+#POLAR1ERRMODEL_IMAGE     Polarisation component std.error from model-fitting
+#POLAR2ERRMODEL_IMAGE     Polarisation component std.error from model-fitting
+#POLARCORRMODEL_IMAGE     Corr.coeff between polar. components from fitting
+#X2MODEL_WORLD            Variance along X-WORLD (alpha) from model-fitting         [deg**2]
+#Y2MODEL_WORLD            Variance along Y_WORLD (delta) from model-fitting         [deg**2]
+#XYMODEL_WORLD            Covariance between X-WORLD and Y-WORLD from model-fitting [deg**2]
+#ELLIP1MODEL_WORLD        Ellipticity component from model-fitting
+#ELLIP2MODEL_WORLD        Ellipticity component from model-fitting
+#POLAR1MODEL_WORLD        Polarisation component from model-fitting
+#POLAR2MODEL_WORLD        Polarisation component from model-fitting
+#ELLIP1ERRMODEL_WORLD     Ellipticity component std.error from model-fitting
+#ELLIP2ERRMODEL_WORLD     Ellipticity component std.error from model-fitting
+#ELLIPCORRMODEL_WORLD     Corr.coeff between ellip.components from model-fitting
+#POLAR1ERRMODEL_WORLD     Polarisation component std.error from model-fitting
+#POLAR2ERRMODEL_WORLD     Polarisation component std.error from model-fitting
+#POLARCORRMODEL_WORLD     Corr.coeff between polar. components from fitting
+#CXXMODEL_IMAGE           Cxx ellipse parameter from model-fitting                  [pixel**(-2)]
+#CYYMODEL_IMAGE           Cyy ellipse parameter from model-fittinh                  [pixel**(-2)]
+#CXYMODEL_IMAGE           Cxy ellipse parameter from model-fitting                  [pixel**(-2)]
+#CXXMODEL_WORLD           Cxx ellipse parameter (WORLD) from model-fitting          [deg**(-2)]
+#CYYMODEL_WORLD           Cyy ellipse parameter (WORLD) from model-fitting          [deg**(-2)]
+#CXYMODEL_WORLD           Cxy ellipse parameter (WORLD) from model-fitting          [deg**(-2)]
+#AMODEL_IMAGE             Model RMS along major axis                                [pixel]
+#BMODEL_IMAGE             Model RMS along minor axis                                [pixel]
+#THETAMODEL_IMAGE         Model position angle (CCW/x)                              [deg]
+#AMODEL_WORLD             Model RMS along major axis (WORLD units)                  [deg]
+#BMODEL_WORLD             Model RMS along minor axis (WORLD units)                  [deg]
+#THETAMODEL_WORLD         Model position angle (CCW/WORLD-x)                        [deg]
+#THETAMODEL_SKY           Model position angle (east of north) (native)             [deg]
+#THETAMODEL_J2000         Model position angle (east of north) (J2000)              [deg]
+#THETAMODEL_B1950         Model position angle (east of north) (B1950)              [deg]
+#SPREAD_MODEL             Spread parameter from model-fitting
+#SPREADERR_MODEL          Spread parameter error from model-fitting
+#FLUX_BACKOFFSET          Background offset from fitting                            [count]
+#FLUXERR_BACKOFFSET       RMS error on fitted background offset                     [count]
+#FLUX_POINTSOURCE         Point source flux from fitting                            [count]
+#FLUXERR_POINTSOURCE      RMS error on fitted point source total flux               [count]
+#MAG_POINTSOURCE          Point source total magnitude from fitting                 [mag]
+#MAGERR_POINTSOURCE       RMS error on fitted point source total magnitude          [mag]
+#FLUX_SPHEROID            Spheroid total flux from fitting                          [count]
+#FLUXERR_SPHEROID         RMS error on fitted spheroid total flux                   [count]
+#MAG_SPHEROID             Spheroid total magnitude from fitting                     [mag]
+#MAGERR_SPHEROID          RMS error on fitted spheroid total magnitude              [mag]
+#FLUX_MAX_SPHEROID        Peak spheroid flux above background                       [count]
+#FLUX_EFF_SPHEROID        Effective spheroid flux above background                  [count]
+#FLUX_MEAN_SPHEROID       Mean effective spheroid flux above background             [count]
+#MU_MAX_SPHEROID          Peak spheroid surface brightness above background         [mag * arcsec**(-2)]
+#MU_EFF_SPHEROID          Effective spheroid surface brightness above background    [mag * arcsec**(-2)]
+#MU_MEAN_SPHEROID         Mean effective spheroid surface brightness above backgrou [mag * arcsec**(-2)]
+#SPHEROID_REFF_IMAGE      Spheroid effective radius from fitting                    [pixel]
+#SPHEROID_REFFERR_IMAGE   RMS error on fitted spheroid effective radius             [pixel]
+#SPHEROID_REFF_WORLD      Spheroid effective radius from fitting                    [deg]
+#SPHEROID_REFFERR_WORLD   RMS error on fitted spheroid effective radius             [deg]
+#SPHEROID_ASPECT_IMAGE    Spheroid aspect ratio from fitting
+#SPHEROID_ASPECTERR_IMAGE RMS error on fitted spheroid aspect ratio
+#SPHEROID_ASPECT_WORLD    Spheroid aspect ratio from fitting
+#SPHEROID_ASPECTERR_WORLD RMS error on fitted spheroid aspect ratio
+#SPHEROID_THETA_IMAGE     Spheroid position angle (CCW/x) from fitting              [deg]
+#SPHEROID_THETAERR_IMAGE  RMS error on spheroid position angle                      [deg]
+#SPHEROID_THETA_WORLD     Spheroid position angle (CCW/world-x)                     [deg]
+#SPHEROID_THETAERR_WORLD  RMS error on spheroid position angle                      [deg]
+#SPHEROID_THETA_SKY       Spheroid position angle (east of north, native)           [deg]
+#SPHEROID_THETA_J2000     Spheroid position angle (east of north, J2000)            [deg]
+#SPHEROID_THETA_B1950     Spheroid position angle (east of north, B1950)            [deg]
+#SPHEROID_SERSICN         Spheroid Sersic index from fitting
+#SPHEROID_SERSICNERR      RMS error on fitted spheroid Sersic index
+#FLUX_DISK                Disk total flux from fitting                              [count]
+#FLUXERR_DISK             RMS error on fitted disk total flux                       [count]
+#MAG_DISK                 Disk total magnitude from fitting                         [mag]
+#MAGERR_DISK              RMS error on fitted disk total magnitude                  [mag]
+#FLUX_MAX_DISK            Peak disk flux above background                           [count]
+#FLUX_EFF_DISK            Effective disk flux above background                      [count]
+#FLUX_MEAN_DISK           Mean effective disk flux above background                 [count]
+#MU_MAX_DISK              Peak disk surface brightness above background             [mag * arcsec**(-2)]
+#MU_EFF_DISK              Effective disk surface brightness above background        [mag * arcsec**(-2)]
+#MU_MEAN_DISK             Mean effective disk surface brightness above background   [mag * arcsec**(-2)]
+#DISK_SCALE_IMAGE         Disk scalelength from fitting                             [pixel]
+#DISK_SCALEERR_IMAGE      RMS error on fitted disk scalelength                      [pixel]
+#DISK_SCALE_WORLD         Disk scalelength from fitting (world coords)              [deg]
+#DISK_SCALEERR_WORLD      RMS error on fitted disk scalelength (world coords)       [deg]
+#DISK_ASPECT_IMAGE        Disk aspect ratio from fitting
+#DISK_ASPECTERR_IMAGE     RMS error on fitted disk aspect ratio
+#DISK_ASPECT_WORLD        Disk aspect ratio from fitting
+#DISK_ASPECTERR_WORLD     RMS error on disk aspect ratio
+#DISK_INCLINATION         Disk inclination from fitting                             [deg]
+#DISK_INCLINATIONERR      RMS error on disk inclination from fitting                [deg]
+#DISK_THETA_IMAGE         Disk position angle (CCW/x) from fitting                  [deg]
+#DISK_THETAERR_IMAGE      RMS error on fitted disk position angle                   [deg]
+#DISK_THETA_WORLD         Disk position angle (CCW/world-x)                         [deg]
+#DISK_THETAERR_WORLD      RMS error on disk position angle                          [deg]
+#DISK_THETA_SKY           Disk position angle (east of north, native)               [deg]
+#DISK_THETA_J2000         Disk position angle (east of north, J2000)                [deg]
+#DISK_THETA_B1950         Disk position angle (east of north, B1950)                [deg]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="output-parameters">
+<h2>- Output parameters<a class="headerlink" href="#output-parameters" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\textbf{Source catalog}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{FITS check images}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textbf{CLASS\_STAR:}\)</span> can be used to separate point sources and extended sources</p></li>
+</ul>
+</section>
+<section id="importing-necessary-packages">
+<h2>0. Importing Necessary Packages<a class="headerlink" href="#importing-necessary-packages" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Printing the versions of packages</span>
+<span class="kn">from</span> <span class="nn">importlib_metadata</span> <span class="kn">import</span> <span class="n">version</span>
+<span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">,</span> <span class="s1">&#39;matplotlib&#39;</span><span class="p">,</span> <span class="s1">&#39;astropy&#39;</span><span class="p">,</span> <span class="s1">&#39;pandas&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pkg</span><span class="o">+</span><span class="s2">&quot;: ver &quot;</span><span class="o">+</span><span class="n">version</span><span class="p">(</span><span class="n">pkg</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>numpy: ver 1.26.4
+matplotlib: ver 3.8.0
+astropy: ver 5.3.4
+pandas: ver 2.2.1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># importing necessary modules</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">glob</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.visualization</span> <span class="kn">import</span> <span class="n">ZScaleInterval</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;sex&#39;</span> <span class="c1"># use &#39;sextractor&#39; or &#39;source-extractor&#39;, depending on your installation.</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="writing-input-files">
+<h2>1. Writing Input Files<a class="headerlink" href="#writing-input-files" title="Link to this heading">#</a></h2>
+<section id="image-list">
+<h3>1) Image list<a class="headerlink" href="#image-list" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dir_img</span> <span class="o">=</span> <span class="s2">&quot;Images/&quot;</span>
+<span class="n">band</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F606W&quot;</span><span class="p">,</span> <span class="s2">&quot;F814W&quot;</span><span class="p">]</span>
+<span class="n">imglist</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">dir_img</span><span class="o">+</span><span class="s2">&quot;*.fits&quot;</span><span class="p">))</span>
+<span class="n">imglist</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Images/M0717_F606W.fits&#39;, &#39;Images/M0717_F814W.fits&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdu_606</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">hdu_814</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="n">ZScaleInterval</span><span class="p">()</span>
+<span class="n">vmin_606</span><span class="p">,</span> <span class="n">vmax_606</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">hdu_606</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">vmin_814</span><span class="p">,</span> <span class="n">vmax_814</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">hdu_814</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hdu_606</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_606</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_606</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;M0717 [F606W]&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hdu_814</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_814</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_814</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;M0717 [F814W]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/bee6a31d859b79126b57713a195a82bf47ef80d4092b8d5d67d3d70221381bd7.png"><img alt="../../../_images/bee6a31d859b79126b57713a195a82bf47ef80d4092b8d5d67d3d70221381bd7.png" src="../../../_images/bee6a31d859b79126b57713a195a82bf47ef80d4092b8d5d67d3d70221381bd7.png" style="width: 839px; height: 323px;" /></a>
+</div>
+</div>
+</section>
+<section id="configuration-file">
+<h3>2) Configuration file<a class="headerlink" href="#configuration-file" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config_name</span> <span class="o">=</span> <span class="s2">&quot;config.txt&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="o">+</span><span class="s2">&quot; -dd &gt; &quot;</span><span class="o">+</span><span class="n">config_name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="output-parameter-file">
+<h3>3) Output parameter file<a class="headerlink" href="#output-parameter-file" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_name</span> <span class="o">=</span> <span class="s2">&quot;output.param&quot;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;X_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Object position along x [pixel]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Y_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Object position along y [pixel]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;NUMBER</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Object number</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MAG_AUTO</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Kron-like elliptical aperture magnitude [mag]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MAGERR_AUTO</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># RMS error for MAG_AUTO    [mag]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;KRON_RADIUS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Kron apertures in units of A or B</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;BACKGROUND</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Background at centroid position</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;ALPHA_J2000</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Right ascension of object center (J2000)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;DELTA_J2000</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Declination of object center (J2000)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;A_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Along major axis</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;B_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Along minor axis</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;THETA_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Position angle</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;MU_MAX</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Peak surface brightness above background</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FLAGS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Extraction flags</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FWHM_IMAGE</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># FWHM assuming a gaussian core</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FLUX_RADIUS</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Half-light radii</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;CLASS_STAR</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Star/Galaxy classifier output</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="determining-input-parameters">
+<h3>4) Determining input parameters<a class="headerlink" href="#determining-input-parameters" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h606</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">h814</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># band = [&quot;F606W&quot;, &quot;F814W&quot;]</span>
+<span class="n">cat_name</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;606.cat&quot;</span><span class="p">,</span> <span class="s2">&quot;814.cat&quot;</span><span class="p">]</span>
+<span class="n">detect_minarea</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># DETECT_MINAREA = 5 (default)</span>
+<span class="n">detect_thresh</span> <span class="o">=</span> <span class="mf">1.5</span>  <span class="c1"># DETECT_THRESH = 1.5 (default)</span>
+<span class="n">saturated</span> <span class="o">=</span> <span class="mf">100.0</span>  <span class="c1"># SATUR_LEVEL = 100.0 (depending on the image!)</span>
+<span class="n">mag0</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">2.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">h606</span><span class="p">[</span><span class="s1">&#39;PHOTFLAM&#39;</span><span class="p">])</span><span class="o">-</span><span class="mf">5.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">h606</span><span class="p">[</span><span class="s1">&#39;PHOTPLAM&#39;</span><span class="p">])</span><span class="o">-</span><span class="mf">2.408</span><span class="p">,</span>
+        <span class="o">-</span><span class="mf">2.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">h814</span><span class="p">[</span><span class="s1">&#39;PHOTFLAM&#39;</span><span class="p">])</span><span class="o">-</span><span class="mf">5.0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">h814</span><span class="p">[</span><span class="s1">&#39;PHOTPLAM&#39;</span><span class="p">])</span><span class="o">-</span><span class="mf">2.408</span><span class="p">]</span>
+<span class="n">egain</span> <span class="o">=</span> <span class="p">[</span><span class="n">h606</span><span class="p">[</span><span class="s1">&#39;CCDGAIN&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">h606</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">],</span> <span class="n">h814</span><span class="p">[</span><span class="s1">&#39;CCDGAIN&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">h814</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">]]</span>
+<span class="c1"># GAIN (effective gain) = gain*exptime (for c/s image) --&gt; this parameter only affects the magnitude error value!</span>
+<span class="n">pixel_scale</span> <span class="o">=</span> <span class="mf">0.03</span>  <span class="c1"># arcsec/pixel</span>
+<span class="n">fwhm</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.09</span><span class="p">,</span> <span class="mf">0.09</span><span class="p">]</span>  <span class="c1"># For HST images, seeing FWHMs are typically 3 pixels (~ 0.09 arcsec).</span>
+<span class="c1"># However, you can directly measure the FWHM value in your image using imexamine or etc.,</span>
+<span class="c1"># because the FWHM value can also vary with image quality.</span>
+<span class="n">back_size</span> <span class="o">=</span> <span class="mi">32</span>  <span class="c1"># BACK_SIZE = 64 (default) --&gt; 32 (revised)</span>
+<span class="c1"># Smaller BACK_SIZE --&gt; Can subtract more local background --&gt; Can detect more sources</span>
+<span class="n">checkimg</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;606_aper.fits&quot;</span><span class="p">,</span> <span class="s2">&quot;814_aper.fits&quot;</span><span class="p">]</span>  <span class="c1"># CHECKIMAGE_NAME (apertures)</span>
+<span class="n">refimg</span> <span class="o">=</span> <span class="n">imglist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For magnitude zeropoints of the HST images, you can refer to the below web page.</p>
+<p><a class="reference external" href="https://www.stsci.edu/hst/instrumentation/acs/data-analysis/zeropoints">ACS zeropoint</a> - Photometric Keywords in SCI Extensions of ACS Images (AB magnitude zeropoint)</p>
+<div class="math notranslate nohighlight">
+\[ZP_{\rm AB}=−2.5\times log10(\texttt{PHOTFLAM})−5\times log10(\texttt{PHOTPLAM})−2.408\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">PHOTFLAM</span></code> or <code class="docutils literal notranslate"><span class="pre">PHOTPLAM</span></code> are written in the image header.</p>
+</section>
+<section id="shell-script-for-sextractor-photometry">
+<h3>5) Shell script for SExtractor photometry<a class="headerlink" href="#shell-script-for-sextractor-photometry" title="Link to this heading">#</a></h3>
+<section id="importance-of-dual-mode-photometry">
+<h4>- Importance of Dual-mode photometry<a class="headerlink" href="#importance-of-dual-mode-photometry" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Number of detected sources are different between the two filters.</p></li>
+<li><p>Shape and size of aperture is different for identical sources in different filter images (if MAG_AUTO is used).</p></li>
+<li><p>To compute colors, it is important to run SExtractor in <span class="math notranslate nohighlight">\(\color{blue}{\rm dual\:mode}\)</span>.</p></li>
+</ul>
+</section>
+<section id="running-sextractor-in-dual-mode">
+<h4>- Running SExtractor in Dual mode<a class="headerlink" href="#running-sextractor-in-dual-mode" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>running command: sex [detection image], [photometry image] -c [configuration file]</p>
+<ul>
+<li><p>Detection image: reference image with all the detected sources (image with longer exposure time and better quality)</p></li>
+<li><p>Photometry image: image to perform photometry on</br></br></p></li>
+</ul>
+</li>
+<li><p>Filter with longest exposure time for project = F814W = detection image</p></li>
+<li><p>Or you can create a new detection image with F606W+F814W</br></br></p></li>
+<li><p>running command Ex)</p>
+<ul>
+<li><p>sextractor [F814W image] -c [F814W configuration file]</p></li>
+<li><p>sextractor [F606W image] -c [F606W configuration file] <span class="math notranslate nohighlight">\(\color{blue}{\rm \#\:single\:mode}\)</span></p></li>
+<li><p>sextractor [F814W image],[F606W image] -c [F606W configuration file] <span class="math notranslate nohighlight">\(\color{blue}{\rm \#\:dual\:mode}\)</span></p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scr_name</span> <span class="o">=</span> <span class="s2">&quot;sephot.sh&quot;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">scr_name</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">band</span><span class="p">)):</span>
+    
+    <span class="c1"># Reference image</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">refimg</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">command</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">imglist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot; -c config.txt -CATALOG_NAME &quot;</span><span class="o">+</span><span class="n">cat_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot; -PARAMETERS_NAME output.param &quot;</span>
+
+    <span class="c1"># Non-reference image</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">command</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">refimg</span><span class="o">+</span><span class="s2">&quot;,&quot;</span><span class="o">+</span><span class="n">imglist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot; -c config.txt -CATALOG_NAME &quot;</span><span class="o">+</span><span class="n">cat_name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s2">&quot; -PARAMETERS_NAME output.param &quot;</span>
+
+    <span class="n">txt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;-DETECT_MINAREA </span><span class="si">{</span><span class="n">detect_minarea</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> -DETECT_THRESH </span><span class="si">{</span><span class="n">detect_thresh</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="n">txt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;-FILTER_NAME </span><span class="si">{</span><span class="n">SEXDIR</span><span class="si">}</span><span class="s2">default.conv -SATUR_LEVEL </span><span class="si">{</span><span class="n">saturated</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="n">txt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;-MAG_ZEROPOINT </span><span class="si">{</span><span class="n">mag0</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> -GAIN </span><span class="si">{</span><span class="n">egain</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> -PIXEL_SCALE </span><span class="si">{</span><span class="n">pixel_scale</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="n">txt</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;-SEEING_FWHM </span><span class="si">{</span><span class="n">fwhm</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> -STARNNW_NAME </span><span class="si">{</span><span class="n">SEXDIR</span><span class="si">}</span><span class="s2">default.nnw -BACK_SIZE </span><span class="si">{</span><span class="n">back_size</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> &quot;</span>
+    <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;-CHECKIMAGE_TYPE APERTURES -CHECKIMAGE_NAME &quot;</span><span class="o">+</span><span class="n">checkimg</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">txt</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+    
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+    
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="id1">
+<h2>2. Running SExtractor<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<div class="cell tag_scroll-output tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sh sephot.sh&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 
+----- SExtractor 2.28.0 started on 2024-04-24 at 11:19:58 with 1 thread
+
+&gt; Setting catalog parameters
+&gt; Reading detection filter
+&gt; Initializing Neural Network
+&gt; Reading Neural Network Weights
+&gt; Initializing check-image(s)
+&gt; Initializing catalog
+&gt; Looking for M0717_F814W.fits
+----- Detecting from: M0717_F814W.fits
+      &quot;Unnamed&quot; / no ext. header / 5961x4381 / 32 bits (floats)
+&gt; Looking for M0717_F606W.fits
+----- Measuring from: M0717_F606W.fits
+      &quot;Unnamed&quot; / no ext. header / 5961x4381 / 32 bits (floats)
+Measurement image:&gt; Setting up background maps
+&gt; Setting up background map at line:   32
+&gt; Setting up background map at line:   64
+&gt; Setting up background map at line:   96
+&gt; Setting up background map at line:  128
+&gt; Setting up background map at line:  160
+&gt; Setting up background map at line:  192
+&gt; Setting up background map at line:  224
+&gt; Setting up background map at line:  256
+&gt; Setting up background map at line:  288
+&gt; Setting up background map at line:  320
+&gt; Setting up background map at line:  352
+&gt; Setting up background map at line:  384
+&gt; Setting up background map at line:  416
+&gt; Setting up background map at line:  448
+&gt; Setting up background map at line:  480
+&gt; Setting up background map at line:  512
+&gt; Setting up background map at line:  544
+&gt; Setting up background map at line:  576
+&gt; Setting up background map at line:  608
+&gt; Setting up background map at line:  640
+&gt; Setting up background map at line:  672
+&gt; Setting up background map at line:  704
+&gt; Setting up background map at line:  736
+&gt; Setting up background map at line:  768
+&gt; Setting up background map at line:  800
+&gt; Setting up background map at line:  832
+&gt; Setting up background map at line:  864
+&gt; Setting up background map at line:  896
+&gt; Setting up background map at line:  928
+&gt; Setting up background map at line:  960
+&gt; Setting up background map at line:  992
+&gt; Setting up background map at line: 1024
+&gt; Setting up background map at line: 1056
+&gt; Setting up background map at line: 1088
+&gt; Setting up background map at line: 1120
+&gt; Setting up background map at line: 1152
+&gt; Setting up background map at line: 1184
+&gt; Setting up background map at line: 1216
+&gt; Setting up background map at line: 1248
+&gt; Setting up background map at line: 1280
+&gt; Setting up background map at line: 1312
+&gt; Setting up background map at line: 1344
+&gt; Setting up background map at line: 1376
+&gt; Setting up background map at line: 1408
+&gt; Setting up background map at line: 1440
+&gt; Setting up background map at line: 1472
+&gt; Setting up background map at line: 1504
+&gt; Setting up background map at line: 1536
+&gt; Setting up background map at line: 1568
+&gt; Setting up background map at line: 1600
+&gt; Setting up background map at line: 1632
+&gt; Setting up background map at line: 1664
+&gt; Setting up background map at line: 1696
+&gt; Setting up background map at line: 1728
+&gt; Setting up background map at line: 1760
+&gt; Setting up background map at line: 1792
+&gt; Setting up background map at line: 1824
+&gt; Setting up background map at line: 1856
+&gt; Setting up background map at line: 1888
+&gt; Setting up background map at line: 1920
+&gt; Setting up background map at line: 1952
+&gt; Setting up background map at line: 1984
+&gt; Setting up background map at line: 2016
+&gt; Setting up background map at line: 2048
+&gt; Setting up background map at line: 2080
+&gt; Setting up background map at line: 2112
+&gt; Setting up background map at line: 2144
+&gt; Setting up background map at line: 2176
+&gt; Setting up background map at line: 2208
+&gt; Setting up background map at line: 2240
+&gt; Setting up background map at line: 2272
+&gt; Setting up background map at line: 2304
+&gt; Setting up background map at line: 2336
+&gt; Setting up background map at line: 2368
+&gt; Setting up background map at line: 2400
+&gt; Setting up background map at line: 2432
+&gt; Setting up background map at line: 2464
+&gt; Setting up background map at line: 2496
+&gt; Setting up background map at line: 2528
+&gt; Setting up background map at line: 2560
+&gt; Setting up background map at line: 2592
+&gt; Setting up background map at line: 2624
+&gt; Setting up background map at line: 2656
+&gt; Setting up background map at line: 2688
+&gt; Setting up background map at line: 2720
+&gt; Setting up background map at line: 2752
+&gt; Setting up background map at line: 2784
+&gt; Setting up background map at line: 2816
+&gt; Setting up background map at line: 2848
+&gt; Setting up background map at line: 2880
+&gt; Setting up background map at line: 2912
+&gt; Setting up background map at line: 2944
+&gt; Setting up background map at line: 2976
+&gt; Setting up background map at line: 3008
+&gt; Setting up background map at line: 3040
+&gt; Setting up background map at line: 3072
+&gt; Setting up background map at line: 3104
+&gt; Setting up background map at line: 3136
+&gt; Setting up background map at line: 3168
+&gt; Setting up background map at line: 3200
+&gt; Setting up background map at line: 3232
+&gt; Setting up background map at line: 3264
+&gt; Setting up background map at line: 3296
+&gt; Setting up background map at line: 3328
+&gt; Setting up background map at line: 3360
+&gt; Setting up background map at line: 3392
+&gt; Setting up background map at line: 3424
+&gt; Setting up background map at line: 3456
+&gt; Setting up background map at line: 3488
+&gt; Setting up background map at line: 3520
+&gt; Setting up background map at line: 3552
+&gt; Setting up background map at line: 3584
+&gt; Setting up background map at line: 3616
+&gt; Setting up background map at line: 3648
+&gt; Setting up background map at line: 3680
+&gt; Setting up background map at line: 3712
+&gt; Setting up background map at line: 3744
+&gt; Setting up background map at line: 3776
+&gt; Setting up background map at line: 3808
+&gt; Setting up background map at line: 3840
+&gt; Setting up background map at line: 3872
+&gt; Setting up background map at line: 3904
+&gt; Setting up background map at line: 3936
+&gt; Setting up background map at line: 3968
+&gt; Setting up background map at line: 4000
+&gt; Setting up background map at line: 4032
+&gt; Setting up background map at line: 4064
+&gt; Setting up background map at line: 4096
+&gt; Setting up background map at line: 4128
+&gt; Setting up background map at line: 4160
+&gt; Setting up background map at line: 4192
+&gt; Setting up background map at line: 4224
+&gt; Setting up background map at line: 4256
+&gt; Setting up background map at line: 4288
+&gt; Setting up background map at line: 4320
+&gt; Setting up background map at line: 4352
+&gt; Filtering background map(s)
+&gt; Computing background d-map
+&gt; Computing background-noise d-map
+(M)   Background: 0.000301342 RMS: 0.001017   / Threshold: 0.0015255  
+Detection image: &gt; Setting up background maps
+&gt; Setting up background map at line:   32
+&gt; Setting up background map at line:   64
+&gt; Setting up background map at line:   96
+&gt; Setting up background map at line:  128
+&gt; Setting up background map at line:  160
+&gt; Setting up background map at line:  192
+&gt; Setting up background map at line:  224
+&gt; Setting up background map at line:  256
+&gt; Setting up background map at line:  288
+&gt; Setting up background map at line:  320
+&gt; Setting up background map at line:  352
+&gt; Setting up background map at line:  384
+&gt; Setting up background map at line:  416
+&gt; Setting up background map at line:  448
+&gt; Setting up background map at line:  480
+&gt; Setting up background map at line:  512
+&gt; Setting up background map at line:  544
+&gt; Setting up background map at line:  576
+&gt; Setting up background map at line:  608
+&gt; Setting up background map at line:  640
+&gt; Setting up background map at line:  672
+&gt; Setting up background map at line:  704
+&gt; Setting up background map at line:  736
+&gt; Setting up background map at line:  768
+&gt; Setting up background map at line:  800
+&gt; Setting up background map at line:  832
+&gt; Setting up background map at line:  864
+&gt; Setting up background map at line:  896
+&gt; Setting up background map at line:  928
+&gt; Setting up background map at line:  960
+&gt; Setting up background map at line:  992
+&gt; Setting up background map at line: 1024
+&gt; Setting up background map at line: 1056
+&gt; Setting up background map at line: 1088
+&gt; Setting up background map at line: 1120
+&gt; Setting up background map at line: 1152
+&gt; Setting up background map at line: 1184
+&gt; Setting up background map at line: 1216
+&gt; Setting up background map at line: 1248
+&gt; Setting up background map at line: 1280
+&gt; Setting up background map at line: 1312
+&gt; Setting up background map at line: 1344
+&gt; Setting up background map at line: 1376
+&gt; Setting up background map at line: 1408
+&gt; Setting up background map at line: 1440
+&gt; Setting up background map at line: 1472
+&gt; Setting up background map at line: 1504
+&gt; Setting up background map at line: 1536
+&gt; Setting up background map at line: 1568
+&gt; Setting up background map at line: 1600
+&gt; Setting up background map at line: 1632
+&gt; Setting up background map at line: 1664
+&gt; Setting up background map at line: 1696
+&gt; Setting up background map at line: 1728
+&gt; Setting up background map at line: 1760
+&gt; Setting up background map at line: 1792
+&gt; Setting up background map at line: 1824
+&gt; Setting up background map at line: 1856
+&gt; Setting up background map at line: 1888
+&gt; Setting up background map at line: 1920
+&gt; Setting up background map at line: 1952
+&gt; Setting up background map at line: 1984
+&gt; Setting up background map at line: 2016
+&gt; Setting up background map at line: 2048
+&gt; Setting up background map at line: 2080
+&gt; Setting up background map at line: 2112
+&gt; Setting up background map at line: 2144
+&gt; Setting up background map at line: 2176
+&gt; Setting up background map at line: 2208
+&gt; Setting up background map at line: 2240
+&gt; Setting up background map at line: 2272
+&gt; Setting up background map at line: 2304
+&gt; Setting up background map at line: 2336
+&gt; Setting up background map at line: 2368
+&gt; Setting up background map at line: 2400
+&gt; Setting up background map at line: 2432
+&gt; Setting up background map at line: 2464
+&gt; Setting up background map at line: 2496
+&gt; Setting up background map at line: 2528
+&gt; Setting up background map at line: 2560
+&gt; Setting up background map at line: 2592
+&gt; Setting up background map at line: 2624
+&gt; Setting up background map at line: 2656
+&gt; Setting up background map at line: 2688
+&gt; Setting up background map at line: 2720
+&gt; Setting up background map at line: 2752
+&gt; Setting up background map at line: 2784
+&gt; Setting up background map at line: 2816
+&gt; Setting up background map at line: 2848
+&gt; Setting up background map at line: 2880
+&gt; Setting up background map at line: 2912
+&gt; Setting up background map at line: 2944
+&gt; Setting up background map at line: 2976
+&gt; Setting up background map at line: 3008
+&gt; Setting up background map at line: 3040
+&gt; Setting up background map at line: 3072
+&gt; Setting up background map at line: 3104
+&gt; Setting up background map at line: 3136
+&gt; Setting up background map at line: 3168
+&gt; Setting up background map at line: 3200
+&gt; Setting up background map at line: 3232
+&gt; Setting up background map at line: 3264
+&gt; Setting up background map at line: 3296
+&gt; Setting up background map at line: 3328
+&gt; Setting up background map at line: 3360
+&gt; Setting up background map at line: 3392
+&gt; Setting up background map at line: 3424
+&gt; Setting up background map at line: 3456
+&gt; Setting up background map at line: 3488
+&gt; Setting up background map at line: 3520
+&gt; Setting up background map at line: 3552
+&gt; Setting up background map at line: 3584
+&gt; Setting up background map at line: 3616
+&gt; Setting up background map at line: 3648
+&gt; Setting up background map at line: 3680
+&gt; Setting up background map at line: 3712
+&gt; Setting up background map at line: 3744
+&gt; Setting up background map at line: 3776
+&gt; Setting up background map at line: 3808
+&gt; Setting up background map at line: 3840
+&gt; Setting up background map at line: 3872
+&gt; Setting up background map at line: 3904
+&gt; Setting up background map at line: 3936
+&gt; Setting up background map at line: 3968
+&gt; Setting up background map at line: 4000
+&gt; Setting up background map at line: 4032
+&gt; Setting up background map at line: 4064
+&gt; Setting up background map at line: 4096
+&gt; Setting up background map at line: 4128
+&gt; Setting up background map at line: 4160
+&gt; Setting up background map at line: 4192
+&gt; Setting up background map at line: 4224
+&gt; Setting up background map at line: 4256
+&gt; Setting up background map at line: 4288
+&gt; Setting up background map at line: 4320
+&gt; Setting up background map at line: 4352
+&gt; Filtering background map(s)
+&gt; Computing background d-map
+&gt; Computing background-noise d-map
+(D)   Background: 0.000520703 RMS: 0.000520161 / Threshold: 0.000780242 
+&gt; Scanning image
+&gt; Line:   25  Objects:       61 detected /        0 sextracted
+&gt; Line:   50  Objects:      151 detected /        0 sextracted
+&gt; Line:   75  Objects:      228 detected /        0 sextracted
+&gt; Line:  100  Objects:      277 detected /        0 sextracted
+&gt; Line:  125  Objects:      365 detected /        0 sextracted
+&gt; Line:  150  Objects:      439 detected /        0 sextracted
+&gt; Line:  175  Objects:      507 detected /        0 sextracted
+&gt; Line:  200  Objects:      592 detected /        0 sextracted
+&gt; Line:  225  Objects:      674 detected /        0 sextracted
+&gt; Line:  250  Objects:      761 detected /        0 sextracted
+&gt; Line:  275  Objects:      844 detected /        0 sextracted
+&gt; Line:  300  Objects:      912 detected /        0 sextracted
+&gt; Line:  325  Objects:      967 detected /        0 sextracted
+&gt; Line:  350  Objects:     1053 detected /        0 sextracted
+&gt; Line:  375  Objects:     1127 detected /        0 sextracted
+&gt; Line:  400  Objects:     1206 detected /        0 sextracted
+&gt; Line:  425  Objects:     1296 detected /        0 sextracted
+&gt; Line:  450  Objects:     1377 detected /        0 sextracted
+&gt; Line:  475  Objects:     1451 detected /        0 sextracted
+&gt; Line:  500  Objects:     1539 detected /        0 sextracted
+&gt; Line:  525  Objects:     1611 detected /        0 sextracted
+&gt; Line:  550  Objects:     1681 detected /        0 sextracted
+&gt; Line:  575  Objects:     1776 detected /        0 sextracted
+&gt; Line:  600  Objects:     1851 detected /        0 sextracted
+&gt; Line:  625  Objects:     1933 detected /        0 sextracted
+&gt; Line:  650  Objects:     2029 detected /        0 sextracted
+&gt; Line:  675  Objects:     2146 detected /        0 sextracted
+&gt; Line:  700  Objects:     2236 detected /        0 sextracted
+&gt; Line:  725  Objects:     2331 detected /        0 sextracted
+&gt; Line:  750  Objects:     2394 detected /        0 sextracted
+&gt; Line:  775  Objects:     2464 detected /        0 sextracted
+&gt; Line:  800  Objects:     2544 detected /        0 sextracted
+&gt; Line:  825  Objects:     2628 detected /        0 sextracted
+&gt; Line:  850  Objects:     2710 detected /        0 sextracted
+&gt; Line:  875  Objects:     2781 detected /        0 sextracted
+&gt; Line:  900  Objects:     2863 detected /        0 sextracted
+&gt; Line:  925  Objects:     2938 detected /        0 sextracted
+&gt; Line:  950  Objects:     3039 detected /        0 sextracted
+&gt; Line:  975  Objects:     3115 detected /        0 sextracted
+&gt; Line: 1000  Objects:     3194 detected /        0 sextracted
+&gt; Line: 1022  Objects:     3244 detected /        0 sextracted
+&gt; Line: 1025  Objects:     3253 detected /       94 sextracted
+&gt; Line: 1050  Objects:     3314 detected /      144 sextracted
+&gt; Line: 1075  Objects:     3396 detected /      180 sextracted
+&gt; Line: 1100  Objects:     3484 detected /      215 sextracted
+&gt; Line: 1125  Objects:     3584 detected /      269 sextracted
+&gt; Line: 1150  Objects:     3664 detected /      316 sextracted
+&gt; Line: 1175  Objects:     3750 detected /      339 sextracted
+&gt; Line: 1200  Objects:     3839 detected /      383 sextracted
+&gt; Line: 1211  Objects:     3884 detected /      400 sextracted
+&gt; Line: 1225  Objects:     3950 detected /      433 sextracted
+&gt; Line: 1250  Objects:     4052 detected /      477 sextracted
+&gt; Line: 1275  Objects:     4177 detected /      514 sextracted
+&gt; Line: 1300  Objects:     4282 detected /      545 sextracted
+&gt; Line: 1325  Objects:     4361 detected /      580 sextracted
+&gt; Line: 1350  Objects:     4471 detected /      620 sextracted
+&gt; Line: 1375  Objects:     4570 detected /      661 sextracted
+&gt; Line: 1400  Objects:     4638 detected /      706 sextracted
+&gt; Line: 1425  Objects:     4741 detected /      753 sextracted
+&gt; Line: 1450  Objects:     4835 detected /      793 sextracted
+&gt; Line: 1455  Objects:     4851 detected /      800 sextracted
+&gt; Line: 1475  Objects:     4933 detected /      831 sextracted
+&gt; Line: 1500  Objects:     5025 detected /      873 sextracted
+&gt; Line: 1525  Objects:     5102 detected /      908 sextracted
+&gt; Line: 1550  Objects:     5205 detected /      948 sextracted
+&gt; Line: 1575  Objects:     5301 detected /      997 sextracted
+&gt; Line: 1600  Objects:     5397 detected /     1034 sextracted
+&gt; Line: 1625  Objects:     5528 detected /     1087 sextracted
+&gt; Line: 1650  Objects:     5630 detected /     1130 sextracted
+&gt; Line: 1675  Objects:     5715 detected /     1174 sextracted
+&gt; Line: 1689  Objects:     5742 detected /     1200 sextracted
+&gt; Line: 1700  Objects:     5782 detected /     1216 sextracted
+&gt; Line: 1725  Objects:     5855 detected /     1261 sextracted
+&gt; Line: 1750  Objects:     5936 detected /     1299 sextracted
+&gt; Line: 1775  Objects:     5999 detected /     1340 sextracted
+&gt; Line: 1800  Objects:     6095 detected /     1373 sextracted
+&gt; Line: 1825  Objects:     6181 detected /     1405 sextracted
+&gt; Line: 1850  Objects:     6305 detected /     1443 sextracted
+&gt; Line: 1875  Objects:     6397 detected /     1478 sextracted
+&gt; Line: 1900  Objects:     6485 detected /     1521 sextracted
+&gt; Line: 1925  Objects:     6591 detected /     1562 sextracted
+&gt; Line: 1947  Objects:     6666 detected /     1600 sextracted
+&gt; Line: 1950  Objects:     6675 detected /     1604 sextracted
+&gt; Line: 1975  Objects:     6773 detected /     1645 sextracted
+&gt; Line: 2000  Objects:     6850 detected /     1674 sextracted
+&gt; Line: 2025  Objects:     6947 detected /     1712 sextracted
+&gt; Line: 2050  Objects:     7035 detected /     1746 sextracted
+&gt; Line: 2075  Objects:     7126 detected /     1792 sextracted
+&gt; Line: 2100  Objects:     7200 detected /     1835 sextracted
+&gt; Line: 2125  Objects:     7284 detected /     1879 sextracted
+&gt; Line: 2150  Objects:     7404 detected /     1919 sextracted
+&gt; Line: 2175  Objects:     7486 detected /     1966 sextracted
+&gt; Line: 2191  Objects:     7547 detected /     2000 sextracted
+&gt; Line: 2200  Objects:     7577 detected /     2015 sextracted
+&gt; Line: 2225  Objects:     7693 detected /     2064 sextracted
+&gt; Line: 2250  Objects:     7780 detected /     2118 sextracted
+&gt; Line: 2275  Objects:     7852 detected /     2166 sextracted
+&gt; Line: 2300  Objects:     7917 detected /     2216 sextracted
+&gt; Line: 2325  Objects:     7986 detected /     2260 sextracted
+&gt; Line: 2350  Objects:     8055 detected /     2316 sextracted
+&gt; Line: 2375  Objects:     8137 detected /     2369 sextracted
+&gt; Line: 2398  Objects:     8188 detected /     2400 sextracted
+&gt; Line: 2400  Objects:     8196 detected /     2404 sextracted
+&gt; Line: 2425  Objects:     8267 detected /     2457 sextracted
+&gt; Line: 2450  Objects:     8349 detected /     2500 sextracted
+&gt; Line: 2475  Objects:     8437 detected /     2551 sextracted
+&gt; Line: 2500  Objects:     8516 detected /     2598 sextracted
+&gt; Line: 2525  Objects:     8594 detected /     2637 sextracted
+&gt; Line: 2550  Objects:     8680 detected /     2683 sextracted
+&gt; Line: 2575  Objects:     8761 detected /     2744 sextracted
+&gt; Line: 2600  Objects:     8849 detected /     2794 sextracted
+&gt; Line: 2605  Objects:     8870 detected /     2800 sextracted
+&gt; Line: 2625  Objects:     8951 detected /     2849 sextracted
+&gt; Line: 2650  Objects:     9003 detected /     2898 sextracted
+&gt; Line: 2675  Objects:     9070 detected /     2941 sextracted
+&gt; Line: 2700  Objects:     9145 detected /     2995 sextracted
+&gt; Line: 2725  Objects:     9231 detected /     3039 sextracted
+&gt; Line: 2750  Objects:     9337 detected /     3085 sextracted
+&gt; Line: 2775  Objects:     9430 detected /     3130 sextracted
+&gt; Line: 2800  Objects:     9524 detected /     3177 sextracted
+&gt; Line: 2812  Objects:     9572 detected /     3200 sextracted
+&gt; Line: 2825  Objects:     9631 detected /     3224 sextracted
+&gt; Line: 2850  Objects:     9728 detected /     3269 sextracted
+&gt; Line: 2875  Objects:     9816 detected /     3324 sextracted
+&gt; Line: 2900  Objects:     9887 detected /     3368 sextracted
+&gt; Line: 2925  Objects:     9983 detected /     3422 sextracted
+&gt; Line: 2950  Objects:    10072 detected /     3476 sextracted
+&gt; Line: 2975  Objects:    10150 detected /     3521 sextracted
+&gt; Line: 3000  Objects:    10240 detected /     3568 sextracted
+&gt; Line: 3025  Objects:    10318 detected /     3596 sextracted
+&gt; Line: 3028  Objects:    10330 detected /     3600 sextracted
+&gt; Line: 3050  Objects:    10405 detected /     3630 sextracted
+&gt; Line: 3075  Objects:    10523 detected /     3667 sextracted
+&gt; Line: 3100  Objects:    10610 detected /     3697 sextracted
+&gt; Line: 3125  Objects:    10687 detected /     3742 sextracted
+&gt; Line: 3150  Objects:    10803 detected /     3782 sextracted
+&gt; Line: 3175  Objects:    10909 detected /     3831 sextracted
+&gt; Line: 3200  Objects:    11015 detected /     3864 sextracted
+&gt; Line: 3225  Objects:    11133 detected /     3902 sextracted
+&gt; Line: 3250  Objects:    11251 detected /     3946 sextracted
+&gt; Line: 3275  Objects:    11342 detected /     3980 sextracted
+&gt; Line: 3284  Objects:    11370 detected /     4000 sextracted
+&gt; Line: 3300  Objects:    11411 detected /     4030 sextracted
+&gt; Line: 3325  Objects:    11505 detected /     4068 sextracted
+&gt; Line: 3350  Objects:    11584 detected /     4114 sextracted
+&gt; Line: 3375  Objects:    11666 detected /     4151 sextracted
+&gt; Line: 3400  Objects:    11757 detected /     4194 sextracted
+&gt; Line: 3425  Objects:    11851 detected /     4233 sextracted
+&gt; Line: 3450  Objects:    11962 detected /     4282 sextracted
+&gt; Line: 3475  Objects:    12035 detected /     4325 sextracted
+&gt; Line: 3500  Objects:    12095 detected /     4373 sextracted
+&gt; Line: 3521  Objects:    12152 detected /     4400 sextracted
+&gt; Line: 3525  Objects:    12168 detected /     4413 sextracted
+&gt; Line: 3550  Objects:    12251 detected /     4457 sextracted
+&gt; Line: 3575  Objects:    12326 detected /     4498 sextracted
+&gt; Line: 3600  Objects:    12402 detected /     4544 sextracted
+&gt; Line: 3625  Objects:    12483 detected /     4584 sextracted
+&gt; Line: 3650  Objects:    12561 detected /     4614 sextracted
+&gt; Line: 3675  Objects:    12652 detected /     4651 sextracted
+&gt; Line: 3700  Objects:    12729 detected /     4687 sextracted
+&gt; Line: 3725  Objects:    12820 detected /     4726 sextracted
+&gt; Line: 3750  Objects:    12895 detected /     4761 sextracted
+&gt; Line: 3775  Objects:    12982 detected /     4790 sextracted
+&gt; Line: 3786  Objects:    13011 detected /     4800 sextracted
+&gt; Line: 3800  Objects:    13053 detected /     4816 sextracted
+&gt; Line: 3825  Objects:    13159 detected /     4847 sextracted
+&gt; Line: 3850  Objects:    13259 detected /     4883 sextracted
+&gt; Line: 3875  Objects:    13344 detected /     4928 sextracted
+&gt; Line: 3900  Objects:    13416 detected /     4960 sextracted
+&gt; Line: 3925  Objects:    13502 detected /     4995 sextracted
+&gt; Line: 3950  Objects:    13565 detected /     5028 sextracted
+&gt; Line: 3975  Objects:    13653 detected /     5050 sextracted
+&gt; Line: 4000  Objects:    13742 detected /     5090 sextracted
+&gt; Line: 4025  Objects:    13819 detected /     5120 sextracted
+&gt; Line: 4050  Objects:    13893 detected /     5165 sextracted
+&gt; Line: 4071  Objects:    13975 detected /     5200 sextracted
+&gt; Line: 4075  Objects:    13985 detected /     5206 sextracted
+&gt; Line: 4100  Objects:    14047 detected /     5242 sextracted
+&gt; Line: 4125  Objects:    14115 detected /     5279 sextracted
+&gt; Line: 4150  Objects:    14181 detected /     5314 sextracted
+&gt; Line: 4175  Objects:    14258 detected /     5346 sextracted
+&gt; Line: 4200  Objects:    14329 detected /     5383 sextracted
+&gt; Line: 4225  Objects:    14391 detected /     5437 sextracted
+&gt; Line: 4250  Objects:    14473 detected /     5480 sextracted
+&gt; Line: 4275  Objects:    14525 detected /     5508 sextracted
+&gt; Line: 4300  Objects:    14599 detected /     5538 sextracted
+&gt; Line: 4325  Objects:    14668 detected /     5577 sextracted
+&gt; Line: 4342  Objects:    14720 detected /     5600 sextracted
+&gt; Line: 4350  Objects:    14735 detected /     5615 sextracted
+&gt; Line: 4375  Objects:    14804 detected /     5662 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6000 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6400 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6800 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     7200 sextracted
+      Objects: detected 14858    / sextracted 7243            
+
+&gt; Closing files
+&gt; 
+&gt; All done (in 4.1 s: 1068.0 lines/s , 1765.8 detections/s)
+&gt; 
+----- SExtractor 2.28.0 started on 2024-04-24 at 11:20:02 with 1 thread
+
+&gt; Setting catalog parameters
+&gt; Reading detection filter
+&gt; Initializing Neural Network
+&gt; Reading Neural Network Weights
+&gt; Initializing check-image(s)
+&gt; Initializing catalog
+&gt; Looking for M0717_F814W.fits
+----- Measuring from: M0717_F814W.fits
+      &quot;Unnamed&quot; / no ext. header / 5961x4381 / 32 bits (floats)
+Detection+Measurement image: &gt; Setting up background maps
+&gt; Setting up background map at line:   32
+&gt; Setting up background map at line:   64
+&gt; Setting up background map at line:   96
+&gt; Setting up background map at line:  128
+&gt; Setting up background map at line:  160
+&gt; Setting up background map at line:  192
+&gt; Setting up background map at line:  224
+&gt; Setting up background map at line:  256
+&gt; Setting up background map at line:  288
+&gt; Setting up background map at line:  320
+&gt; Setting up background map at line:  352
+&gt; Setting up background map at line:  384
+&gt; Setting up background map at line:  416
+&gt; Setting up background map at line:  448
+&gt; Setting up background map at line:  480
+&gt; Setting up background map at line:  512
+&gt; Setting up background map at line:  544
+&gt; Setting up background map at line:  576
+&gt; Setting up background map at line:  608
+&gt; Setting up background map at line:  640
+&gt; Setting up background map at line:  672
+&gt; Setting up background map at line:  704
+&gt; Setting up background map at line:  736
+&gt; Setting up background map at line:  768
+&gt; Setting up background map at line:  800
+&gt; Setting up background map at line:  832
+&gt; Setting up background map at line:  864
+&gt; Setting up background map at line:  896
+&gt; Setting up background map at line:  928
+&gt; Setting up background map at line:  960
+&gt; Setting up background map at line:  992
+&gt; Setting up background map at line: 1024
+&gt; Setting up background map at line: 1056
+&gt; Setting up background map at line: 1088
+&gt; Setting up background map at line: 1120
+&gt; Setting up background map at line: 1152
+&gt; Setting up background map at line: 1184
+&gt; Setting up background map at line: 1216
+&gt; Setting up background map at line: 1248
+&gt; Setting up background map at line: 1280
+&gt; Setting up background map at line: 1312
+&gt; Setting up background map at line: 1344
+&gt; Setting up background map at line: 1376
+&gt; Setting up background map at line: 1408
+&gt; Setting up background map at line: 1440
+&gt; Setting up background map at line: 1472
+&gt; Setting up background map at line: 1504
+&gt; Setting up background map at line: 1536
+&gt; Setting up background map at line: 1568
+&gt; Setting up background map at line: 1600
+&gt; Setting up background map at line: 1632
+&gt; Setting up background map at line: 1664
+&gt; Setting up background map at line: 1696
+&gt; Setting up background map at line: 1728
+&gt; Setting up background map at line: 1760
+&gt; Setting up background map at line: 1792
+&gt; Setting up background map at line: 1824
+&gt; Setting up background map at line: 1856
+&gt; Setting up background map at line: 1888
+&gt; Setting up background map at line: 1920
+&gt; Setting up background map at line: 1952
+&gt; Setting up background map at line: 1984
+&gt; Setting up background map at line: 2016
+&gt; Setting up background map at line: 2048
+&gt; Setting up background map at line: 2080
+&gt; Setting up background map at line: 2112
+&gt; Setting up background map at line: 2144
+&gt; Setting up background map at line: 2176
+&gt; Setting up background map at line: 2208
+&gt; Setting up background map at line: 2240
+&gt; Setting up background map at line: 2272
+&gt; Setting up background map at line: 2304
+&gt; Setting up background map at line: 2336
+&gt; Setting up background map at line: 2368
+&gt; Setting up background map at line: 2400
+&gt; Setting up background map at line: 2432
+&gt; Setting up background map at line: 2464
+&gt; Setting up background map at line: 2496
+&gt; Setting up background map at line: 2528
+&gt; Setting up background map at line: 2560
+&gt; Setting up background map at line: 2592
+&gt; Setting up background map at line: 2624
+&gt; Setting up background map at line: 2656
+&gt; Setting up background map at line: 2688
+&gt; Setting up background map at line: 2720
+&gt; Setting up background map at line: 2752
+&gt; Setting up background map at line: 2784
+&gt; Setting up background map at line: 2816
+&gt; Setting up background map at line: 2848
+&gt; Setting up background map at line: 2880
+&gt; Setting up background map at line: 2912
+&gt; Setting up background map at line: 2944
+&gt; Setting up background map at line: 2976
+&gt; Setting up background map at line: 3008
+&gt; Setting up background map at line: 3040
+&gt; Setting up background map at line: 3072
+&gt; Setting up background map at line: 3104
+&gt; Setting up background map at line: 3136
+&gt; Setting up background map at line: 3168
+&gt; Setting up background map at line: 3200
+&gt; Setting up background map at line: 3232
+&gt; Setting up background map at line: 3264
+&gt; Setting up background map at line: 3296
+&gt; Setting up background map at line: 3328
+&gt; Setting up background map at line: 3360
+&gt; Setting up background map at line: 3392
+&gt; Setting up background map at line: 3424
+&gt; Setting up background map at line: 3456
+&gt; Setting up background map at line: 3488
+&gt; Setting up background map at line: 3520
+&gt; Setting up background map at line: 3552
+&gt; Setting up background map at line: 3584
+&gt; Setting up background map at line: 3616
+&gt; Setting up background map at line: 3648
+&gt; Setting up background map at line: 3680
+&gt; Setting up background map at line: 3712
+&gt; Setting up background map at line: 3744
+&gt; Setting up background map at line: 3776
+&gt; Setting up background map at line: 3808
+&gt; Setting up background map at line: 3840
+&gt; Setting up background map at line: 3872
+&gt; Setting up background map at line: 3904
+&gt; Setting up background map at line: 3936
+&gt; Setting up background map at line: 3968
+&gt; Setting up background map at line: 4000
+&gt; Setting up background map at line: 4032
+&gt; Setting up background map at line: 4064
+&gt; Setting up background map at line: 4096
+&gt; Setting up background map at line: 4128
+&gt; Setting up background map at line: 4160
+&gt; Setting up background map at line: 4192
+&gt; Setting up background map at line: 4224
+&gt; Setting up background map at line: 4256
+&gt; Setting up background map at line: 4288
+&gt; Setting up background map at line: 4320
+&gt; Setting up background map at line: 4352
+&gt; Filtering background map(s)
+&gt; Computing background d-map
+&gt; Computing background-noise d-map
+(M+D) Background: 0.000520703 RMS: 0.000520161 / Threshold: 0.000780242 
+&gt; Scanning image
+&gt; Line:   25  Objects:       61 detected /        0 sextracted
+&gt; Line:   50  Objects:      151 detected /        0 sextracted
+&gt; Line:   75  Objects:      228 detected /        0 sextracted
+&gt; Line:  100  Objects:      277 detected /        0 sextracted
+&gt; Line:  125  Objects:      365 detected /        0 sextracted
+&gt; Line:  150  Objects:      439 detected /        0 sextracted
+&gt; Line:  175  Objects:      507 detected /        0 sextracted
+&gt; Line:  200  Objects:      592 detected /        0 sextracted
+&gt; Line:  225  Objects:      674 detected /        0 sextracted
+&gt; Line:  250  Objects:      761 detected /        0 sextracted
+&gt; Line:  275  Objects:      844 detected /        0 sextracted
+&gt; Line:  300  Objects:      912 detected /        0 sextracted
+&gt; Line:  325  Objects:      967 detected /        0 sextracted
+&gt; Line:  350  Objects:     1053 detected /        0 sextracted
+&gt; Line:  375  Objects:     1127 detected /        0 sextracted
+&gt; Line:  400  Objects:     1206 detected /        0 sextracted
+&gt; Line:  425  Objects:     1296 detected /        0 sextracted
+&gt; Line:  450  Objects:     1377 detected /        0 sextracted
+&gt; Line:  475  Objects:     1451 detected /        0 sextracted
+&gt; Line:  500  Objects:     1539 detected /        0 sextracted
+&gt; Line:  525  Objects:     1611 detected /        0 sextracted
+&gt; Line:  550  Objects:     1681 detected /        0 sextracted
+&gt; Line:  575  Objects:     1776 detected /        0 sextracted
+&gt; Line:  600  Objects:     1851 detected /        0 sextracted
+&gt; Line:  625  Objects:     1933 detected /        0 sextracted
+&gt; Line:  650  Objects:     2029 detected /        0 sextracted
+&gt; Line:  675  Objects:     2146 detected /        0 sextracted
+&gt; Line:  700  Objects:     2236 detected /        0 sextracted
+&gt; Line:  725  Objects:     2331 detected /        0 sextracted
+&gt; Line:  750  Objects:     2394 detected /        0 sextracted
+&gt; Line:  775  Objects:     2464 detected /        0 sextracted
+&gt; Line:  800  Objects:     2544 detected /        0 sextracted
+&gt; Line:  825  Objects:     2628 detected /        0 sextracted
+&gt; Line:  850  Objects:     2710 detected /        0 sextracted
+&gt; Line:  875  Objects:     2781 detected /        0 sextracted
+&gt; Line:  900  Objects:     2863 detected /        0 sextracted
+&gt; Line:  925  Objects:     2938 detected /        0 sextracted
+&gt; Line:  950  Objects:     3039 detected /        0 sextracted
+&gt; Line:  975  Objects:     3115 detected /        0 sextracted
+&gt; Line: 1000  Objects:     3194 detected /        0 sextracted
+&gt; Line: 1022  Objects:     3244 detected /        0 sextracted
+&gt; Line: 1025  Objects:     3253 detected /       94 sextracted
+&gt; Line: 1050  Objects:     3314 detected /      144 sextracted
+&gt; Line: 1075  Objects:     3396 detected /      180 sextracted
+&gt; Line: 1100  Objects:     3484 detected /      215 sextracted
+&gt; Line: 1125  Objects:     3584 detected /      269 sextracted
+&gt; Line: 1150  Objects:     3664 detected /      316 sextracted
+&gt; Line: 1175  Objects:     3750 detected /      339 sextracted
+&gt; Line: 1200  Objects:     3839 detected /      383 sextracted
+&gt; Line: 1211  Objects:     3884 detected /      400 sextracted
+&gt; Line: 1225  Objects:     3950 detected /      433 sextracted
+&gt; Line: 1250  Objects:     4052 detected /      477 sextracted
+&gt; Line: 1275  Objects:     4177 detected /      514 sextracted
+&gt; Line: 1300  Objects:     4282 detected /      545 sextracted
+&gt; Line: 1325  Objects:     4361 detected /      580 sextracted
+&gt; Line: 1350  Objects:     4471 detected /      620 sextracted
+&gt; Line: 1375  Objects:     4570 detected /      661 sextracted
+&gt; Line: 1400  Objects:     4638 detected /      706 sextracted
+&gt; Line: 1425  Objects:     4741 detected /      753 sextracted
+&gt; Line: 1450  Objects:     4835 detected /      793 sextracted
+&gt; Line: 1455  Objects:     4851 detected /      800 sextracted
+&gt; Line: 1475  Objects:     4933 detected /      831 sextracted
+&gt; Line: 1500  Objects:     5025 detected /      873 sextracted
+&gt; Line: 1525  Objects:     5102 detected /      908 sextracted
+&gt; Line: 1550  Objects:     5205 detected /      948 sextracted
+&gt; Line: 1575  Objects:     5301 detected /      997 sextracted
+&gt; Line: 1600  Objects:     5397 detected /     1034 sextracted
+&gt; Line: 1625  Objects:     5528 detected /     1087 sextracted
+&gt; Line: 1650  Objects:     5630 detected /     1130 sextracted
+&gt; Line: 1675  Objects:     5715 detected /     1174 sextracted
+&gt; Line: 1689  Objects:     5742 detected /     1200 sextracted
+&gt; Line: 1700  Objects:     5782 detected /     1216 sextracted
+&gt; Line: 1725  Objects:     5855 detected /     1261 sextracted
+&gt; Line: 1750  Objects:     5936 detected /     1299 sextracted
+&gt; Line: 1775  Objects:     5999 detected /     1340 sextracted
+&gt; Line: 1800  Objects:     6095 detected /     1373 sextracted
+&gt; Line: 1825  Objects:     6181 detected /     1405 sextracted
+&gt; Line: 1850  Objects:     6305 detected /     1443 sextracted
+&gt; Line: 1875  Objects:     6397 detected /     1478 sextracted
+&gt; Line: 1900  Objects:     6485 detected /     1521 sextracted
+&gt; Line: 1925  Objects:     6591 detected /     1562 sextracted
+&gt; Line: 1947  Objects:     6666 detected /     1600 sextracted
+&gt; Line: 1950  Objects:     6675 detected /     1604 sextracted
+&gt; Line: 1975  Objects:     6773 detected /     1645 sextracted
+&gt; Line: 2000  Objects:     6850 detected /     1674 sextracted
+&gt; Line: 2025  Objects:     6947 detected /     1712 sextracted
+&gt; Line: 2050  Objects:     7035 detected /     1746 sextracted
+&gt; Line: 2075  Objects:     7126 detected /     1792 sextracted
+&gt; Line: 2100  Objects:     7200 detected /     1835 sextracted
+&gt; Line: 2125  Objects:     7284 detected /     1879 sextracted
+&gt; Line: 2150  Objects:     7404 detected /     1919 sextracted
+&gt; Line: 2175  Objects:     7486 detected /     1966 sextracted
+&gt; Line: 2191  Objects:     7547 detected /     2000 sextracted
+&gt; Line: 2200  Objects:     7577 detected /     2015 sextracted
+&gt; Line: 2225  Objects:     7693 detected /     2064 sextracted
+&gt; Line: 2250  Objects:     7780 detected /     2118 sextracted
+&gt; Line: 2275  Objects:     7852 detected /     2166 sextracted
+&gt; Line: 2300  Objects:     7917 detected /     2216 sextracted
+&gt; Line: 2325  Objects:     7986 detected /     2260 sextracted
+&gt; Line: 2350  Objects:     8055 detected /     2316 sextracted
+&gt; Line: 2375  Objects:     8137 detected /     2369 sextracted
+&gt; Line: 2398  Objects:     8188 detected /     2400 sextracted
+&gt; Line: 2400  Objects:     8196 detected /     2404 sextracted
+&gt; Line: 2425  Objects:     8267 detected /     2457 sextracted
+&gt; Line: 2450  Objects:     8349 detected /     2500 sextracted
+&gt; Line: 2475  Objects:     8437 detected /     2551 sextracted
+&gt; Line: 2500  Objects:     8516 detected /     2598 sextracted
+&gt; Line: 2525  Objects:     8594 detected /     2637 sextracted
+&gt; Line: 2550  Objects:     8680 detected /     2683 sextracted
+&gt; Line: 2575  Objects:     8761 detected /     2744 sextracted
+&gt; Line: 2600  Objects:     8849 detected /     2794 sextracted
+&gt; Line: 2605  Objects:     8870 detected /     2800 sextracted
+&gt; Line: 2625  Objects:     8951 detected /     2849 sextracted
+&gt; Line: 2650  Objects:     9003 detected /     2898 sextracted
+&gt; Line: 2675  Objects:     9070 detected /     2941 sextracted
+&gt; Line: 2700  Objects:     9145 detected /     2995 sextracted
+&gt; Line: 2725  Objects:     9231 detected /     3039 sextracted
+&gt; Line: 2750  Objects:     9337 detected /     3085 sextracted
+&gt; Line: 2775  Objects:     9430 detected /     3130 sextracted
+&gt; Line: 2800  Objects:     9524 detected /     3177 sextracted
+&gt; Line: 2812  Objects:     9572 detected /     3200 sextracted
+&gt; Line: 2825  Objects:     9631 detected /     3224 sextracted
+&gt; Line: 2850  Objects:     9728 detected /     3269 sextracted
+&gt; Line: 2875  Objects:     9816 detected /     3324 sextracted
+&gt; Line: 2900  Objects:     9887 detected /     3368 sextracted
+&gt; Line: 2925  Objects:     9983 detected /     3422 sextracted
+&gt; Line: 2950  Objects:    10072 detected /     3476 sextracted
+&gt; Line: 2975  Objects:    10150 detected /     3521 sextracted
+&gt; Line: 3000  Objects:    10240 detected /     3568 sextracted
+&gt; Line: 3025  Objects:    10318 detected /     3596 sextracted
+&gt; Line: 3028  Objects:    10330 detected /     3600 sextracted
+&gt; Line: 3050  Objects:    10405 detected /     3630 sextracted
+&gt; Line: 3075  Objects:    10523 detected /     3667 sextracted
+&gt; Line: 3100  Objects:    10610 detected /     3697 sextracted
+&gt; Line: 3125  Objects:    10687 detected /     3742 sextracted
+&gt; Line: 3150  Objects:    10803 detected /     3782 sextracted
+&gt; Line: 3175  Objects:    10909 detected /     3831 sextracted
+&gt; Line: 3200  Objects:    11015 detected /     3864 sextracted
+&gt; Line: 3225  Objects:    11133 detected /     3902 sextracted
+&gt; Line: 3250  Objects:    11251 detected /     3946 sextracted
+&gt; Line: 3275  Objects:    11342 detected /     3980 sextracted
+&gt; Line: 3284  Objects:    11370 detected /     4000 sextracted
+&gt; Line: 3300  Objects:    11411 detected /     4030 sextracted
+&gt; Line: 3325  Objects:    11505 detected /     4068 sextracted
+&gt; Line: 3350  Objects:    11584 detected /     4114 sextracted
+&gt; Line: 3375  Objects:    11666 detected /     4151 sextracted
+&gt; Line: 3400  Objects:    11757 detected /     4194 sextracted
+&gt; Line: 3425  Objects:    11851 detected /     4233 sextracted
+&gt; Line: 3450  Objects:    11962 detected /     4282 sextracted
+&gt; Line: 3475  Objects:    12035 detected /     4325 sextracted
+&gt; Line: 3500  Objects:    12095 detected /     4373 sextracted
+&gt; Line: 3521  Objects:    12152 detected /     4400 sextracted
+&gt; Line: 3525  Objects:    12168 detected /     4413 sextracted
+&gt; Line: 3550  Objects:    12251 detected /     4457 sextracted
+&gt; Line: 3575  Objects:    12326 detected /     4498 sextracted
+&gt; Line: 3600  Objects:    12402 detected /     4544 sextracted
+&gt; Line: 3625  Objects:    12483 detected /     4584 sextracted
+&gt; Line: 3650  Objects:    12561 detected /     4614 sextracted
+&gt; Line: 3675  Objects:    12652 detected /     4651 sextracted
+&gt; Line: 3700  Objects:    12729 detected /     4687 sextracted
+&gt; Line: 3725  Objects:    12820 detected /     4726 sextracted
+&gt; Line: 3750  Objects:    12895 detected /     4761 sextracted
+&gt; Line: 3775  Objects:    12982 detected /     4790 sextracted
+&gt; Line: 3786  Objects:    13011 detected /     4800 sextracted
+&gt; Line: 3800  Objects:    13053 detected /     4816 sextracted
+&gt; Line: 3825  Objects:    13159 detected /     4847 sextracted
+&gt; Line: 3850  Objects:    13259 detected /     4883 sextracted
+&gt; Line: 3875  Objects:    13344 detected /     4928 sextracted
+&gt; Line: 3900  Objects:    13416 detected /     4960 sextracted
+&gt; Line: 3925  Objects:    13502 detected /     4995 sextracted
+&gt; Line: 3950  Objects:    13565 detected /     5028 sextracted
+&gt; Line: 3975  Objects:    13653 detected /     5050 sextracted
+&gt; Line: 4000  Objects:    13742 detected /     5090 sextracted
+&gt; Line: 4025  Objects:    13819 detected /     5120 sextracted
+&gt; Line: 4050  Objects:    13893 detected /     5165 sextracted
+&gt; Line: 4071  Objects:    13975 detected /     5200 sextracted
+&gt; Line: 4075  Objects:    13985 detected /     5206 sextracted
+&gt; Line: 4100  Objects:    14047 detected /     5242 sextracted
+&gt; Line: 4125  Objects:    14115 detected /     5279 sextracted
+&gt; Line: 4150  Objects:    14181 detected /     5314 sextracted
+&gt; Line: 4175  Objects:    14258 detected /     5346 sextracted
+&gt; Line: 4200  Objects:    14329 detected /     5383 sextracted
+&gt; Line: 4225  Objects:    14391 detected /     5437 sextracted
+&gt; Line: 4250  Objects:    14473 detected /     5480 sextracted
+&gt; Line: 4275  Objects:    14525 detected /     5508 sextracted
+&gt; Line: 4300  Objects:    14599 detected /     5538 sextracted
+&gt; Line: 4325  Objects:    14668 detected /     5577 sextracted
+&gt; Line: 4342  Objects:    14720 detected /     5600 sextracted
+&gt; Line: 4350  Objects:    14735 detected /     5615 sextracted
+&gt; Line: 4375  Objects:    14804 detected /     5662 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6000 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6400 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     6800 sextracted
+&gt; Line: 4381  Objects:    14858 detected /     7200 sextracted
+      Objects: detected 14858    / sextracted 7243            
+
+&gt; Closing files
+&gt; 
+&gt; All done (in 3.6 s: 1228.1 lines/s , 2030.4 detections/s)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="reading-the-data">
+<h2>3. Reading the Data<a class="headerlink" href="#reading-the-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;num&#39;</span><span class="p">,</span><span class="s1">&#39;mag&#39;</span><span class="p">,</span><span class="s1">&#39;merr&#39;</span><span class="p">,</span><span class="s1">&#39;kron&#39;</span><span class="p">,</span><span class="s1">&#39;backgr&#39;</span><span class="p">,</span><span class="s1">&#39;ra&#39;</span><span class="p">,</span><span class="s1">&#39;dec&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;theta&#39;</span><span class="p">,</span><span class="s1">&#39;mu0&#39;</span><span class="p">,</span><span class="s1">&#39;flag&#39;</span><span class="p">,</span><span class="s1">&#39;fwhm&#39;</span><span class="p">,</span><span class="s1">&#39;flxrad&#39;</span><span class="p">,</span><span class="s1">&#39;cl&#39;</span><span class="p">]</span>
+<span class="n">dat_V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">cat_name</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">colnames</span><span class="p">)</span>
+<span class="n">dat_I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">cat_name</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">colnames</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_scroll-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dat_V</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>num</th>
+      <th>mag</th>
+      <th>merr</th>
+      <th>kron</th>
+      <th>backgr</th>
+      <th>ra</th>
+      <th>dec</th>
+      <th>a</th>
+      <th>b</th>
+      <th>theta</th>
+      <th>mu0</th>
+      <th>flag</th>
+      <th>fwhm</th>
+      <th>flxrad</th>
+      <th>cl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1911.3966</td>
+      <td>731.6298</td>
+      <td>1</td>
+      <td>21.6796</td>
+      <td>0.0016</td>
+      <td>3.50</td>
+      <td>0.008239</td>
+      <td>109.418494</td>
+      <td>37.714342</td>
+      <td>19.341</td>
+      <td>17.625</td>
+      <td>0.44</td>
+      <td>20.1833</td>
+      <td>2</td>
+      <td>9.84</td>
+      <td>15.628</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5889.4160</td>
+      <td>712.3062</td>
+      <td>2</td>
+      <td>25.0555</td>
+      <td>0.0258</td>
+      <td>5.06</td>
+      <td>0.000524</td>
+      <td>109.376589</td>
+      <td>37.714185</td>
+      <td>38.850</td>
+      <td>2.450</td>
+      <td>-79.75</td>
+      <td>24.3301</td>
+      <td>19</td>
+      <td>58.57</td>
+      <td>90.367</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4584.9277</td>
+      <td>434.9285</td>
+      <td>3</td>
+      <td>21.8951</td>
+      <td>0.0017</td>
+      <td>3.50</td>
+      <td>0.004010</td>
+      <td>109.390331</td>
+      <td>37.711874</td>
+      <td>21.432</td>
+      <td>12.511</td>
+      <td>72.92</td>
+      <td>19.8551</td>
+      <td>0</td>
+      <td>13.37</td>
+      <td>10.840</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2690.8933</td>
+      <td>337.5047</td>
+      <td>4</td>
+      <td>23.0958</td>
+      <td>0.0032</td>
+      <td>3.50</td>
+      <td>0.001310</td>
+      <td>109.410282</td>
+      <td>37.711060</td>
+      <td>15.863</td>
+      <td>6.663</td>
+      <td>-87.72</td>
+      <td>20.8277</td>
+      <td>0</td>
+      <td>8.63</td>
+      <td>9.864</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1297.1003</td>
+      <td>281.1276</td>
+      <td>5</td>
+      <td>21.8859</td>
+      <td>0.0022</td>
+      <td>3.50</td>
+      <td>0.008271</td>
+      <td>109.424964</td>
+      <td>37.710586</td>
+      <td>33.888</td>
+      <td>13.639</td>
+      <td>-61.65</td>
+      <td>21.7182</td>
+      <td>0</td>
+      <td>111.26</td>
+      <td>27.440</td>
+      <td>0.001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_scroll-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dat_I</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>num</th>
+      <th>mag</th>
+      <th>merr</th>
+      <th>kron</th>
+      <th>backgr</th>
+      <th>ra</th>
+      <th>dec</th>
+      <th>a</th>
+      <th>b</th>
+      <th>theta</th>
+      <th>mu0</th>
+      <th>flag</th>
+      <th>fwhm</th>
+      <th>flxrad</th>
+      <th>cl</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1911.3966</td>
+      <td>731.6298</td>
+      <td>1</td>
+      <td>20.1743</td>
+      <td>0.0004</td>
+      <td>3.50</td>
+      <td>0.016663</td>
+      <td>109.418494</td>
+      <td>37.714342</td>
+      <td>19.341</td>
+      <td>17.625</td>
+      <td>0.44</td>
+      <td>18.7318</td>
+      <td>2</td>
+      <td>10.11</td>
+      <td>16.040</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5889.4160</td>
+      <td>712.3062</td>
+      <td>2</td>
+      <td>24.5670</td>
+      <td>0.0139</td>
+      <td>5.06</td>
+      <td>0.000402</td>
+      <td>109.376589</td>
+      <td>37.714185</td>
+      <td>38.850</td>
+      <td>2.450</td>
+      <td>-79.75</td>
+      <td>23.9554</td>
+      <td>19</td>
+      <td>58.57</td>
+      <td>40.278</td>
+      <td>0.000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4584.9277</td>
+      <td>434.9285</td>
+      <td>3</td>
+      <td>20.5084</td>
+      <td>0.0004</td>
+      <td>3.50</td>
+      <td>0.007200</td>
+      <td>109.390331</td>
+      <td>37.711874</td>
+      <td>21.432</td>
+      <td>12.511</td>
+      <td>72.92</td>
+      <td>18.6067</td>
+      <td>0</td>
+      <td>13.36</td>
+      <td>12.136</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2690.8933</td>
+      <td>337.5047</td>
+      <td>4</td>
+      <td>21.7658</td>
+      <td>0.0008</td>
+      <td>3.50</td>
+      <td>0.001527</td>
+      <td>109.410282</td>
+      <td>37.711060</td>
+      <td>15.863</td>
+      <td>6.663</td>
+      <td>-87.72</td>
+      <td>19.4696</td>
+      <td>0</td>
+      <td>8.54</td>
+      <td>9.882</td>
+      <td>0.029</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1297.1003</td>
+      <td>281.1276</td>
+      <td>5</td>
+      <td>21.3095</td>
+      <td>0.0011</td>
+      <td>3.50</td>
+      <td>0.008162</td>
+      <td>109.424964</td>
+      <td>37.710586</td>
+      <td>33.888</td>
+      <td>13.639</td>
+      <td>-61.65</td>
+      <td>20.9812</td>
+      <td>0</td>
+      <td>73.93</td>
+      <td>26.175</td>
+      <td>0.029</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="plotting-the-figures">
+<h2>4. Plotting the Figures<a class="headerlink" href="#plotting-the-figures" title="Link to this heading">#</a></h2>
+<section id="check-image-apertures">
+<h3>0) Check image - APERTURES<a class="headerlink" href="#check-image-apertures" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hdu_606_check</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;./606_aper.fits&#39;</span><span class="p">)</span>
+<span class="n">hdu_814_check</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;./814_aper.fits&#39;</span><span class="p">)</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="n">ZScaleInterval</span><span class="p">()</span>
+<span class="n">vmin_606_check</span><span class="p">,</span> <span class="n">vmax_606_check</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">hdu_606_check</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">vmin_814_check</span><span class="p">,</span> <span class="n">vmax_814_check</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">hdu_814_check</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hdu_606_check</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_606_check</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_606_check</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;CHECKIMAGE_TYPE: APERTURES [F606W]&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">hdu_814_check</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_814_check</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_814_check</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;CHECKIMAGE_TYPE: APERTURES [F814W]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/ee68af9b862b7e3e71577423ebc291b4fce9fdb37e15ab7f242d6453ab5d9d76.png"><img alt="../../../_images/ee68af9b862b7e3e71577423ebc291b4fce9fdb37e15ab7f242d6453ab5d9d76.png" src="../../../_images/ee68af9b862b7e3e71577423ebc291b4fce9fdb37e15ab7f242d6453ab5d9d76.png" style="width: 779px; height: 1220px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dat</span> <span class="o">=</span> <span class="p">[</span><span class="n">dat_V</span><span class="p">,</span> <span class="n">dat_I</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="magnitude-magnitude-error-diagram">
+<h3>1) Magnitude - magnitude error diagram<a class="headerlink" href="#magnitude-magnitude-error-diagram" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F606W magnitude&quot;</span><span class="p">,</span> <span class="s2">&quot;F814W magnitude&quot;</span><span class="p">]</span>
+<span class="n">ylab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Magnitude error&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="p">):</span>
+    <span class="n">mag_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">99.0</span><span class="p">)</span>
+    <span class="c1"># magnitude of 99.0 means the source not detected in the 606-band image but detected in the 814-band image.</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;mag&#39;</span><span class="p">][</span><span class="n">mag_range</span><span class="p">],</span> <span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;merr&#39;</span><span class="p">][</span><span class="n">mag_range</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">32.5</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/a5dc993efdc108dc18ab1981e48ad716abeb75f7443185b8a68fc4ae5314b51c.png"><img alt="../../../_images/a5dc993efdc108dc18ab1981e48ad716abeb75f7443185b8a68fc4ae5314b51c.png" src="../../../_images/a5dc993efdc108dc18ab1981e48ad716abeb75f7443185b8a68fc4ae5314b51c.png" style="width: 768px; height: 376px;" /></a>
+</div>
+</div>
+</section>
+<section id="magnitude-stellarity-class-star-digram">
+<h3>2) Magnitude - stellarity (<code class="docutils literal notranslate"><span class="pre">CLASS_STAR</span></code>) digram<a class="headerlink" href="#magnitude-stellarity-class-star-digram" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xlab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F606W magnitude&quot;</span><span class="p">,</span> <span class="s2">&quot;F814W magnitude&quot;</span><span class="p">]</span>
+<span class="n">ylab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Stellarity (CLASS_STAR)&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="p">):</span>
+    <span class="n">mag_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">99.0</span><span class="p">)</span>
+    <span class="c1"># magnitude of 99.0 means the source not detected in the 606-band image but detected in the 814-band image.</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;mag&#39;</span><span class="p">][</span><span class="n">mag_range</span><span class="p">],</span> <span class="n">dat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;cl&#39;</span><span class="p">][</span><span class="n">mag_range</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># CLASS_STAR = 0.4 cut can also depend on the image quality, distribution of CLASS_STAR, or your scientific goals!</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">32.5</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../../../_images/4b4306f65e2e1847b12f1ebc665396f87ac7fc30e8571a2c21d65d635ce268fc.png"><img alt="../../../_images/4b4306f65e2e1847b12f1ebc665396f87ac7fc30e8571a2c21d65d635ce268fc.png" src="../../../_images/4b4306f65e2e1847b12f1ebc665396f87ac7fc30e8571a2c21d65d635ce268fc.png" style="width: 769px; height: 376px;" /></a>
+</div>
+</div>
+<p>From the above basic results, how can you select point/extended sources for analysis?</p>
+</section>
+<section id="cmds-of-galaxies-just-for-example">
+<h3>3) CMDs of galaxies (just for example!)<a class="headerlink" href="#cmds-of-galaxies-just-for-example" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gal_cnd</span> <span class="o">=</span> <span class="p">((</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">30.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;merr&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">30.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;merr&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">&amp;</span> \
+           <span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;flxrad&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">4.</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;fwhm&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">4.</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;flxrad&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">4.</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;fwhm&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">4.</span><span class="p">)</span> <span class="o">&amp;</span> \
+           <span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">&amp;</span> \
+           <span class="p">(</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;cl&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.4</span><span class="p">))</span>
+
+<span class="n">xlab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F606W-F814W&quot;</span><span class="p">]</span>
+<span class="n">ylab</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;F814W magnitude&quot;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dat_V</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">][</span><span class="n">gal_cnd</span><span class="p">]</span><span class="o">-</span><span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">][</span><span class="n">gal_cnd</span><span class="p">],</span> <span class="n">dat_I</span><span class="p">[</span><span class="s1">&#39;mag&#39;</span><span class="p">][</span><span class="n">gal_cnd</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># ax.axhline(0.4, 0, 1, color=&#39;red&#39;, ls=&#39;--&#39;, lw=1)</span>
+<span class="c1"># # CLASS_STAR = 0.4 cut can also depend on the image quality, distribution of CLASS_STAR, or your scientific goals!</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="mf">30.0</span><span class="p">,</span> <span class="mf">17.0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylab</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;F814W magnitude&#39;)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../../../_images/d75b7de7d5d856f85eeb351d2da5183a1e3ad52c85e0bfafe49b8166215d7d40.png"><img alt="../../../_images/d75b7de7d5d856f85eeb351d2da5183a1e3ad52c85e0bfafe49b8166215d7d40.png" src="../../../_images/d75b7de7d5d856f85eeb351d2da5183a1e3ad52c85e0bfafe49b8166215d7d40.png" style="width: 465px; height: 448px;" /></a>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../PSF_photometry.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PSF photometry of NGC 2210</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../GALFIT-Surface_Photometry.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Surface Photometry Using GALFIT</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-source-extractor-sextractor">- What is Source Extractor (SExtractor)?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-sextractor">- Running SExtractor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-parameters">- Input parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-parameters">- Output parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#importing-necessary-packages">0. Importing Necessary Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-input-files">1. Writing Input Files</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#image-list">1) Image list</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-file">2) Configuration file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#output-parameter-file">3) Output parameter file</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-input-parameters">4) Determining input parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-script-for-sextractor-photometry">5) Shell script for SExtractor photometry</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-of-dual-mode-photometry">- Importance of Dual-mode photometry</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-sextractor-in-dual-mode">- Running SExtractor in Dual mode</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2. Running SExtractor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-the-data">3. Reading the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-figures">4. Plotting the Figures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-image-apertures">0) Check image - APERTURES</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#magnitude-magnitude-error-diagram">1) Magnitude - magnitude error diagram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#magnitude-stellarity-class-star-digram">2) Magnitude - stellarity (<code class="docutils literal notranslate"><span class="pre">CLASS_STAR</span></code>) digram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cmds-of-galaxies-just-for-example">3) CMDs of galaxies (just for example!)</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

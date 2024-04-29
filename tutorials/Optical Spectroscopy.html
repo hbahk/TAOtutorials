@@ -1,0 +1,1875 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Specutils: An Astropy package for spectroscopy &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Optical Spectroscopy';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Concept of spectroscopy" href="SAO-Spectroscopic-Data-Reduction.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/Optical Spectroscopy.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Specutils: An Astropy package for spectroscopy</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i-working-with-spectrum1ds">I. Working with Spectrum1Ds</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-1-basic-spectrum-creation">I-1. Basic Spectrum Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-2-reading-from-a-file">I-2. Reading from a File</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1">- method 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2">- method 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3">- method 3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-3-including-uncertainties">I-3: Including Uncertainties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-4-including-redshift-or-radial-velocity">I-4: Including Redshift or Radial Velocity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#including-masks-defining-wcs-multi-dimensional-data-sets-slicing">Including Masks, Defining WCS, Multi-dimensional Data Sets, Slicing …</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-working-with-spectral-cubes">II. Working with Spectral Cubes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-1-loading-a-cube">II-1. Loading a cube</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-2-spectral-slab-extraction">II-2. Spectral slab extraction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-3-spectral-bounding-region">II-3. Spectral Bounding Region</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-4-moments">II-4. Moments</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-0">moment 0</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-1">moment 1</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-5-use-case">II-5. Use Case</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-analysis">III. Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-1-creating-a-model-spectral-line-for-practice">III-1. creating a model spectral line for practice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-2-snr-signal-to-noise-ratio">III-2. SNR (signal to noise ratio)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-3-line-flux-estimates">III-3. Line Flux Estimates</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#line-flux">- line flux</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalent-width">- equivalent width</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-4-centroid">III-4. Centroid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-5-moment">III-5. Moment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-6-line-widths">III-6. Line widths</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#template-comparison-dust-extinction-template-cross-correlation">Template comparison, Dust extinction, Template Cross-correlation …</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-line-spectrum-fitting">IV. Line/Spectrum Fitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-1-line-finding">IV-1. Line Finding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-find-lines-threshold">- using ‘find_lines_threshold’</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-find-lines-derivative">- using ‘find_lines_derivative’</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-2-parameter-estimation">IV-2. Parameter Estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-3-model-line-fitting">IV-3. Model (Line) Fitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-example">simple example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#various-cases">various cases</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-4-continuum-fitting">IV-4. Continuum Fitting</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="specutils-an-astropy-package-for-spectroscopy">
+<h1>Specutils: An Astropy package for spectroscopy<a class="headerlink" href="#specutils-an-astropy-package-for-spectroscopy" title="Link to this heading">#</a></h1>
+<p>document: <a class="reference external" href="https://specutils.readthedocs.io/en/stable/index.html">https://specutils.readthedocs.io/en/stable/index.html</a></p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>conda install -c conda-forge specutils</p>
+<ul class="simple">
+<li><p>if some packages in ‘specutils’ do not exist, try uninstall and reinstall (i.e., update to the latest version)</p>
+<ul>
+<li><p>uninstall: conda uninstall specutils</p></li>
+<li><p>install: conda install -c conda-forge specutils</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">astropy.visualization</span> <span class="kn">import</span> <span class="n">quantity_support</span>
+<span class="kn">import</span> <span class="nn">specutils</span>
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+<span class="n">quantity_support</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;astropy.visualization.units.quantity_support.&lt;locals&gt;.MplQuantityConverter at 0x7fac20818640&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">specutils</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;1.10.0&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>reference: <a class="reference external" href="https://specutils.readthedocs.io/en/stable/index.html">https://specutils.readthedocs.io/en/stable/index.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;https://data.sdss.org/sas/dr16/sdss/spectro/redux/26/spectra/1323/spec-1323-52797-0012.fits&#39;</span>
+<span class="c1"># The spectrum is in the second HDU of this file.</span>
+<span class="k">with</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>  
+    <span class="n">specdata</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+    
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+<span class="n">lamb</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="n">specdata</span><span class="p">[</span><span class="s1">&#39;loglam&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">AA</span> 
+<span class="n">flux</span> <span class="o">=</span> <span class="n">specdata</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**-</span><span class="mi">17</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;erg cm-2 s-1 AA-1&#39;</span><span class="p">)</span> 
+<span class="n">spec</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">lamb</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">spec</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">,</span> <span class="n">spec</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;example spectrum&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;example spectrum&#39;)
+</pre></div>
+</div>
+<img alt="../_images/2f352331c4a7635e54de88677b00fc6b84093dd1a49762944aef820dcc398fb1.png" src="../_images/2f352331c4a7635e54de88677b00fc6b84093dd1a49762944aef820dcc398fb1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">fit_generic_continuum</span>
+<span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>  <span class="c1"># Ignore warnings</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">cont_norm_spec</span> <span class="o">=</span> <span class="n">spec</span> <span class="o">/</span> <span class="n">fit_generic_continuum</span><span class="p">(</span><span class="n">spec</span><span class="p">)(</span><span class="n">spec</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span> 
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">cont_norm_spec</span><span class="o">.</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">cont_norm_spec</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;continuum normalized spectrum&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">654</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">nm</span><span class="p">,</span> <span class="mi">660</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">nm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(6539.999999999999, 6599.999999999999)
+</pre></div>
+</div>
+<img alt="../_images/3316f263cd1ee21d78a432cf483420eebe2e07874ec4d9c429908fe3a5d4a18f.png" src="../_images/3316f263cd1ee21d78a432cf483420eebe2e07874ec4d9c429908fe3a5d4a18f.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">equivalent_width</span>
+<span class="n">equivalent_width</span><span class="p">(</span><span class="n">cont_norm_spec</span><span class="p">,</span> <span class="n">regions</span><span class="o">=</span><span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">6562</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mi">6575</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_latex math notranslate nohighlight">
+\[-14.739627 \; \mathrm{\mathring{A}}\]</div>
+</div>
+</div>
+</section>
+<section id="i-working-with-spectrum1ds">
+<h2>I. Working with Spectrum1Ds<a class="headerlink" href="#i-working-with-spectrum1ds" title="Link to this heading">#</a></h2>
+<p>reference: <a class="reference external" href="https://specutils.readthedocs.io/en/stable/spectrum1d.html#multi-dimensional-data-sets">https://specutils.readthedocs.io/en/stable/spectrum1d.html#multi-dimensional-data-sets</a></p>
+<section id="i-1-basic-spectrum-creation">
+<h3>I-1. Basic Spectrum Creation<a class="headerlink" href="#i-1-basic-spectrum-creation" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+
+<span class="n">flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span>
+<span class="n">wavelength</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5100</span><span class="p">,</span> <span class="mi">5300</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span>
+
+<span class="n">spec1d</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">,</span> <span class="n">spec1d</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Dispersion&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Flux&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Flux&#39;)
+</pre></div>
+</div>
+<img alt="../_images/e0df4fb729db9c27cf5b263dc6ab32059e2d2f6240babd4055d08dc17f870bd4.png" src="../_images/e0df4fb729db9c27cf5b263dc6ab32059e2d2f6240babd4055d08dc17f870bd4.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>spectral_axis could be:</p>
+<ul>
+<li><p>wavelength</p></li>
+<li><p>frequency</p></li>
+<li><p>velocity</p></li>
+<li><p>wavenumber</p></li>
+<li><p>…</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="i-2-reading-from-a-file">
+<h3>I-2. Reading from a File<a class="headerlink" href="#i-2-reading-from-a-file" title="Link to this heading">#</a></h3>
+<section id="method-1">
+<h4>- method 1<a class="headerlink" href="#method-1" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spec1d</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">&quot;/Users/jaehong/jh/2023_천문관측법_조교/specutils/spec-1323-52797-0012.fits&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">spec1d</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;flux: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">flux</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;wavelength: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>type: &lt;class &#39;specutils.spectra.spectrum1d.Spectrum1D&#39;&gt;
+
+Spectrum1D (length=3827)
+flux:             [ 218.23 1e-17 erg / (Angstrom cm2 s), ..., 175.59 1e-17 erg / (Angstrom cm2 s) ],  mean=204.55 1e-17 erg / (Angstrom cm2 s)
+spectral axis:    [ 3815.0 Angstrom, ..., 9206.6 Angstrom ],  mean=6120.1 Angstrom
+uncertainty:      [ InverseVariance(0.01040728), ..., InverseVariance(0.05215673) ]
+
+flux: [218.22615 215.54787 210.0806  ... 188.33995 190.35242 175.59198] 1e-17 erg / (Angstrom cm2 s)
+
+wavelength: [3815.0483 3815.926  3816.806  ... 9202.379  9204.495  9206.613 ] Angstrom
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: UnitsWarning: &#39;1E-17 erg/cm^2/s/Angstrom&#39; contains multiple slashes, which is discouraged by the FITS standard [astropy.units.format.generic]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-2">
+<h4>- method 2<a class="headerlink" href="#method-2" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="n">specs</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;https://data.sdss.org/sas/dr16/sdss/spectro/redux/26/spectra/1323/spec-1323-52797-0012.fits&#39;</span><span class="p">)</span> 
+
+<span class="n">spec1d</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">specs</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;SDSS-III/IV spec&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">spec1d</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;flux: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">flux</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;wavelength: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>type: &lt;class &#39;specutils.spectra.spectrum1d.Spectrum1D&#39;&gt;
+
+Spectrum1D (length=3827)
+flux:             [ 218.23 1e-17 erg / (Angstrom cm2 s), ..., 175.59 1e-17 erg / (Angstrom cm2 s) ],  mean=204.55 1e-17 erg / (Angstrom cm2 s)
+spectral axis:    [ 3815.0 Angstrom, ..., 9206.6 Angstrom ],  mean=6120.1 Angstrom
+uncertainty:      [ InverseVariance(0.01040728), ..., InverseVariance(0.05215673) ]
+
+flux: [218.22615 215.54787 210.0806  ... 188.33995 190.35242 175.59198] 1e-17 erg / (Angstrom cm2 s)
+
+wavelength: [3815.0483 3815.926  3816.806  ... 9202.379  9204.495  9206.613 ] Angstrom
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-3">
+<h4>- method 3<a class="headerlink" href="#method-3" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astroquery.sdss</span> <span class="kn">import</span> <span class="n">SDSS</span>  
+<span class="n">specs</span> <span class="o">=</span> <span class="n">SDSS</span><span class="o">.</span><span class="n">get_spectra</span><span class="p">(</span><span class="n">plate</span><span class="o">=</span><span class="mi">751</span><span class="p">,</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">52251</span><span class="p">,</span> <span class="n">fiberID</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span> <span class="n">data_release</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>  
+
+<span class="n">spec1d</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">specs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;SDSS-III/IV spec&quot;</span><span class="p">)</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;type: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">spec1d</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;flux: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">flux</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;wavelength: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">wavelength</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>type: &lt;class &#39;specutils.spectra.spectrum1d.Spectrum1D&#39;&gt;
+
+Spectrum1D (length=3841)
+flux:             [ 30.597 1e-17 erg / (Angstrom cm2 s), ..., 51.703 1e-17 erg / (Angstrom cm2 s) ],  mean=51.88 1e-17 erg / (Angstrom cm2 s)
+spectral axis:    [ 3799.3 Angstrom, ..., 9198.1 Angstrom ],  mean=6106.1 Angstrom
+uncertainty:      [ InverseVariance(0.06440803), ..., InverseVariance(0.18243204) ]
+
+flux: [30.596626 33.245728 35.89512  ... 53.27969  50.236168 51.702717] 1e-17 erg / (Angstrom cm2 s)
+
+wavelength: [3799.2686 3800.1426 3801.0188 ... 9193.905  9196.0205 9198.141 ] Angstrom
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/astroquery/sdss/core.py:862: VisibleDeprecationWarning: Reading unicode strings without specifying the encoding argument is deprecated. Set the encoding, use None for the system default.
+  arr = np.atleast_1d(np.genfromtxt(io.BytesIO(response.content),
+WARNING: UnitsWarning: &#39;1E-17 erg/cm^2/s/Angstrom&#39; contains multiple slashes, which is discouraged by the FITS standard [astropy.units.format.generic]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="i-3-including-uncertainties">
+<h3>I-3: Including Uncertainties<a class="headerlink" href="#i-3-including-uncertainties" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">StdDevUncertainty</span>
+
+<span class="n">spec</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5010</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="n">StdDevUncertainty</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span><span class="p">))</span>
+<span class="n">spec</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Spectrum1D(flux=&lt;Quantity [0.49040181, 0.43498723, 0.66039948, 0.53592973, 0.54751061,
+           0.35586843, 0.90988496, 0.87836575, 0.65191482, 0.99397559] Jy&gt;, spectral_axis=&lt;SpectralAxis [5000., 5001., 5002., 5003., 5004., 5005., 5006., 5007., 5008., 5009.] Angstrom&gt;, uncertainty=StdDevUncertainty([0.02232193, 0.07250031, 0.06335244, 0.01399662,
+                   0.07552979, 0.05237487, 0.00484745, 0.09800045,
+                   0.06291432, 0.07220244]))&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="i-4-including-redshift-or-radial-velocity">
+<h3>I-4: Including Redshift or Radial Velocity<a class="headerlink" href="#i-4-including-redshift-or-radial-velocity" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;original setting:&#39;</span><span class="p">)</span>
+<span class="n">spec1</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5010</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">redshift</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec1</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+<span class="n">spec2</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">5010</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">radial_velocity</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km/s&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec2</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">shift_spectrum_to:&#39;</span><span class="p">)</span>
+<span class="n">spec1</span><span class="o">.</span><span class="n">shift_spectrum_to</span><span class="p">(</span><span class="n">redshift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  <span class="c1"># Equivalent: spec1.redshift = 0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec1</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+<span class="n">spec2</span><span class="o">.</span><span class="n">shift_spectrum_to</span><span class="p">(</span><span class="n">radial_velocity</span><span class="o">=</span><span class="mi">5000</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km/s&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec2</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">set_reshift_to or set_radial_velocity_to:&#39;</span><span class="p">)</span>
+<span class="n">spec1</span><span class="o">.</span><span class="n">set_redshift_to</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec1</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+<span class="n">spec2</span><span class="o">.</span><span class="n">set_radial_velocity_to</span><span class="p">(</span><span class="mi">50000</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s2">&quot;km/s&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spec2</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>original setting:
+[5000. 5001. 5002. 5003. 5004. 5005. 5006. 5007. 5008. 5009.] Angstrom
+[5000. 5001. 5002. 5003. 5004. 5005. 5006. 5007. 5008. 5009.] Angstrom
+
+shift_spectrum_to:
+[6521.73913043 6523.04347826 6524.34782609 6525.65217391 6526.95652174
+ 6528.26086957 6529.56521739 6530.86956522 6532.17391304 6533.47826087] Angstrom
+[5067.16763967 5068.18107319 5069.19450672 5070.20794025 5071.22137378
+ 5072.2348073  5073.24824083 5074.26167436 5075.27510789 5076.28854142] Angstrom
+
+set_reshift_to or set_radial_velocity_to:
+[6521.73913043 6523.04347826 6524.34782609 6525.65217391 6526.95652174
+ 6528.26086957 6529.56521739 6530.86956522 6532.17391304 6533.47826087] Angstrom
+[5067.16763967 5068.18107319 5069.19450672 5070.20794025 5071.22137378
+ 5072.2348073  5073.24824083 5074.26167436 5075.27510789 5076.28854142] Angstrom
+</pre></div>
+</div>
+</div>
+</div>
+<section id="including-masks-defining-wcs-multi-dimensional-data-sets-slicing">
+<h4>Including Masks, Defining WCS, Multi-dimensional Data Sets, Slicing …<a class="headerlink" href="#including-masks-defining-wcs-multi-dimensional-data-sets-slicing" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="ii-working-with-spectral-cubes">
+<h2>II. Working with Spectral Cubes<a class="headerlink" href="#ii-working-with-spectral-cubes" title="Link to this heading">#</a></h2>
+<p>reference: <a class="reference external" href="https://specutils.readthedocs.io/en/stable/spectral_cube.html">https://specutils.readthedocs.io/en/stable/spectral_cube.html</a></p>
+<ul class="simple">
+<li><p>2D spatial image + 1D spectrum: 3D data cube</p></li>
+</ul>
+<section id="ii-1-loading-a-cube">
+<h3>II-1. Loading a cube<a class="headerlink" href="#ii-1-loading-a-cube" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">specutils.spectra</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;https://stsci.box.com/shared/static/28a88k1qfipo4yxc4p4d40v4axtlal8y.fits&quot;</span>
+<span class="n">file</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sc</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;MaNGA cube&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PLATEID = 7495 / Current plate 
+a string value was expected. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56746.000000 from DATE-OBS&#39;. [astropy.wcs.wcs]
+/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/specutils/spectra/spectrum1d.py:203: UserWarning: Input WCS indicates that the spectral axis is not last. Reshaping arrays to put spectral axis last.
+  warnings.warn(&quot;Input WCS indicates that the spectral axis is not&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(74, 74, 4563)
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\rightarrow\)</span> The cube has 74<span class="math notranslate nohighlight">\(\times\)</span>74 spaxels (spatial pixels) with 4563 spectral axis points in each one</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="o">.</span><span class="n">spectral_axis_unit</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: AstropyDeprecationWarning: The spectral_axis_unit function is deprecated and may be removed in a future version.
+        Use spectral_axis.unit instead. [warnings]
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\mathrm{m}\]</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\rightarrow\)</span> Unit of this spectral axis is ‘meter’</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="mi">2000</span><span class="p">:</span><span class="mi">2003</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Spectrum1D(flux=&lt;Quantity [[[0.48920232, 0.4987253 , 0.5098349 ],
+            [0.493365  , 0.4964812 , 0.5223962 ],
+            [0.49446177, 0.4909543 , 0.5304416 ]],
+
+           [[0.53114057, 0.53538376, 0.5467784 ],
+            [0.53761804, 0.533159  , 0.554437  ],
+            [0.5470889 , 0.54905874, 0.57109433]],
+
+           [[0.5599331 , 0.554316  , 0.5618426 ],
+            [0.5763055 , 0.5668046 , 0.5774939 ],
+            [0.59571505, 0.60118765, 0.59942234]]] 1e-17 erg / (Angstrom cm2 s spaxel)&gt;, spectral_axis=&lt;SpectralAxis 
+   (observer to target:
+      radial_velocity=0.0 km / s
+      redshift=0.0)
+  [5.73984286e-07, 5.74116466e-07, 5.74248676e-07] m&gt;, uncertainty=InverseVariance([[[4324.235 , 4326.87  , 4268.985 ],
+                  [5128.3867, 5142.5005, 4998.457 ],
+                  [4529.9097, 4545.8345, 4255.305 ]],
+
+                 [[4786.163 , 4811.216 , 4735.3135],
+                  [4992.71  , 5082.1294, 4927.881 ],
+                  [4992.9683, 5046.971 , 4798.005 ]],
+
+                 [[4831.2236, 4887.096 , 4806.84  ],
+                  [3895.8677, 4027.9104, 3896.0195],
+                  [4521.258 , 4630.997 , 4503.0396]]]))&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\rightarrow\)</span> 3 flux values <span class="math notranslate nohighlight">\(\times\)</span> 9 spaxels (spatial pixels): total 27 values</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Spectrum at spaxel of (30, 30)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wavelength [$\AA$]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Flux&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Flux&#39;)
+</pre></div>
+</div>
+<img alt="../_images/75c52f2c9a31f21cd7e465187386c54910e7c0bc55dfbedd1e84fe69223bec19.png" src="../_images/75c52f2c9a31f21cd7e465187386c54910e7c0bc55dfbedd1e84fe69223bec19.png" />
+</div>
+</div>
+</section>
+<section id="ii-2-spectral-slab-extraction">
+<h3>II-2. Spectral slab extraction<a class="headerlink" href="#ii-2-spectral-slab-extraction" title="Link to this heading">#</a></h3>
+<p>The spectral_slab function can be used to extract spectral regions from the cube.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">spectral_slab</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="n">spectral_slab</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="mf">5000.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mf">5003.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">ss</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,::]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(74, 74, 3)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Spectrum1D(flux=&lt;Quantity [[[0.6103081 , 0.95697385, 1.0791174 ],
+            [0.5663384 , 0.8872061 , 1.0814004 ],
+            [0.520966  , 0.7819859 , 1.024845  ]],
+
+           [[0.64514536, 0.96376216, 1.083235  ],
+            [0.6112465 , 0.89025146, 1.058679  ],
+            [0.56316894, 0.77895504, 0.99165994]],
+
+           [[0.65954393, 0.9084677 , 0.9965009 ],
+            [0.6255246 , 0.84401435, 0.9930112 ],
+            [0.59066033, 0.762025  , 0.9361185 ]]] 1e-17 erg / (Angstrom cm2 s spaxel)&gt;, spectral_axis=&lt;SpectralAxis 
+   (observer to target:
+      radial_velocity=0.0 km / s
+      redshift=0.0)
+  [5.00034537e-07, 5.00149688e-07, 5.00264865e-07] m&gt;, uncertainty=InverseVariance([[[3449.242 , 2389.292 , 2225.105 ],
+                  [4098.7485, 2965.88  , 2632.497 ],
+                  [3589.92  , 2902.7622, 2292.3823]],
+
+                 [[3563.3342, 2586.58  , 2416.039 ],
+                  [4090.8855, 3179.1702, 2851.823 ],
+                  [4158.919 , 3457.0115, 2841.1965]],
+
+                 [[3684.6013, 3056.2   , 2880.6592],
+                  [3221.7888, 2801.3518, 2525.541 ],
+                  [3936.68  , 3461.534 , 3047.6135]]]))&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ss</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">ss</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Spectrum at spaxel of (30, 30)</span><span class="se">\n</span><span class="s2">and wavelength range of 5000~5003 $\AA$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wavelength [$\AA$]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Flux&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Flux&#39;)
+</pre></div>
+</div>
+<img alt="../_images/479bdb93d9ab6b994ad085d5275e6643035f748838c706bb9b8b2f2248b2fdc6.png" src="../_images/479bdb93d9ab6b994ad085d5275e6643035f748838c706bb9b8b2f2248b2fdc6.png" />
+</div>
+</div>
+</section>
+<section id="ii-3-spectral-bounding-region">
+<h3>II-3. Spectral Bounding Region<a class="headerlink" href="#ii-3-spectral-bounding-region" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">extract_bounding_spectral_region</span>
+<span class="n">composite_region</span> <span class="o">=</span> <span class="n">SpectralRegion</span><span class="p">([(</span><span class="mi">5000</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mi">5002</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">),</span> <span class="p">(</span><span class="mi">5006</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mf">5008.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">)])</span>
+<span class="n">sub_spectrum</span> <span class="o">=</span> <span class="n">extract_bounding_spectral_region</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">composite_region</span><span class="p">)</span> 
+<span class="n">sub_spectrum</span><span class="o">.</span><span class="n">spectral_axis</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[[5.0003454 \times 10^{-7},~5.0014969 \times 10^{-7},~5.0026486 \times 10^{-7},~5.0038007 \times 10^{-7},~5.004953 \times 10^{-7},~5.0061055 \times 10^{-7},~5.0072584 \times 10^{-7}] \; \mathrm{m}\]</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sub_spectrum</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">sub_spectrum</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;composite 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sub_spectrum</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">sub_spectrum</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;composite 2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Spectrum at spaxel of (30, 30)</span><span class="se">\n</span><span class="s2">and wavelength range of composite spectral region&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wavelength [$\AA$]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Flux&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fac31954c10&gt;
+</pre></div>
+</div>
+<img alt="../_images/39e70eee609b391f818953189616d9684c7ccce3a815e976482baf877f4bd964.png" src="../_images/39e70eee609b391f818953189616d9684c7ccce3a815e976482baf877f4bd964.png" />
+</div>
+</div>
+</section>
+<section id="ii-4-moments">
+<h3>II-4. Moments<a class="headerlink" href="#ii-4-moments" title="Link to this heading">#</a></h3>
+<p>about moments: <a class="reference external" href="https://casa.nrao.edu/Release3.4.0/docs/userman/UserManse41.html">https://casa.nrao.edu/Release3.4.0/docs/userman/UserManse41.html</a></p>
+<ul class="simple">
+<li><p>moment 0: integrated value of the spectrum</p></li>
+<li><p>moment 1: intensity weighted coordinate <span class="math notranslate nohighlight">\(\rightarrow\)</span> traditionally used to get ’velocity fields’</p></li>
+<li><p>moment 2: intensity weighted dispersion of the coordinate <span class="math notranslate nohighlight">\(\rightarrow\)</span> traditionally used to get ’velocity dispersion’</p></li>
+</ul>
+<section id="moment-0">
+<h4>moment 0<a class="headerlink" href="#moment-0" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">moment</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sc shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">m0</span> <span class="o">=</span> <span class="n">moment</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 0 shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m0</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 0 (over whole wavelength range):</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 0 at spaxel [30:33,30:33]:</span><span class="se">\n</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m0</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sc shape: (74, 74, 4563)
+
+moment 0 shape: (74, 74)
+
+moment 0 (over whole wavelength range):
+ [[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]] 1e-17 erg / (Angstrom cm2 s spaxel)
+
+moment 0 at spaxel [30:33,30:33]:
+[[1952.3552 1979.4755 1986.7565]
+ [2087.3977 2102.9895 2161.1938]
+ [2155.5762 2223.35   2315.4287]] 1e-17 erg / (Angstrom cm2 s spaxel)
+</pre></div>
+</div>
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\rightarrow\)</span> the brightest spaxel among [30:33, 30:33] is [32, 32], value of 2315.4287.</p>
+</section>
+<section id="moment-1">
+<h4>moment 1<a class="headerlink" href="#moment-1" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sc shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sc</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">moment</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 1 shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 1 (over whole wavelength range):</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> Angstrom&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span><span class="mi">30</span><span class="p">:</span><span class="mi">33</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">*</span><span class="mf">1e10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sc shape: (74, 74, 4563)
+
+moment 1 shape: (74, 74)
+
+moment 1 (over whole wavelength range):
+ [[nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ ...
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]] m
+
+[[6452.61317402 6462.65068917 6481.28165723]
+ [6464.67929507 6479.41282558 6514.60998073]
+ [6486.72775133 6526.31872372 6567.33086858]] Angstrom
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/astropy/units/quantity.py:611: RuntimeWarning: invalid value encountered in divide
+  result = super().__array_ufunc__(function, method, *arrays, **kwargs)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="mi">30</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="mi">30</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">sc</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flux</span><span class="p">)])</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">m</span><span class="p">[</span><span class="mi">30</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="mi">30</span><span class="o">+</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;moment 1(</span><span class="si">{:.1f}</span><span class="s1">) $\AA$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">30</span><span class="o">+</span><span class="n">i</span><span class="p">,</span><span class="mi">30</span><span class="o">+</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="o">*</span><span class="mf">1e10</span><span class="p">))</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">6563</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H alpha at z=0 (6563 $\AA$)&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Wavelength [$\AA$]&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/000501c6154289ad8874c541f4d99c764fb8d349a0dca21272c59c1cb475c797.png" src="../_images/000501c6154289ad8874c541f4d99c764fb8d349a0dca21272c59c1cb475c797.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(\rightarrow\)</span> the most blue-shifted spaxel among [30:33, 30:33] is [30, 30], value of 6452.6 Angstrom.</p>
+</section>
+</section>
+<section id="ii-5-use-case">
+<h3>II-5. Use Case<a class="headerlink" href="#ii-5-use-case" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span><span class="p">,</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">moment</span>
+<span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">spectral_slab</span>
+           
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;https://stsci.box.com/shared/static/28a88k1qfipo4yxc4p4d40v4axtlal8y.fits&quot;</span>
+<span class="n">fn</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">spec1d</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;spec shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec1d</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+<span class="c1"># Extract H-alpha sub-cube for moment maps using spectral_slab</span>
+<span class="n">subspec</span> <span class="o">=</span> <span class="n">spectral_slab</span><span class="p">(</span><span class="n">spec1d</span><span class="p">,</span> <span class="mf">6745.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mi">6765</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">)</span>
+<span class="n">ha_wave</span> <span class="o">=</span> <span class="n">subspec</span><span class="o">.</span><span class="n">spectral_axis</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;subspec shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subspec</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+<span class="c1"># Extract wider sub-cube covering H-alpha and [N II] using spectral_slab</span>
+<span class="n">subspec_wide</span> <span class="o">=</span> <span class="n">spectral_slab</span><span class="p">(</span><span class="n">spec1d</span><span class="p">,</span> <span class="mf">6705.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">,</span> <span class="mi">6805</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">AA</span><span class="p">)</span>
+<span class="n">ha_wave_wide</span><span class="o">=</span> <span class="n">subspec_wide</span><span class="o">.</span><span class="n">spectral_axis</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;subspec_wide shape: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subspec_wide</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+
+<span class="c1"># Convert flux density to microJy and correct negative flux offset for this particular dataset</span>
+<span class="n">ha_flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subspec</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.0093</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0E-6</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span>
+<span class="n">ha_flux_wide</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">subspec_wide</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="o">+</span> <span class="mf">0.0093</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.0E-6</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;h alpha flux (over whole spaxels): </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ha_flux</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;h alpha + [N II] flux (over whole spaxels): </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ha_flux_wide</span><span class="p">))</span>
+
+<span class="c1"># Compute moment maps for H-alpha line</span>
+<span class="n">moment0_halpha</span> <span class="o">=</span> <span class="n">moment</span><span class="p">(</span><span class="n">subspec</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">moment1_halpha</span> <span class="o">=</span> <span class="n">moment</span><span class="p">(</span><span class="n">subspec</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 0 (over 6745~6765AA wavelength range):</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment0_halpha</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 1 (over 6745~6765AA wavelength range):</span><span class="se">\n</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment1_halpha</span><span class="p">))</span>
+
+<span class="c1"># Convert moment1 from AA to velocity</span>
+<span class="c1"># H-alpha is redshifted to 6755 AA for this galaxy</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 1 at spaxel [40,40]: </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment1_halpha</span><span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="mi">40</span><span class="p">]))</span>
+<span class="n">vel_map</span> <span class="o">=</span> <span class="mf">3.0E5</span> <span class="o">*</span> <span class="p">(</span><span class="n">moment1_halpha</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mf">6.755E-7</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.755E-7</span> <span class="c1"># km/s</span>
+
+<span class="c1"># Plot results in 3 panels (subspec_wide,  H-alpha line flux, H-alpha velocity map)</span>
+<span class="n">f</span><span class="p">,(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">,</span><span class="n">ax3</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ha_wave_wide</span><span class="o">*</span><span class="mf">1e10</span><span class="p">,</span> <span class="p">(</span><span class="n">ha_flux_wide</span><span class="p">)</span><span class="o">*</span><span class="mf">1000.</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$\AA$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;uJy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">6755</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;H alpha(6755 $\AA$)&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;both&quot;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;flux</span><span class="se">\n</span><span class="s1">(summed over all spaxels)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">moment0_halpha</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;moment 0 map</span><span class="se">\n</span><span class="s1">(over 6745~6765$\AA$ wavelength range)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x pixels&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">vel_map</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mf">100.</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mf">100.</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;rainbow&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;moment 1 map</span><span class="se">\n</span><span class="s1">(over 6745~6765$\AA$ wavelength range)&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x pixels&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PLATEID = 7495 / Current plate 
+a string value was expected. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56746.000000 from DATE-OBS&#39;. [astropy.wcs.wcs]
+/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/specutils/spectra/spectrum1d.py:203: UserWarning: Input WCS indicates that the spectral axis is not last. Reshaping arrays to put spectral axis last.
+  warnings.warn(&quot;Input WCS indicates that the spectral axis is not&quot;
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>spec shape: (74, 74, 4563)
+
+subspec shape: (74, 74, 13)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+WARNING: No observer defined on WCS, SpectralCoord will be converted without any velocity frame change [astropy.wcs.wcsapi.fitswcs]
+/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/astropy/units/quantity.py:611: RuntimeWarning: invalid value encountered in divide
+  result = super().__array_ufunc__(function, method, *arrays, **kwargs)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>subspec_wide shape: (74, 74, 65)
+
+h alpha flux (over whole spaxels): [0.000603   0.00056514 0.00060918 0.00081698 0.00112461 0.00132214
+ 0.00135893 0.0013588  0.00127405 0.00099207 0.00070127 0.00057755
+ 0.00056347] Jy
+
+h alpha + [N II] flux (over whole spaxels): [0.00059711 0.00059765 0.00061359 0.00060334 0.00060105 0.0005995
+ 0.00060372 0.00060931 0.00060515 0.00060226 0.00059755 0.00060024
+ 0.0006006  0.00060518 0.0006052  0.00060508 0.00061074 0.00060609
+ 0.00060177 0.00062301 0.00066609 0.00069764 0.00070389 0.0007092
+ 0.0006931  0.00064985 0.000603   0.00056514 0.00060918 0.00081698
+ 0.00112461 0.00132214 0.00135893 0.0013588  0.00127405 0.00099207
+ 0.00070127 0.00057755 0.00056347 0.00056896 0.00057253 0.00057587
+ 0.00063    0.00075689 0.00088826 0.00095038 0.00096512 0.0009594
+ 0.00088658 0.0007338  0.00062021 0.0005854  0.00057143 0.00057699
+ 0.00058685 0.00058275 0.00058624 0.00059103 0.00059145 0.00059179
+ 0.00058911 0.00058391 0.00058259 0.00058562 0.00058717] Jy
+
+moment 0 (over 6745~6765AA wavelength range):
+ [[0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ ...
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]
+ [0. 0. 0. ... 0. 0. 0.]] 1e-17 erg / (Angstrom cm2 s spaxel)
+
+moment 1 (over 6745~6765AA wavelength range):
+ [[nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ ...
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]
+ [nan nan nan ... nan nan nan]] m
+
+moment 1 at spaxel [40,40]: 6.754677523157036e-07 m
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;x pixels&#39;)
+</pre></div>
+</div>
+<img alt="../_images/6e16666a648ce01584a0d8df5be8fdb4d13fd9f579d56b54916419a488f5751a.png" src="../_images/6e16666a648ce01584a0d8df5be8fdb4d13fd9f579d56b54916419a488f5751a.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>The moment 0 map shows in which part of the galaxy the star forming region is located.</p></li>
+<li><p>The moment 1 map shows the rotation of the galaxy.</p></li>
+</ul>
+</section>
+</section>
+<section id="iii-analysis">
+<h2>III. Analysis<a class="headerlink" href="#iii-analysis" title="Link to this heading">#</a></h2>
+<p>reference: <a class="reference external" href="https://specutils.readthedocs.io/en/stable/analysis.html">https://specutils.readthedocs.io/en/stable/analysis.html</a></p>
+<section id="iii-1-creating-a-model-spectral-line-for-practice">
+<h3>III-1. creating a model spectral line for practice<a class="headerlink" href="#iii-1-creating-a-model-spectral-line-for-practice" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">StdDevUncertainty</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span><span class="p">,</span> <span class="n">SpectralRegion</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span> 
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">spectral_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">11.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">GHz</span>
+<span class="n">spectral_model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mf">0.8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mi">5</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.8</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">)</span>
+
+<span class="n">flux</span> <span class="o">=</span> <span class="n">spectral_model</span><span class="p">(</span><span class="n">spectral_axis</span><span class="p">)</span>
+<span class="n">flux</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">spectral_axis</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Jy</span>
+<span class="n">uncertainty</span> <span class="o">=</span> <span class="n">StdDevUncertainty</span><span class="p">(</span><span class="mf">0.2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">flux</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">)</span>
+
+<span class="n">noisy_gaussian</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">spectral_axis</span><span class="o">=</span><span class="n">spectral_axis</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">uncertainty</span><span class="o">=</span><span class="n">uncertainty</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">,</span> <span class="n">noisy_gaussian</span><span class="o">.</span><span class="n">flux</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;spectral line for practice&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;spectral line for practice&#39;)
+</pre></div>
+</div>
+<img alt="../_images/453541ef52b7b6159e1d347f9e79c202d6eb64b698c6cde3342d790df7c4efb0.png" src="../_images/453541ef52b7b6159e1d347f9e79c202d6eb64b698c6cde3342d790df7c4efb0.png" />
+</div>
+</div>
+</section>
+<section id="iii-2-snr-signal-to-noise-ratio">
+<h3>III-2. SNR (signal to noise ratio)<a class="headerlink" href="#iii-2-snr-signal-to-noise-ratio" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">snr</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">snr</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snr</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">4</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.4773066557399983
+9.830087299340123
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="iii-3-line-flux-estimates">
+<h3>III-3. Line Flux Estimates<a class="headerlink" href="#iii-3-line-flux-estimates" title="Link to this heading">#</a></h3>
+<section id="line-flux">
+<h4>- line flux<a class="headerlink" href="#line-flux" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Flux in the provided spectrum (or regions). Unit is the spectrum’s [flux unit] times [spectral_axis unit].</p></li>
+<li><p>The line_flux function assumes the spectrum has already been continuum-subtracted.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">line_flux</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;line flux: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line_flux</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;line flux uncertainty: </span><span class="si">{:.4f}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line_flux</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">))</span><span class="o">.</span><span class="n">uncertainty</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;line flux: </span><span class="si">{:.4e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line_flux</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">erg</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">cm</span><span class="o">**-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="o">**-</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;line flux uncertainty: </span><span class="si">{:.4e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line_flux</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">)</span><span class="o">.</span><span class="n">uncertainty</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">erg</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">cm</span><span class="o">**-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">s</span><span class="o">**-</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>line flux: 4.9378 GHz Jy
+line flux uncertainty: 0.0899 GHz Jy
+
+line flux: 4.9795e-14 erg / (cm2 s)
+line flux uncertainty: 1.4213e-15 erg / (cm2 s)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="equivalent-width">
+<h4>- equivalent width<a class="headerlink" href="#equivalent-width" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>For the equivalent width, note the need to add a continuum level</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">equivalent_width</span>
+
+<span class="n">noisy_gaussian_with_continuum</span> <span class="o">=</span> <span class="n">noisy_gaussian</span> <span class="o">+</span> <span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">equivalent_width</span><span class="p">(</span><span class="n">noisy_gaussian_with_continuum</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">equivalent_width</span><span class="p">(</span><span class="n">noisy_gaussian_with_continuum</span><span class="p">,</span> <span class="n">regions</span><span class="o">=</span><span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-4.979510865809041 GHz
+-4.937848741441899 GHz
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="iii-4-centroid">
+<h3>III-4. Centroid<a class="headerlink" href="#iii-4-centroid" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">centroid</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;centroid of the spectral line: </span><span class="si">{:4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">centroid</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>centroid of the spectral line: 4.999092 GHz
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="iii-5-moment">
+<h3>III-5. Moment<a class="headerlink" href="#iii-5-moment" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>since we don’t have spectral cube data as above (see II-5. Use Case), we can compute moments, but we can’t draw moment maps.</p></li>
+<li><p>about moments: <a class="reference external" href="https://casa.nrao.edu/Release3.4.0/docs/userman/UserManse41.html">https://casa.nrao.edu/Release3.4.0/docs/userman/UserManse41.html</a></p>
+<ul>
+<li><p>moment 0: integrated value of the spectrum</p></li>
+<li><p>moment 1: intensity weighted coordinate <span class="math notranslate nohighlight">\(\rightarrow\)</span> traditionally used to get ’velocity fields’</p></li>
+<li><p>moment 2: intensity weighted dispersion of the coordinate <span class="math notranslate nohighlight">\(\rightarrow\)</span> traditionally used to get ’velocity dispersion’</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">moment</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 0: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 1: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;moment 2: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">moment</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">,</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">GHz</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>moment 0: 98.26318995469377 Jy
+moment 1: 4.999091509500502 GHz
+moment 2: 0.5858669537838598 GHz2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="iii-6-line-widths">
+<h3>III-6. Line widths<a class="headerlink" href="#iii-6-line-widths" title="Link to this heading">#</a></h3>
+<p>There are several width statistics that are provided by the specutils.analysis submodule.</p>
+<ul class="simple">
+<li><p>gaussian_sigma_width: The ‘gaussian_sigma_width’ function estimates the width of the spectrum by computing a second-moment-based approximation of the standard deviation.</p></li>
+<li><p>gaussian_fwhm: The ‘gaussian_fwhm’ function estimates the width of the spectrum at half max, again by computing an approximation of the standard deviation.</p></li>
+</ul>
+<p>** Both of above functions assume that the spectrum is approximately gaussian.</p>
+<ul class="simple">
+<li><p>fwhm: The function ‘fwhm’ provides an estimate of the full width of the spectrum at half max that does not assume the spectrum is gaussian. It locates the maximum, and then locates the value closest to half of the maximum on either side, and measures the distance between them.</p></li>
+<li><p>fwzi: A function to calculate the full width at zero intensity (i.e. the width of a spectral feature at the continuum) is provided as ‘fwzi’. Like the fwhm calculation, it does not make assumptions about the shape of the feature and calculates the width by finding the points at either side of maximum that reach the continuum value. In this case, it assumes the provided spectrum has been continuum subtracted.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">gaussian_sigma_width</span><span class="p">,</span> <span class="n">gaussian_fwhm</span><span class="p">,</span> <span class="n">fwhm</span><span class="p">,</span> <span class="n">fwzi</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gaussian_sigma_width</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gaussian_fwhm</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fwhm</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">fwzi</span><span class="p">(</span><span class="n">noisy_gaussian</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.7407543142214599 GHz
+1.744343107571848 GHz
+1.8604766629181038 GHz
+94.99997483835863 GHz
+</pre></div>
+</div>
+</div>
+</div>
+<section id="template-comparison-dust-extinction-template-cross-correlation">
+<h4>Template comparison, Dust extinction, Template Cross-correlation …<a class="headerlink" href="#template-comparison-dust-extinction-template-cross-correlation" title="Link to this heading">#</a></h4>
+</section>
+</section>
+</section>
+<section id="iv-line-spectrum-fitting">
+<h2>IV. Line/Spectrum Fitting<a class="headerlink" href="#iv-line-spectrum-fitting" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://specutils.readthedocs.io/en/stable/fitting.html">https://specutils.readthedocs.io/en/stable/fitting.html</a></p>
+<section id="iv-1-line-finding">
+<h3>IV-1. Line Finding<a class="headerlink" href="#iv-1-line-finding" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="k">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">Spectrum1D</span><span class="p">,</span> <span class="n">SpectralRegion</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">g3</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">(</span><span class="o">-</span><span class="mf">1.7</span><span class="p">,</span> <span class="mf">8.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">g1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">g2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">g3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">spectrum</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">flux</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">spectral_axis</span><span class="o">=</span><span class="n">x</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">spectral_axis</span><span class="p">,</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Spectral Axis (</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">spectral_axis</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Flux Axis(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spectrum</span><span class="o">.</span><span class="n">flux</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Example spectral lines&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a31b5e5a3273e9893418c9a86019e828a2d12cde8665ac95ab3f19f30bc1a2e9.png" src="../_images/a31b5e5a3273e9893418c9a86019e828a2d12cde8665ac95ab3f19f30bc1a2e9.png" />
+</div>
+</div>
+<section id="using-find-lines-threshold">
+<h4>- using ‘find_lines_threshold’<a class="headerlink" href="#using-find-lines-threshold" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>While we know the true uncertainty here, this is often not the case with real data.</p></li>
+<li><p>Therefore, since find_lines_threshold requires an uncertainty, we will produce an estimate of the uncertainty by calling the noise_region_uncertainty function:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">noise_region_uncertainty</span>
+
+<span class="n">noise_region</span> <span class="o">=</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">0</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+<span class="n">spectrum</span> <span class="o">=</span> <span class="n">noise_region_uncertainty</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">noise_region</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">find_lines_threshold</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="n">find_lines_threshold</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">noise_factor</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== emission lines:===</span><span class="se">\n</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lines</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;emission&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== absorption lines:===</span><span class="se">\n</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lines</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;absorption&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== emission lines:===
+    line_center    line_type line_center_index
+        um                                   
+----------------- --------- -----------------
+4.572864321608041  emission                91
+4.824120603015076  emission                96
+5.477386934673367  emission               109
+ 8.99497487437186  emission               179
+
+=== absorption lines:===
+    line_center    line_type  line_center_index
+        um                                    
+----------------- ---------- -----------------
+8.190954773869347 absorption               163
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Spectrum is not below the threshold signal-to-noise 0.01. This may indicate you have not continuum subtracted this spectrum (or that you have but it has high SNR features).
+
+If you want to suppress this warning either type &#39;specutils.conf.do_continuum_function_check = False&#39; or see http://docs.astropy.org/en/stable/config/#adding-new-configuration-items for other ways to configure the warning. [specutils.analysis.flux]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-find-lines-derivative">
+<h4>- using ‘find_lines_derivative’<a class="headerlink" href="#using-find-lines-derivative" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define a noise region for adding the uncertainty</span>
+<span class="n">noise_region</span> <span class="o">=</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">0</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+
+<span class="c1"># Derivative technique</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">find_lines_derivative</span>
+
+<span class="n">lines</span> <span class="o">=</span> <span class="n">find_lines_derivative</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">flux_threshold</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== emission lines:===</span><span class="se">\n</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lines</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;emission&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=== absorption lines:===</span><span class="se">\n</span><span class="s1"> </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">lines</span><span class="p">[</span><span class="s1">&#39;line_type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;absorption&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== emission lines:===
+    line_center    line_type line_center_index
+        um                                   
+----------------- --------- -----------------
+4.522613065326634  emission                90
+5.477386934673367  emission               109
+
+=== absorption lines:===
+    line_center    line_type  line_center_index
+        um                                    
+----------------- ---------- -----------------
+8.190954773869347 absorption               163
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Spectrum is not below the threshold signal-to-noise 0.01. This may indicate you have not continuum subtracted this spectrum (or that you have but it has high SNR features).
+
+If you want to suppress this warning either type &#39;specutils.conf.do_continuum_function_check = False&#39; or see http://docs.astropy.org/en/stable/config/#adding-new-configuration-items for other ways to configure the warning. [specutils.analysis.flux]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="iv-2-parameter-estimation">
+<h3>IV-2. Parameter Estimation<a class="headerlink" href="#iv-2-parameter-estimation" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">estimate_line_parameters</span>
+<span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">extract_region</span>
+
+<span class="n">sub_region</span> <span class="o">=</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+<span class="n">sub_spectrum</span> <span class="o">=</span> <span class="n">extract_region</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">sub_region</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">estimate_line_parameters</span><span class="p">(</span><span class="n">sub_spectrum</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">()))</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: Gaussian1D
+Inputs: (&#39;x&#39;,)
+Outputs: (&#39;y&#39;,)
+Model set size: 1
+Parameters:
+        amplitude            mean              stddev      
+            Jy                um                 um        
+    ------------------ ---------------- -------------------
+    1.1845669151078486 4.57517271067525 0.19373372929165977
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">specutils</span> <span class="kn">import</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">estimate_line_parameters</span>
+<span class="kn">from</span> <span class="nn">specutils.manipulation</span> <span class="kn">import</span> <span class="n">extract_region</span>
+<span class="kn">from</span> <span class="nn">specutils.analysis</span> <span class="kn">import</span> <span class="n">centroid</span><span class="p">,</span> <span class="n">fwhm</span>
+
+<span class="n">sub_region</span> <span class="o">=</span> <span class="n">SpectralRegion</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+<span class="n">sub_spectrum</span> <span class="o">=</span> <span class="n">extract_region</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">sub_region</span><span class="p">)</span>
+
+<span class="n">ricker</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">RickerWavelet1D</span><span class="p">()</span>
+<span class="n">ricker</span><span class="o">.</span><span class="n">amplitude</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">flux</span><span class="p">)</span>
+<span class="n">ricker</span><span class="o">.</span><span class="n">x_0</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">centroid</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">region</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">ricker</span><span class="o">.</span><span class="n">sigma</span><span class="o">.</span><span class="n">estimator</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">fwhm</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">estimate_line_parameters</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">ricker</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: RickerWavelet1D
+Inputs: (&#39;x&#39;,)
+Outputs: (&#39;y&#39;,)
+Model set size: 1
+Parameters:
+        amplitude             x_0                sigma       
+            Jy                 um                  um        
+    ------------------ ------------------ -------------------
+    2.4220683957581444 3.6045476935889367 0.24416769183724707
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/jaehong/opt/anaconda3/lib/python3.8/site-packages/astropy/units/quantity.py:611: RuntimeWarning: invalid value encountered in divide
+  result = super().__array_ufunc__(function, method, *arrays, **kwargs)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="iv-3-model-line-fitting">
+<h3>IV-3. Model (Line) Fitting<a class="headerlink" href="#iv-3-model-line-fitting" title="Link to this heading">#</a></h3>
+<section id="simple-example">
+<h4>simple example<a class="headerlink" href="#simple-example" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">astropy.modeling</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+
+<span class="kn">from</span> <span class="nn">specutils.spectra</span> <span class="kn">import</span> <span class="n">Spectrum1D</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">fit_lines</span>
+
+<span class="c1"># Create a simple spectrum with a Gaussian.</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span> <span class="mf">6.3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">0.8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">spectrum_line_fit</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">flux</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">spectral_axis</span><span class="o">=</span><span class="n">x</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+
+<span class="c1"># Fit the spectrum and calculate the fitted flux values (``y_fit``)</span>
+<span class="n">g_init</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Gaussian1D</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="mf">3.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mf">6.1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">1.</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+<span class="n">g_fit</span> <span class="o">=</span> <span class="n">fit_lines</span><span class="p">(</span><span class="n">spectrum_line_fit</span><span class="p">,</span> <span class="n">g_init</span><span class="p">)</span>
+<span class="n">y_fit</span> <span class="o">=</span> <span class="n">g_fit</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+
+<span class="c1"># Plot the original spectrum and the fitted.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Original spectrum&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_fit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Fit result&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Single fit peak&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fac214acc70&gt;
+</pre></div>
+</div>
+<img alt="../_images/54e92a3e6e64eabcd85971892872a1653e19cf4841a5502f8849ea9074890bb3.png" src="../_images/54e92a3e6e64eabcd85971892872a1653e19cf4841a5502f8849ea9074890bb3.png" />
+</div>
+</div>
+</section>
+<section id="various-cases">
+<h4>various cases<a class="headerlink" href="#various-cases" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Single Peak Fit Within a Window (Defined by Center)</p></li>
+<li><p>Single Peak Fit Within a Window (Defined by Left and Right)</p></li>
+<li><p>Double Peak Fit</p></li>
+<li><p>Double Peak Fit Within a Window</p></li>
+<li><p>Double Peak Fit Within Around a Center Window</p></li>
+<li><p>Double Peak Fit - Two Separate Peaks</p></li>
+<li><p>Double Peak Fit - Two Separate Peaks With Two Windows</p></li>
+<li><p>Double Peak Fit - Exclude One Region</p></li>
+</ul>
+</section>
+</section>
+<section id="iv-4-continuum-fitting">
+<h3>IV-4. Continuum Fitting<a class="headerlink" href="#iv-4-continuum-fitting" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>While the line-fitting machinery can be used to fit continuua at the same time as models, often it is convenient to subtract or normalize a spectrum by its continuum before other processing is done. specutils provides some convenience functions to perform exactly this task. An example is shown below.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
+<span class="kn">from</span> <span class="nn">specutils.spectra</span> <span class="kn">import</span> <span class="n">Spectrum1D</span><span class="p">,</span> <span class="n">SpectralRegion</span>
+<span class="kn">from</span> <span class="nn">specutils.fitting</span> <span class="kn">import</span> <span class="n">fit_generic_continuum</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mf">6.3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">0.1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">y_continuum</span> <span class="o">=</span> <span class="mf">3.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mf">5.6</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mf">4.8</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">+=</span> <span class="n">y_continuum</span>
+
+<span class="n">spectrum_cont_fit</span> <span class="o">=</span> <span class="n">Spectrum1D</span><span class="p">(</span><span class="n">flux</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">Jy</span><span class="p">,</span> <span class="n">spectral_axis</span><span class="o">=</span><span class="n">x</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>  <span class="c1"># Ignore warnings</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+    <span class="n">g1_fit</span> <span class="o">=</span> <span class="n">fit_generic_continuum</span><span class="p">(</span><span class="n">spectrum_cont_fit</span><span class="p">)</span>
+    
+<span class="n">y_continuum_fitted</span> <span class="o">=</span> <span class="n">g1_fit</span><span class="p">(</span><span class="n">x</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">um</span><span class="p">)</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_continuum_fitted</span><span class="p">)</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Continuum Fitting&quot;</span><span class="p">)</span>  
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intel MKL WARNING: Support of Intel(R) Streaming SIMD Extensions 4.2 (Intel(R) SSE4.2) enabled only processors has been deprecated. Intel oneAPI Math Kernel Library 2025.0 will require Intel(R) Advanced Vector Extensions (Intel(R) AVX) instructions.
+</pre></div>
+</div>
+<img alt="../_images/021d85f577466215bf72207d9411f036ca6b3ba82b0204c16da8c40107110567.png" src="../_images/021d85f577466215bf72207d9411f036ca6b3ba82b0204c16da8c40107110567.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="SAO-Spectroscopic-Data-Reduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Concept of spectroscopy</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#i-working-with-spectrum1ds">I. Working with Spectrum1Ds</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-1-basic-spectrum-creation">I-1. Basic Spectrum Creation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-2-reading-from-a-file">I-2. Reading from a File</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-1">- method 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2">- method 2</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#method-3">- method 3</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-3-including-uncertainties">I-3: Including Uncertainties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#i-4-including-redshift-or-radial-velocity">I-4: Including Redshift or Radial Velocity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#including-masks-defining-wcs-multi-dimensional-data-sets-slicing">Including Masks, Defining WCS, Multi-dimensional Data Sets, Slicing …</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-working-with-spectral-cubes">II. Working with Spectral Cubes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-1-loading-a-cube">II-1. Loading a cube</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-2-spectral-slab-extraction">II-2. Spectral slab extraction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-3-spectral-bounding-region">II-3. Spectral Bounding Region</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-4-moments">II-4. Moments</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-0">moment 0</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#moment-1">moment 1</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ii-5-use-case">II-5. Use Case</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-analysis">III. Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-1-creating-a-model-spectral-line-for-practice">III-1. creating a model spectral line for practice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-2-snr-signal-to-noise-ratio">III-2. SNR (signal to noise ratio)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-3-line-flux-estimates">III-3. Line Flux Estimates</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#line-flux">- line flux</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalent-width">- equivalent width</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-4-centroid">III-4. Centroid</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-5-moment">III-5. Moment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iii-6-line-widths">III-6. Line widths</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#template-comparison-dust-extinction-template-cross-correlation">Template comparison, Dust extinction, Template Cross-correlation …</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-line-spectrum-fitting">IV. Line/Spectrum Fitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-1-line-finding">IV-1. Line Finding</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-find-lines-threshold">- using ‘find_lines_threshold’</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-find-lines-derivative">- using ‘find_lines_derivative’</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-2-parameter-estimation">IV-2. Parameter Estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-3-model-line-fitting">IV-3. Model (Line) Fitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-example">simple example</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#various-cases">various cases</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iv-4-continuum-fitting">IV-4. Continuum Fitting</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

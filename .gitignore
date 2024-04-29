@@ -1,0 +1,5 @@
+_sources/
+old/*
+test*.html
+test*.ipynb
+Spectroscopic-Data-Reduction.html

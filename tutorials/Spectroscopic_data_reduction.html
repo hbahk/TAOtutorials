@@ -1,0 +1,1285 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Spectroscopic Data Reduction &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Spectroscopic_data_reduction';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Preprocessing the CCD images" href="Preprocessing.html" />
+    <link rel="prev" title="Surface Photometry Using GALFIT" href="GALFIT-Surface_Photometry.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Optical%20Spectroscopy.html">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/Spectroscopic_data_reduction.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Spectroscopic Data Reduction</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-of-the-raw-images">Preprocessing of the Raw Images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-master-bias">Making the Master Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-master-flat">Making Master Flat</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-flat-image-shift">Checking for Flat Image Shift</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-with-the-standard-star-profile">Comparing with the Standard Star Profile</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-the-raw-images">Preprocessing the Raw Images</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-1d-spectra">Extracting 1D Spectra</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="spectroscopic-data-reduction">
+<h1>Spectroscopic Data Reduction<a class="headerlink" href="#spectroscopic-data-reduction" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">ascii</span><span class="p">,</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span><span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">median_filter</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
+<span class="kn">from</span> <span class="nn">astropy.stats</span> <span class="kn">import</span> <span class="n">sigma_clip</span><span class="p">,</span> <span class="n">gaussian_fwhm_to_sigma</span>
+<span class="kn">from</span> <span class="nn">numpy.polynomial.chebyshev</span> <span class="kn">import</span> <span class="n">chebfit</span><span class="p">,</span> <span class="n">chebval</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">CCDData</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling.models</span> <span class="kn">import</span> <span class="n">Gaussian1D</span><span class="p">,</span> <span class="n">Chebyshev2D</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling.fitting</span> <span class="kn">import</span> <span class="n">LevMarLSQFitter</span>
+<span class="kn">from</span> <span class="nn">astropy.visualization</span> <span class="kn">import</span> <span class="n">ZScaleInterval</span>
+<span class="kn">from</span> <span class="nn">ccdproc</span> <span class="kn">import</span> <span class="n">combine</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">gridspec</span><span class="p">,</span> <span class="n">rcParams</span><span class="p">,</span> <span class="n">rc</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">preproc</span> <span class="c1"># custom module for data reduction</span>
+
+<span class="c1"># plt.rcParams[&#39;axes.linewidth&#39;] = 2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
+
+<span class="n">WD</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./data/proj5&#39;</span><span class="p">)</span>
+<span class="n">RAWDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s1">&#39;raw&#39;</span> <span class="o">/</span> <span class="s1">&#39;P03hbahk0304145443GZ_data&#39;</span>
+<span class="n">OUTDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s1">&#39;out&#39;</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">OUTDIR</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">OUTDIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_summary_table_focas</span><span class="p">(</span><span class="n">rawdir</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;.fits.gz&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Make a summary table of the raw data in the directory. This function is</span>
+<span class="sd">    specifically designed for the data taken with the FOCAS instrument.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        rawdir (pathlib.Path): The directory containing the raw data.</span>
+<span class="sd">        suffix (str, optional): The suffix of the raw data files. Defaults to</span>
+<span class="sd">            &#39;.fits.gz&#39;.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        stab (astropy.table.Table): The summary table of the raw data in the directory.</span>
+<span class="sd">        </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># making a summary table</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">rawdir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="o">+</span><span class="n">suffix</span><span class="p">):</span>
+        <span class="n">hdr</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        
+        <span class="c1"># getting the filter information from the header</span>
+        <span class="n">filt1</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;FILTER01&#39;</span><span class="p">]</span>
+        <span class="n">filt2</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;FILTER02&#39;</span><span class="p">]</span>
+        <span class="n">filt3</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;FILTER03&#39;</span><span class="p">]</span>
+            
+        <span class="n">X</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;AIRMASS&#39;</span><span class="p">]</span> <span class="c1"># airmass</span>
+        <span class="n">disp</span> <span class="o">=</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DISPERSR&#39;</span><span class="p">]</span> <span class="c1"># disperser</span>
+        
+        <span class="c1"># appending the data to the summary list</span>
+        <span class="n">summary</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DATE-OBS&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;OBJECT&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;RA&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DEC&#39;</span><span class="p">],</span>
+                        <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;DATA-TYP&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">],</span> <span class="n">X</span><span class="p">,</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;ALTITUDE&#39;</span><span class="p">],</span> <span class="n">disp</span><span class="p">,</span>
+                        <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;SLT-WID&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;SLT-PA&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;SLIT&#39;</span><span class="p">],</span> <span class="n">filt1</span><span class="p">,</span> <span class="n">filt2</span><span class="p">,</span> <span class="n">filt3</span><span class="p">,</span>
+                        <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;UT-STR&#39;</span><span class="p">],</span> <span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;UT-END&#39;</span><span class="p">]])</span>
+        
+    <span class="c1"># creating the summary table</span>
+    <span class="n">stab</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">summary</span><span class="p">,</span>
+                 <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">,</span> <span class="s1">&#39;date-obs&#39;</span><span class="p">,</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span> <span class="s1">&#39;ra&#39;</span><span class="p">,</span> <span class="s1">&#39;dec&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;exptime&#39;</span><span class="p">,</span> <span class="s1">&#39;airmass&#39;</span><span class="p">,</span> <span class="s1">&#39;altitude&#39;</span><span class="p">,</span> <span class="s1">&#39;disperser&#39;</span><span class="p">,</span> <span class="s1">&#39;slit-width&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;slit-pa&#39;</span><span class="p">,</span> <span class="s1">&#39;slit&#39;</span><span class="p">,</span> <span class="s1">&#39;filter1&#39;</span><span class="p">,</span> <span class="s1">&#39;filter2&#39;</span><span class="p">,</span><span class="s1">&#39;filter3&#39;</span><span class="p">,</span> <span class="s1">&#39;ut-str&#39;</span><span class="p">,</span> <span class="s1">&#39;ut-end&#39;</span><span class="p">],</span>
+                 <span class="n">dtype</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">,</span> <span class="s1">&#39;f8&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">,</span> <span class="s1">&#39;U50&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">stab</span>
+
+<span class="n">summary_table</span> <span class="o">=</span> <span class="n">make_summary_table_focas</span><span class="p">(</span><span class="n">RAWDIR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_table</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">(</span><span class="n">display_length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><i>Table length=60</i>
+<table id="table5412181808-836028" class="table-striped table-bordered table-condensed">
+<thead><tr><th>idx</th><th>filename</th><th>date-obs</th><th>object</th><th>ra</th><th>dec</th><th>type</th><th>exptime</th><th>airmass</th><th>altitude</th><th>disperser</th><th>slit-width</th><th>slit-pa</th><th>slit</th><th>filter1</th><th>filter2</th><th>filter3</th><th>ut-str</th><th>ut-end</th></tr></thead>
+<tr><td>0</td><td>FCSA00141794.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:17:48.038</td><td>+19:54:08.26</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:37:11.906</td><td>04:37:15.139</td></tr>
+<tr><td>1</td><td>FCSA00141920.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.157</td><td>+29:47:45.71</td><td>OBJECT</td><td>1200.0</td><td>1.136</td><td>61.6129</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>07:59:00.676</td><td>08:19:01.117</td></tr>
+<tr><td>2</td><td>FCSA00141930.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.230</td><td>+29:47:45.13</td><td>OBJECT</td><td>1200.0</td><td>1.038</td><td>74.4191</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>09:03:28.980</td><td>09:23:29.405</td></tr>
+<tr><td>3</td><td>FCSA00141848.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>11:39:50.841</td><td>+19:54:11.18</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRMR01</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:59:10.571</td><td>04:59:10.574</td></tr>
+<tr><td>4</td><td>FCSA00141916.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.020</td><td>+29:47:44.75</td><td>OBJECT</td><td>1200.0</td><td>1.254</td><td>52.8249</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>07:18:00.165</td><td>07:38:00.608</td></tr>
+<tr><td>5</td><td>FCSA00141734.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>21:41:03.767</td><td>+17:46:28.41</td><td>BIAS</td><td>0.0</td><td>1.001</td><td>86.8997</td><td>SCFCGRHD90</td><td>0.5</td><td>-0.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:53:03.807</td><td>14:53:03.810</td></tr>
+<tr><td>6</td><td>FCSA00141566.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:23:03.374</td><td>+19:54:09.25</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:46:28.971</td><td>04:46:30.721</td></tr>
+<tr><td>7</td><td>FCSA00141576.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:26:18.779</td><td>+19:54:09.76</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:49:43.639</td><td>04:49:46.993</td></tr>
+<tr><td>8</td><td>FCSA00141822.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:26:05.681</td><td>+19:54:09.65</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:45:27.990</td><td>04:45:29.664</td></tr>
+<tr><td>9</td><td>FCSA00141582.fits.gz</td><td>2013-06-06</td><td>COMPARISON</td><td>11:30:54.937</td><td>+19:54:10.37</td><td>COMPARISON</td><td>1.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:54:18.901</td><td>04:54:20.208</td></tr>
+<tr><td>10</td><td>FCSA00141592.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>11:33:34.934</td><td>+19:54:10.68</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:56:58.577</td><td>04:56:58.581</td></tr>
+<tr><td>11</td><td>FCSA00141850.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>11:40:15.919</td><td>+19:54:11.21</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRMR01</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:59:35.705</td><td>04:59:35.709</td></tr>
+<tr><td>12</td><td>FCSA00141928.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:40.904</td><td>+29:47:45.16</td><td>OBJECT</td><td>1200.0</td><td>1.06</td><td>70.6138</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>08:42:58.958</td><td>09:02:59.531</td></tr>
+<tr><td>13</td><td>FCSA00141840.fits.gz</td><td>2013-06-07</td><td>COMPARISON</td><td>11:36:05.843</td><td>+19:54:10.86</td><td>COMPARISON</td><td>1.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:55:26.356</td><td>04:55:27.664</td></tr>
+<tr><td>14</td><td>FCSA00141938.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:40.962</td><td>+29:47:44.65</td><td>OBJECT</td><td>1200.0</td><td>1.016</td><td>79.8546</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>09:47:25.717</td><td>10:07:26.151</td></tr>
+<tr><td>15</td><td>FCSA00142004.fits.gz</td><td>2013-06-07</td><td>Feige110</td><td>23:20:01.957</td><td>-05:10:51.73</td><td>OBJECT</td><td>120.0</td><td>1.221</td><td>54.915</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:57:35.107</td><td>14:59:35.437</td></tr>
+<tr><td>16</td><td>FCSA00142014.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>22:44:41.129</td><td>+05:07:05.56</td><td>BIAS</td><td>0.0</td><td>1.064</td><td>70.0</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:06:35.438</td><td>15:06:35.475</td></tr>
+<tr><td>17</td><td>FCSA00141814.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:24:09.922</td><td>+19:54:09.36</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:43:32.479</td><td>04:43:33.844</td></tr>
+<tr><td>18</td><td>FCSA00141882.fits.gz</td><td>2013-06-07</td><td>Feige34</td><td>10:39:30.966</td><td>+43:06:49.52</td><td>COMPARISON</td><td>1.0</td><td>1.192</td><td>56.9683</td><td>SCFCGRHD90</td><td>0.5</td><td>-240.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:51:10.923</td><td>05:51:12.178</td></tr>
+<tr><td>19</td><td>FCSA00141574.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:25:47.384</td><td>+19:54:09.68</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:49:12.414</td><td>04:49:15.712</td></tr>
+<tr><td>20</td><td>FCSA00141564.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:22:34.585</td><td>+19:54:09.18</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:46:00.022</td><td>04:46:01.332</td></tr>
+<tr><td>21</td><td>FCSA00141842.fits.gz</td><td>2013-06-07</td><td>COMPARISON</td><td>11:37:39.133</td><td>+19:54:11.00</td><td>COMPARISON</td><td>1.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:56:59.334</td><td>04:57:00.535</td></tr>
+<tr><td>22</td><td>FCSA00141852.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>11:40:41.097</td><td>+19:54:11.24</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRMR01</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:00:00.677</td><td>05:00:00.681</td></tr>
+<tr><td>23</td><td>FCSA00141590.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>11:33:10.259</td><td>+19:54:10.64</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:56:33.980</td><td>04:56:33.983</td></tr>
+<tr><td>24</td><td>FCSA00141580.fits.gz</td><td>2013-06-06</td><td>COMPARISON</td><td>11:29:22.148</td><td>+19:54:10.18</td><td>COMPARISON</td><td>1.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:52:46.502</td><td>04:52:48.069</td></tr>
+<tr><td>25</td><td>FCSA00142016.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>22:45:04.116</td><td>+05:05:25.26</td><td>BIAS</td><td>0.0</td><td>1.064</td><td>69.9853</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:07:00.612</td><td>15:07:00.615</td></tr>
+<tr><td>26</td><td>FCSA00142006.fits.gz</td><td>2013-06-07</td><td>Feige110</td><td>23:20:01.931</td><td>-05:10:52.32</td><td>OBJECT</td><td>120.0</td><td>1.215</td><td>55.3661</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:00:12.283</td><td>15:02:12.492</td></tr>
+<tr><td>27</td><td>FCSA00141820.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:25:36.591</td><td>+19:54:09.58</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:44:59.057</td><td>04:45:00.666</td></tr>
+<tr><td>28</td><td>FCSA00141816.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:24:38.912</td><td>+19:54:09.43</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:44:01.648</td><td>04:44:02.864</td></tr>
+<tr><td>29</td><td>FCSA00142020.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>22:45:04.155</td><td>+05:05:25.82</td><td>BIAS</td><td>0.0</td><td>1.063</td><td>70.1304</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:07:53.382</td><td>15:07:53.385</td></tr>
+<tr><td>30</td><td>FCSA00141880.fits.gz</td><td>2013-06-07</td><td>Feige34</td><td>10:39:30.972</td><td>+43:06:49.26</td><td>OBJECT</td><td>60.0</td><td>1.188</td><td>57.2701</td><td>SCFCGRHD90</td><td>0.5</td><td>-240.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:49:08.496</td><td>05:50:08.794</td></tr>
+<tr><td>31</td><td>FCSA00141940.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.342</td><td>+29:47:44.22</td><td>OBJECT</td><td>1200.0</td><td>1.016</td><td>79.7146</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>10:07:55.867</td><td>10:27:56.272</td></tr>
+<tr><td>32</td><td>FCSA00141796.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:18:28.363</td><td>+19:54:08.39</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:37:51.954</td><td>04:37:55.270</td></tr>
+<tr><td>33</td><td>FCSA00141588.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>11:32:45.281</td><td>+19:54:10.59</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:56:08.968</td><td>04:56:08.971</td></tr>
+<tr><td>34</td><td>FCSA00141736.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>21:31:44.487</td><td>+19:44:47.63</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9655</td><td>SCFCGRHD90</td><td>0.5</td><td>-0.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:53:28.961</td><td>14:53:28.964</td></tr>
+<tr><td>35</td><td>FCSA00142012.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>22:44:16.061</td><td>+05:07:05.66</td><td>BIAS</td><td>0.0</td><td>1.064</td><td>70.0</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:06:10.484</td><td>15:06:10.487</td></tr>
+<tr><td>36</td><td>FCSA00141584.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>11:31:55.327</td><td>+19:54:10.49</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:55:19.239</td><td>04:55:19.243</td></tr>
+<tr><td>37</td><td>FCSA00141846.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>11:39:25.764</td><td>+19:54:11.15</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRMR01</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:58:45.651</td><td>04:58:45.655</td></tr>
+<tr><td>38</td><td>FCSA00141570.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:24:38.470</td><td>+19:54:09.51</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:48:03.580</td><td>04:48:06.856</td></tr>
+<tr><td>39</td><td>FCSA00141560.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:21:04.403</td><td>+19:54:08.92</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:44:30.263</td><td>04:44:31.639</td></tr>
+<tr><td>40</td><td>FCSA00141894.fits.gz</td><td>2013-06-07</td><td>Feige34</td><td>10:39:30.923</td><td>+43:06:49.54</td><td>OBJECT</td><td>60.0</td><td>1.207</td><td>55.9261</td><td>SCFCGRHD90</td><td>0.5</td><td>-240.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:58:05.720</td><td>05:59:05.978</td></tr>
+<tr><td>41</td><td>FCSA00141802.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:20:01.653</td><td>+19:54:08.67</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:39:25.020</td><td>04:39:28.281</td></tr>
+<tr><td>42</td><td>FCSA00141918.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:40.875</td><td>+29:47:45.21</td><td>OBJECT</td><td>1200.0</td><td>1.189</td><td>57.2495</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>07:38:31.841</td><td>07:58:32.311</td></tr>
+<tr><td>43</td><td>FCSA00141936.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.176</td><td>+29:47:45.47</td><td>OBJECT</td><td>1200.0</td><td>1.022</td><td>78.0223</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>09:26:54.703</td><td>09:46:55.075</td></tr>
+<tr><td>44</td><td>FCSA00141926.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.023</td><td>+29:47:45.31</td><td>OBJECT</td><td>1200.0</td><td>1.09</td><td>66.505</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>08:22:27.919</td><td>08:42:28.480</td></tr>
+<tr><td>45</td><td>FCSA00141578.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:26:49.877</td><td>+19:54:09.83</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:50:14.581</td><td>04:50:17.883</td></tr>
+<tr><td>46</td><td>FCSA00141568.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:23:31.060</td><td>+19:54:09.33</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:46:56.497</td><td>04:46:58.109</td></tr>
+<tr><td>47</td><td>FCSA00141732.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>22:23:06.413</td><td>+08:27:10.24</td><td>BIAS</td><td>0.0</td><td>1.046</td><td>72.9932</td><td>SCFCGRHD90</td><td>0.5</td><td>-0.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:52:38.851</td><td>14:52:38.855</td></tr>
+<tr><td>48</td><td>FCSA00141878.fits.gz</td><td>2013-06-07</td><td>Feige34</td><td>10:39:30.978</td><td>+43:06:49.28</td><td>OBJECT</td><td>60.0</td><td>1.185</td><td>57.5049</td><td>SCFCGRHD90</td><td>0.5</td><td>-240.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:47:32.380</td><td>05:48:32.720</td></tr>
+<tr><td>49</td><td>FCSA00142018.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>22:45:04.156</td><td>+05:05:25.88</td><td>BIAS</td><td>0.0</td><td>1.064</td><td>70.0573</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:07:26.683</td><td>15:07:26.686</td></tr>
+<tr><td>50</td><td>FCSA00141730.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>23:03:44.623</td><td>-01:20:01.29</td><td>BIAS</td><td>0.0</td><td>1.169</td><td>58.8068</td><td>SCFCGRHD90</td><td>0.5</td><td>-0.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:52:13.406</td><td>14:52:13.410</td></tr>
+<tr><td>51</td><td>FCSA00141818.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:25:08.002</td><td>+19:54:09.51</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:44:30.393</td><td>04:44:31.697</td></tr>
+<tr><td>52</td><td>FCSA00142010.fits.gz</td><td>2013-06-07</td><td>Feige110</td><td>23:20:01.964</td><td>-05:10:51.68</td><td>OBJECT</td><td>120.0</td><td>1.208</td><td>55.8712</td><td>SCFCGRHD90</td><td>0.5</td><td>-405.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>15:03:10.694</td><td>15:05:11.030</td></tr>
+<tr><td>53</td><td>FCSA00141798.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:18:59.560</td><td>+19:54:08.48</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:38:23.184</td><td>04:38:26.574</td></tr>
+<tr><td>54</td><td>FCSA00141854.fits.gz</td><td>2013-06-07</td><td>BIAS</td><td>11:41:06.075</td><td>+19:54:11.27</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRMR01</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>05:00:25.637</td><td>05:00:25.674</td></tr>
+<tr><td>55</td><td>FCSA00141586.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>11:32:20.002</td><td>+19:54:10.54</td><td>BIAS</td><td>0.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:55:43.880</td><td>04:55:43.883</td></tr>
+<tr><td>56</td><td>FCSA00141562.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:22:06.397</td><td>+19:54:09.10</td><td>DOMEFLAT</td><td>1.1</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:45:32.080</td><td>04:45:33.717</td></tr>
+<tr><td>57</td><td>FCSA00141572.fits.gz</td><td>2013-06-06</td><td>DOMEFLAT</td><td>11:25:16.188</td><td>+19:54:09.60</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9625</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:48:41.382</td><td>04:48:44.710</td></tr>
+<tr><td>58</td><td>FCSA00141728.fits.gz</td><td>2013-06-06</td><td>BIAS</td><td>23:19:58.381</td><td>-05:11:14.89</td><td>BIAS</td><td>0.0</td><td>1.248</td><td>53.1982</td><td>SCFCGRHD90</td><td>0.5</td><td>-0.3</td><td>SCFCSLLC20</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>14:51:48.193</td><td>14:51:48.197</td></tr>
+<tr><td>59</td><td>FCSA00141800.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:19:30.656</td><td>+19:54:08.58</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:38:54.202</td><td>04:38:57.612</td></tr>
+</table><style>table.dataTable {clear: both; width: auto !important; margin: 0 !important;}
+.dataTables_info, .dataTables_length, .dataTables_filter, .dataTables_paginate{
+display: inline-block; margin-right: 1em; }
+.paginate_button { margin-right: 5px; }
+</style>
+<script>
+
+var astropy_sort_num = function(a, b) {
+    var a_num = parseFloat(a);
+    var b_num = parseFloat(b);
+
+    if (isNaN(a_num) && isNaN(b_num))
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    else if (!isNaN(a_num) && !isNaN(b_num))
+        return ((a_num < b_num) ? -1 : ((a_num > b_num) ? 1 : 0));
+    else
+        return isNaN(a_num) ? -1 : 1;
+}
+
+require.config({paths: {
+    datatables: 'https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min'
+}});
+require(["datatables"], function(){
+    console.log("$('#table5412181808-836028').dataTable()");
+    
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "optionalnum-asc": astropy_sort_num,
+    "optionalnum-desc": function (a,b) { return -astropy_sort_num(a, b); }
+});
+
+    $('#table5412181808-836028').dataTable({
+        order: [],
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, 100, 500, 1000, -1], [10, 25, 50, 100, 500, 1000, 'All']],
+        pagingType: "full_numbers",
+        columnDefs: [{targets: [0, 7, 8, 9, 11, 12], type: "optionalnum"}]
+    });
+});
+</script>
+</div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biastab</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;BIAS&#39;</span><span class="p">]</span>
+<span class="n">flattab</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;DOMEFLAT&#39;</span><span class="p">]</span>
+<span class="n">arctab</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;COMPARISON&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+                       <span class="p">(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;slit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;SCFCSLLC08&#39;</span><span class="p">)]</span>
+<span class="n">scitab</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GRB 130606A&#39;</span><span class="p">]</span>
+<span class="n">stdtab_f110</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Feige110&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OBJECT&#39;</span><span class="p">)]</span>
+<span class="n">stdtab_f34</span> <span class="o">=</span> <span class="n">summary_table</span><span class="p">[(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;object&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Feige34&#39;</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">summary_table</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;OBJECT&#39;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for displaying in zscale</span>
+<span class="n">interval</span> <span class="o">=</span> <span class="n">ZScaleInterval</span><span class="p">()</span>
+
+<span class="c1"># plotting the images</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">titles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Bias&#39;</span><span class="p">,</span> <span class="s1">&#39;Flat&#39;</span><span class="p">,</span> <span class="s1">&#39;Arc&#39;</span><span class="p">,</span> <span class="s1">&#39;Sci&#39;</span><span class="p">]</span>
+<span class="n">bias</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">biastab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">flat</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">flattab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">arc</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">arctab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sci</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">scitab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">bias</span><span class="p">,</span> <span class="n">flat</span><span class="p">,</span> <span class="n">arc</span><span class="p">,</span> <span class="n">sci</span><span class="p">]):</span>
+    <span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span><span class="p">][</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">titles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">labelleft</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="k">del</span> <span class="n">bias</span><span class="p">,</span> <span class="n">flat</span><span class="p">,</span> <span class="n">arc</span><span class="p">,</span> <span class="n">sci</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/b7a6f4f7a85e5d53a8bc8d99932b9a5fb6b8ab544737641224b31f329b70c164.png"><img alt="../_images/b7a6f4f7a85e5d53a8bc8d99932b9a5fb6b8ab544737641224b31f329b70c164.png" src="../_images/b7a6f4f7a85e5d53a8bc8d99932b9a5fb6b8ab544737641224b31f329b70c164.png" style="width: 1430px; height: 384px;" /></a>
+</div>
+</div>
+<section id="preprocessing-of-the-raw-images">
+<h2>Preprocessing of the Raw Images<a class="headerlink" href="#preprocessing-of-the-raw-images" title="Link to this heading">#</a></h2>
+<p>Preprocessing of the raw images is the first step in the data reduction process. The raw images are usually not ready for scientific analysis and need to be preprocessed before they can be used for scientific analysis. The preprocessing steps include the following:</p>
+<ol class="arabic simple">
+<li><p>Bias subtraction</p></li>
+<li><p>Dark subtraction</p></li>
+<li><p>Flat fielding</p></li>
+<li><p>Cosmic ray removal</p></li>
+</ol>
+<p>There are lots of software available for preprocessing the raw images. In this tutorial, we will use the <code class="docutils literal notranslate"><span class="pre">ccdproc</span></code> package for preprocessing the raw images. The <code class="docutils literal notranslate"><span class="pre">ccdproc</span></code> package is a Python package for reducing astronomical data taken with CCD cameras. It provides many of the necessary tools for processing of CCD images. For more information on the <code class="docutils literal notranslate"><span class="pre">ccdproc</span></code> package, please visit the <a class="reference external" href="https://ccdproc.readthedocs.io/en/latest/">documentation</a>, and for the complete guide on the reduction process for astronomical images using Python, <a class="reference external" href="https://www.astropy.org/ccd-reduction-and-photometry-guide/v/dev/notebooks/00-00-Preface.html">CCD Reduction and Photometry Guide</a>.</p>
+<p>In this notebook, we will preprocess the raw images using <code class="docutils literal notranslate"><span class="pre">preproc.py</span></code> script. This script is available in the tutorial directory. Dark subtraction will not be performed in this notebook since the amount of dark current in the images is negligible.</p>
+<section id="making-the-master-bias">
+<h3>Making the Master Bias<a class="headerlink" href="#making-the-master-bias" title="Link to this heading">#</a></h3>
+<p>Before making the master bias, we need to check the bias images for any defects. We skip this step here, but it is important to check since the bias images are used to calibrate all the other images. If there are defects in the bias images, they will be propagated to all the other images.</p>
+<p>The master bias is made by combining all the bias images. The master bias will be subtracted from all the images to remove the bias level. For combining the bias images, the sigma-clipping algorithm is used to reject outliers and then the average of the remaining images is calculated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biaslist</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">biastab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">combine_bias</span><span class="p">(</span><span class="n">biaslist</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">outname</span><span class="o">=</span><span class="s1">&#39;MBias.fits&#39;</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PC001001= 1.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC001002= 0.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC002001= 0.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC002002= 1.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: RADECSYS= &#39;FK5 &#39; / The equatorial coordinate system 
+the RADECSYS keyword is deprecated, use RADESYSa. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T04:59:10.645&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;unitfix&#39; made the change &#39;Changed units:
+  &#39;degree&#39; -&gt; &#39;deg&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;celfix&#39; made the change &#39;Unmatched celestial axes&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:53:03.880&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:56:58.652&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T04:59:35.780&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:06:35.545&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T05:00:00.751&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:56:34.054&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:07:00.686&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:07:53.456&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:56:09.042&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:53:29.035&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:06:10.558&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:55:19.314&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T04:58:45.726&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:52:38.925&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:07:26.756&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:52:13.481&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T05:00:25.744&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:55:43.954&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mbias</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MBias.fits&#39;</span>
+<span class="n">mbias_img</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">mbias</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">mbias_img</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mbias_img</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Master Bias&#39;</span><span class="p">)</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;5%&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x148a756a0&gt;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/d8b47c7782f452b710a4e944c426dfd6099a72d53a0cab173ef4a508f8bf8f3a.png"><img alt="../_images/d8b47c7782f452b710a4e944c426dfd6099a72d53a0cab173ef4a508f8bf8f3a.png" src="../_images/d8b47c7782f452b710a4e944c426dfd6099a72d53a0cab173ef4a508f8bf8f3a.png" style="width: 1002px; height: 374px;" /></a>
+</div>
+</div>
+</section>
+<section id="making-master-flat">
+<h3>Making Master Flat<a class="headerlink" href="#making-master-flat" title="Link to this heading">#</a></h3>
+<p>Not like the photometric observation, spectroscopic flat image is typically taken with something like halogen lamp or tungsten lamp, which is inevitably not uniform especially for the dispersion direction. Therefore, we need to make a master flat image <em>flat</em>, which involves modeling the flat spectrum and dividing the flat image by the model. To obtain a good master flat, we need to:</p>
+<ol class="arabic simple">
+<li><p><strong>Examine the flat spectra</strong>: do they show any variablity throughout the observation? can we combine them without any further consideration? do they have any features like wiggles or bumps? do they have any discontinuity?</p></li>
+<li><p><strong>Model the flat spectra</strong>: we can use a polynomial (or smoothing convolution) to model the flat spectrum. The degree of the polynomial (or size of the smoothing kernel) should be determined by the complexity of the flat spectrum.</p></li>
+<li><p><strong>Normalize the flat spectra</strong>: divide the flat image by the model to obtain a normalized flat image.</p></li>
+</ol>
+<p>Combining can be done either before or after the modeling. If the flat spectra are stable, we can combine them first and then model the combined flat spectrum. If the flat spectra are not stable, we can model each flat spectrum and then combine the normalized flat images. If the flat spectra show significant variability, we can also consider not combining them at all.</p>
+<p>Because of this complexity, making a master flat can be a time-consuming part of the data reduction process. Moreover, the quality of the master flat directly affects the quality of the reduced science images, which may introduce systematic errors if not done properly. Therefore, the spectroscopic flat fielding is often omitted in the data reduction process, when the flat fielding conversely introduces more errors than it corrects.</p>
+<section id="checking-for-flat-image-shift">
+<h4>Checking for Flat Image Shift<a class="headerlink" href="#checking-for-flat-image-shift" title="Link to this heading">#</a></h4>
+<p>The flat image may shift slightly depending on the telescope’s pointing direction. Since different images might require different flats, it can be risky to median combine all the flat images taken overnight. We should perform a quick and rough check to see if there is a shift in the flat images.</p>
+<p>To avoid bias might arise from this shift, it is recommended to take flat images at the same pointing direction as the science images. However, if the shift is small, we can still use the median combined flat image for calibration.</p>
+<p>In this notebook, we will skip this process for simplicity, but you should always check for flat image shift in your own data. We will assume that the flat images are already aligned, and we will proceed to combine them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flattab_exp3</span> <span class="o">=</span> <span class="n">flattab</span><span class="p">[</span><span class="n">flattab</span><span class="p">[</span><span class="s1">&#39;exptime&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">3.0</span><span class="p">]</span>
+<span class="n">flattab_exp1</span> <span class="o">=</span> <span class="n">flattab</span><span class="p">[</span><span class="n">flattab</span><span class="p">[</span><span class="s1">&#39;exptime&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">1.1</span><span class="p">]</span>
+<span class="n">flatlist_exp3</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">flattab_exp3</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="n">flatlist_exp1</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">flattab_exp1</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+
+<span class="n">mbias</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MBias.fits&#39;</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">make_master_flat</span><span class="p">(</span><span class="n">flatlist_exp3</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">outname</span><span class="o">=</span><span class="s1">&#39;MFlat03.0.fits&#39;</span><span class="p">,</span> 
+                             <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">filter_key</span><span class="o">=</span><span class="s1">&#39;FILTER02&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">make_master_flat</span><span class="p">(</span><span class="n">flatlist_exp1</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">outname</span><span class="o">=</span><span class="s1">&#39;MFlat01.1.fits&#39;</span><span class="p">,</span>
+                             <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">filter_key</span><span class="o">=</span><span class="s1">&#39;FILTER02&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">_</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-with-the-standard-star-profile">
+<h4>Comparing with the Standard Star Profile<a class="headerlink" href="#comparing-with-the-standard-star-profile" title="Link to this heading">#</a></h4>
+<p>Typical flat spectra shows many wiggles and bumps. Yet, we don’t know if these features are originated from the grating, which in turn will affect our science frame equally. If they are not due to the grating, such as filters in front of the flat-field lamp, the extreme difference in color temperature between the lamps and the object of interest, or wavelength-dependent variations in the reflectivity of the paint used for the flat-field screen (<a class="reference external" href="https://arxiv.org/abs/1010.5270">Massey &amp; Hansen, 2010</a>), they are not going to present on the science frame.</p>
+<p>Let’s see if a supposedly smooth source (in this case, a standard star) has same “wiggles” and “bumps” on its spectrum. If this is the case, we should model the flat lamp with “high order” and normalize the flat image with this model. If not, we should adopt “low-order” model or constant to normalize our flat field.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">flat03</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MFlat03.0.fits&#39;</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">flat03</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat03</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Master Flat (3.0s)&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">flat01</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MFlat01.1.fits&#39;</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">flat01</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat03</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Master Flat (1.1s)&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">f34</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">stdtab_f34</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">f34</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">f34</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Feige34 (Standard Star)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Feige34 (Standard Star)&#39;)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/bb9f070865eabb5202ea9404c48368656a37401ac81f08c377b769827b54b073.png"><img alt="../_images/bb9f070865eabb5202ea9404c48368656a37401ac81f08c377b769827b54b073.png" src="../_images/bb9f070865eabb5202ea9404c48368656a37401ac81f08c377b769827b54b073.png" style="width: 1002px; height: 312px;" /></a>
+<a class="reference internal image-reference" href="../_images/80c5fd4f6922c0f787990f1b92ce91726ec984527f895ab2702e741d6b3d334d.png"><img alt="../_images/80c5fd4f6922c0f787990f1b92ce91726ec984527f895ab2702e741d6b3d334d.png" src="../_images/80c5fd4f6922c0f787990f1b92ce91726ec984527f895ab2702e741d6b3d334d.png" style="width: 1002px; height: 312px;" /></a>
+<a class="reference internal image-reference" href="../_images/c156af81afcdca91d3113399b7007ed84123b7b3faa2018581181ff2ef9f2225.png"><img alt="../_images/c156af81afcdca91d3113399b7007ed84123b7b3faa2018581181ff2ef9f2225.png" src="../_images/c156af81afcdca91d3113399b7007ed84123b7b3faa2018581181ff2ef9f2225.png" style="width: 1002px; height: 312px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flat03</span><span class="p">[:,</span> <span class="mi">700</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="s1">&#39;Master Flat, 3.0s, Row 700&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">f34</span><span class="p">[:,</span> <span class="mi">737</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="s1">&#39;Feige34, Row 700, Raw&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/f2aca338350f3b3a8b09ee2e7f118dd141279aae2572117c66180fd02a33396d.png"><img alt="../_images/f2aca338350f3b3a8b09ee2e7f118dd141279aae2572117c66180fd02a33396d.png" src="../_images/f2aca338350f3b3a8b09ee2e7f118dd141279aae2572117c66180fd02a33396d.png" style="width: 1012px; height: 508px;" /></a>
+</div>
+</div>
+<p>Although we can see some tiny wiggles in the flat spectrum, this is not significant enough to adopt higher-order polynomials to model the flat spectrum, as opposed to the case if we have significant fringe patterns. If you closely examine the flat spectrum, you will see that the wiggles are not random, but rather located at the atmospheric absorption lines. This is because the flat image is taken with a lamp, and the lamp light is absorbed by the atmosphere at these absorption lines. Since the absorption lines are not random, we can safely ignore them when modeling the flat spectrum.</p>
+<p>Here we model the flat spectrum with median filtering, which is a simple and effective way to remove noise while preserving the shape of the spectrum. We will use a median filter in the dispersion direction to model the flat spectrum, with a window size of 100 pixels. This is a good starting point, but you may need to adjust the window size depending on the complexity of the flat spectrum.</p>
+<p>For simplicity, we will only use the combined flat image taken with the exposure time of 3 seconds. In practice, you may use all the flat images taken with different exposure times to make a master flat, or you can use the flat images taken with long and short exposure times to make a bad pixel map.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># median filtering the flat field image along the dispersion axis</span>
+<span class="n">flat03_filt</span> <span class="o">=</span> <span class="n">median_filter</span><span class="p">(</span><span class="n">flat03</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># normalizing the flat field image</span>
+<span class="n">normflat</span> <span class="o">=</span> <span class="n">flat03</span> <span class="o">/</span> <span class="n">flat03_filt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flat03</span><span class="p">[:,</span> <span class="mi">700</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Raw&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">flat03_filt</span><span class="p">[:,</span> <span class="mi">700</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Filtered&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">4100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">2.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">normflat</span><span class="p">[:,</span> <span class="mi">700</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Normalized&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">4100</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">311</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">flat03</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat03</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Master Flat&#39;</span><span class="p">)</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;2%&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">312</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flat03_filt</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Filtered Master Flat&#39;</span><span class="p">)</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;2%&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">313</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">normflat</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">normflat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normalized Master Flat&#39;</span><span class="p">)</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">cax</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s1">&#39;2%&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x148eaf950&gt;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/df70195304712f26036b6445046dacc330fe27de3ee33981ce6630a6d996b0ed.png"><img alt="../_images/df70195304712f26036b6445046dacc330fe27de3ee33981ce6630a6d996b0ed.png" src="../_images/df70195304712f26036b6445046dacc330fe27de3ee33981ce6630a6d996b0ed.png" style="width: 996px; height: 508px;" /></a>
+<a class="reference internal image-reference" href="../_images/01725bca3b2819b85209ae459502685cf50316d6661ca88927adc09a4e32601b.png"><img alt="../_images/01725bca3b2819b85209ae459502685cf50316d6661ca88927adc09a4e32601b.png" src="../_images/01725bca3b2819b85209ae459502685cf50316d6661ca88927adc09a4e32601b.png" style="width: 1049px; height: 958px;" /></a>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># writing the normalized flat field image to a file</span>
+<span class="n">hdr</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MFlat03.0.fits&#39;</span><span class="p">)</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">normflat</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">hdr</span><span class="p">)</span>
+<span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;nMFlat03.0.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the same reason, we should be careful when we reduce the arc frames. The location of the lines in the arc spectrum may shift slightly depending on the telescope’s pointing direction. Therefore, it is strongly recommended to take arc frames at the same pointing direction as the science frames.</p>
+<p>We should check for the shift in the arc frames, but we will skip this process for simplicity.</p>
+<p>However, unlike the flat fielding, the wavelength calibration is of critical importance in the spectroscopic data reduction process, since few percent of errors in the wavelength calibration can introduce systematic errors in the scientific analysis, such as the measurement of the redshift of galaxies. Therefore, we should always check for the shift in the arc frames before wavelength calibration.</p>
+</section>
+</section>
+<section id="preprocessing-the-raw-images">
+<h3>Preprocessing the Raw Images<a class="headerlink" href="#preprocessing-the-raw-images" title="Link to this heading">#</a></h3>
+<p>Now we will preprocess the raw images. We will subtract the master bias and divide the master flat from the raw science frames. These preprocessed science frames will not be combined, since the spatial location of the object is different in each frame. We will combine the light from the object after extracting the 1D spectrum.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mbias</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MBias.fits&#39;</span>
+<span class="n">mflat</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;nMFlat03.0.fits&#39;</span>
+<span class="c1"># preprocessing the arc image</span>
+<span class="n">arc_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">arctab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Preprocessing arc images...&#39;</span><span class="p">)</span>
+<span class="n">arc</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">arc_list</span><span class="p">,</span> <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">mflat</span><span class="o">=</span><span class="n">mflat</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">)</span>
+
+<span class="c1"># combine the preprocessed arc image</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Combining the preprocessed arc images...&#39;</span><span class="p">)</span>
+<span class="n">parcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">CCDData</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="o">+</span><span class="n">f</span><span class="o">.</span><span class="n">stem</span><span class="p">))</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">arc_list</span><span class="p">]</span>
+<span class="n">carc</span> <span class="o">=</span> <span class="n">combine</span><span class="p">(</span><span class="n">parcs</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;average&#39;</span><span class="p">,</span> <span class="n">sigma_clip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sigma_clip_low_thresh</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+               <span class="n">sigma_clip_high_thresh</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">carc</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;cArc.fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The combined arc image is saved as cArc.fits&#39;</span><span class="p">)</span>
+
+<span class="c1"># preprocessing the science image</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Preprocessing science images...&#39;</span><span class="p">)</span>
+<span class="n">sci_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">scitab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">sci_list</span><span class="p">,</span> <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">mflat</span><span class="o">=</span><span class="n">mflat</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">insert_ivar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># preprocessing the standard star images</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Preprocessing standard star images...&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Standard star: Feige110&#39;</span><span class="p">)</span>
+<span class="n">std_list_f110</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">stdtab_f110</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">std_list_f110</span><span class="p">,</span> <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">mflat</span><span class="o">=</span><span class="n">mflat</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span>
+                    <span class="n">insert_ivar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Standard star: Feige34&#39;</span><span class="p">)</span>
+<span class="n">std_list_f34</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">stdtab_f34</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">preproc</span><span class="p">(</span><span class="n">std_list_f34</span><span class="p">,</span> <span class="n">mbias</span><span class="o">=</span><span class="n">mbias</span><span class="p">,</span> <span class="n">mflat</span><span class="o">=</span><span class="n">mflat</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span>
+                    <span class="n">insert_ivar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Preprocessing arc images...
+Done: pFCSA00141840.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hbahk/class/TAOtutorials/tutorials/preproc.py:295: RuntimeWarning: invalid value encountered in divide
+  sci_data /= mflat_data    # Flat fielding
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done: pFCSA00141882.fits
+Done: pFCSA00141580.fits
+Combining the preprocessed arc images...
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PC001001= 1.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC001002= 0.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC002001= 0.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: PC002002= 1.00000000 / Pixel Coordinate translation matrix 
+this form of the PCi_ja keyword is deprecated, use PCi_ja. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: RADECSYS= &#39;FK5 &#39; / The equatorial coordinate system 
+the RADECSYS keyword is deprecated, use RADESYSa. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T04:55:27.734&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;unitfix&#39; made the change &#39;Changed units:
+  &#39;degree&#39; -&gt; &#39;deg&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;celfix&#39; made the change &#39;Unmatched celestial axes&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T05:51:12.249&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:52:48.140&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The combined arc image is saved as cArc.fits
+Preprocessing science images...
+Done: pFCSA00141920.fits
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/hbahk/class/TAOtutorials/tutorials/preproc.py:295: RuntimeWarning: invalid value encountered in divide
+  sci_data /= mflat_data    # Flat fielding
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done: pFCSA00141930.fits
+Done: pFCSA00141916.fits
+Done: pFCSA00141928.fits
+Done: pFCSA00141938.fits
+Done: pFCSA00141940.fits
+Done: pFCSA00141918.fits
+Done: pFCSA00141936.fits
+Done: pFCSA00141926.fits
+Preprocessing standard star images...
+Standard star: Feige110
+Done: pFCSA00142004.fits
+Done: pFCSA00142006.fits
+Done: pFCSA00142010.fits
+Standard star: Feige34
+Done: pFCSA00141880.fits
+Done: pFCSA00141894.fits
+Done: pFCSA00141878.fits
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">carc</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">carc</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Combined Image&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">sci</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">sci_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">sci</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">sci</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Preprocessed Science Image&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">std110</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">OUTDIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">std_list_f110</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">std110</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">std110</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Preprocessed Feige110 Image&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Preprocessed Feige110 Image&#39;)
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="../_images/3bfe7dbca7dd3b185cfc95f63aeb2cc9f88efeff6bbdf91b9ed2bf5fdb570b31.png"><img alt="../_images/3bfe7dbca7dd3b185cfc95f63aeb2cc9f88efeff6bbdf91b9ed2bf5fdb570b31.png" src="../_images/3bfe7dbca7dd3b185cfc95f63aeb2cc9f88efeff6bbdf91b9ed2bf5fdb570b31.png" style="width: 1002px; height: 312px;" /></a>
+<a class="reference internal image-reference" href="../_images/d542b707fb3ac9ebd81843fe590fed1478ec0c21e499c59b44552db8dbc576f3.png"><img alt="../_images/d542b707fb3ac9ebd81843fe590fed1478ec0c21e499c59b44552db8dbc576f3.png" src="../_images/d542b707fb3ac9ebd81843fe590fed1478ec0c21e499c59b44552db8dbc576f3.png" style="width: 1002px; height: 312px;" /></a>
+<a class="reference internal image-reference" href="../_images/2d406fd5a5c9c397490658376f04d33a37f12f4754b072adac116c13c47d9168.png"><img alt="../_images/2d406fd5a5c9c397490658376f04d33a37f12f4754b072adac116c13c47d9168.png" src="../_images/2d406fd5a5c9c397490658376f04d33a37f12f4754b072adac116c13c47d9168.png" style="width: 1002px; height: 312px;" /></a>
+</div>
+</div>
+</section>
+</section>
+<section id="extracting-1d-spectra">
+<h2>Extracting 1D Spectra<a class="headerlink" href="#extracting-1d-spectra" title="Link to this heading">#</a></h2>
+<p>The 1D spectra are extracted from the 2D science frames by summing the flux along the spatial direction. The extraction process consists of the following steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Source Identification</strong>: Identify the source in the 2D science frame.</p></li>
+<li><p><strong>Aperture Tracing</strong>: Trace the spatial position of the source along the dispersion direction.</p></li>
+<li><p><strong>Aperture Summation</strong>: Sum the flux along the trace to extract the 1D spectrum.</p></li>
+</ol>
+<p>Let’s extract the 1D spectra of the standard star first, because it is brighter and easier to extract.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="GALFIT-Surface_Photometry.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Surface Photometry Using GALFIT</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Preprocessing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Preprocessing the CCD images</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-of-the-raw-images">Preprocessing of the Raw Images</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-master-bias">Making the Master Bias</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-master-flat">Making Master Flat</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#checking-for-flat-image-shift">Checking for Flat Image Shift</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-with-the-standard-star-profile">Comparing with the Standard Star Profile</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-the-raw-images">Preprocessing the Raw Images</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-1d-spectra">Extracting 1D Spectra</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>SNU TAO Tutorials &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/Optical%20Spectroscopy.html">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/README.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>SNU TAO Tutorials</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorials">Tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparation">1. Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-this-repository">1.1. Clone this repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-installations">1.2. Software installations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">1.2.1 Python packages</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#source-extractor">1.2.2 Source Extractor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#psf-extractor">1.2.3. PSF Extractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="snu-tao-tutorials">
+<h1>SNU TAO Tutorials<a class="headerlink" href="#snu-tao-tutorials" title="Link to this heading">#</a></h1>
+<p>Tutorials for Techniques in Astronomical Observation, Seoul National University.</p>
+<section id="tutorials">
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Tutorial 0: <a class="reference external" href="https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/Preprocessing.ipynb">Preprocessing</a> (under construction, written by Hyeonguk Bahk)</p></li>
+<li><p>Tutorial 1: <a class="reference external" href="https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/PSF_photometry.ipynb">PSF photometry</a> (written by Hyeonguk Bahk)</p></li>
+<li><p>Tutorial 2: <a class="reference external" href="https://github.com/hbahk/TAOtutorials/blob/main/tutorials/data/proj3/run_SExtractor.ipynb">Running SExtractor</a> (written by Jeong Hwan Lee, edited by Jae-Hong Jeong and Hyeonguk Bahk)</p></li>
+<li><p>Tutorial 3: <a class="reference external" href="https://github.com/hbahk/TAOtutorials/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb">Surface Photometry Using GALFIT</a> (written by Hyeonguk Bahk)</p></li>
+<li><p>Tutorial 4: <a class="reference external" href="https://github.com/hbahk/TAOtutorials/blob/main/tutorials/Spectroscopic_data_reduction.ipynb">Spectroscopic data reduction</a> (under construction, written by Hyeonguk Bahk)</p></li>
+<li><p>Tutorial A1: <a class="reference external" href="https://github.com/hbahk/TAOtutorials/blob/main/tutorials/SAO-Spectroscopic-Data-Reduction.ipynb">Spectroscopic Data Reduction for SNUO 1m</a> (Fall 2022, written by Hyeonguk Bahk, originally prepared by Jooyeon Geem); This will be updated using the FOCAS data, which will be data needed for the final project.</p></li>
+<li><p>Tutorial A2: <a class="reference external" href="https://github.com/hbahk/TAOtutorials/blob/main/tutorials/Optical%20Spectroscopy.ipynb">Optical Spectroscopy Using <code class="docutils literal notranslate"><span class="pre">specutils</span></code></a> (written by Jae-Hong Jeong)</p></li>
+</ul>
+</section>
+<section id="preparation">
+<h2>1. Preparation<a class="headerlink" href="#preparation" title="Link to this heading">#</a></h2>
+<section id="clone-this-repository">
+<h3>1.1. Clone this repository<a class="headerlink" href="#clone-this-repository" title="Link to this heading">#</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;PathToGitClone&gt;
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/hbahk/TAOTutorials.git
+</pre></div>
+</div>
+</section>
+<section id="software-installations">
+<h3>1.2. Software installations<a class="headerlink" href="#software-installations" title="Link to this heading">#</a></h3>
+<section id="python-packages">
+<h4>1.2.1 Python packages<a class="headerlink" href="#python-packages" title="Link to this heading">#</a></h4>
+<ul>
+<li><p>Useful links</p>
+<p><a class="reference external" href="https://github.com/ysBach/SNU_AOclass/blob/master/Notebooks/00-3_Prepare_Python.md">SNU_AOclass/00-3_Prepare_Python.md at master · ysBach/SNU_AOclass · GitHub</a></p>
+<p><a class="reference external" href="https://github.com/ysBach/SNU_AOclass/blob/master/Notebooks/00-1_Softwares.md">SNU_AOclass/00-1_Softwares.md at master · ysBach/SNU_AOclass · GitHub</a></p>
+</li>
+</ul>
+<ol class="arabic simple">
+<li><p>Create a new conda environment (optional)</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>tao<span class="w"> </span>python<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>pandas<span class="w"> </span>jupyter
+conda<span class="w"> </span>activate<span class="w"> </span>tao
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Install packages via conda</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>astropy<span class="w"> </span>sep<span class="w"> </span>tqdm
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>photutils
+conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>astropy<span class="w"> </span>ccdproc<span class="w"> </span>astroscrappy<span class="w"> </span>specutils
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Install package via Github repositories</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;PathToGitClone&gt;<span class="w"> </span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/jrjohansson/version_information.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/astropy/astroquery.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ejeschke/ginga.git<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/quatrope/astroalign
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>version_information<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+<span class="nb">cd</span><span class="w"> </span>astroquery<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..
+<span class="nb">cd</span><span class="w"> </span>ginga<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
+<span class="nb">cd</span><span class="w"> </span>astroalign<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">cd</span><span class="w"> </span>..<span class="w"> </span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Set the python path of your own kernels/editors with this environments</p></li>
+</ol>
+<p>cf) For Spyder users, install <code class="docutils literal notranslate"><span class="pre">spyder-kernels</span></code> for your version of Spyder following the table in this link <a class="reference external" href="https://docs.spyder-ide.org/current/troubleshooting/common-illnesses.html#spyder-kernels-not-installed-incompatible">Common Illnesses — Spyder 5 documentation</a>. In my case, the version of my Spyder is 5.2.2, so I had to install <code class="docutils literal notranslate"><span class="pre">spyder-kernels=2.2.1</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>spyder‑kernels<span class="o">=</span><span class="m">2</span>.2.1
+</pre></div>
+</div>
+</section>
+<section id="source-extractor">
+<h4>1.2.2 Source Extractor<a class="headerlink" href="#source-extractor" title="Link to this heading">#</a></h4>
+<ul>
+<li><p><strong>For Linux (or Window) users</strong>, please refer to the official documentation: <a class="reference external" href="https://sextractor.readthedocs.io/en/latest/Installing.html">Installing the software</a>.</p>
+<p>For Ubuntu users, for example, simple command will do:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>sextractor
+</pre></div>
+</div>
+</li>
+<li><p><strong>For Mac users</strong>, using Homebrew is easiest way, I suppose.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>sextractor
+</pre></div>
+</div>
+<p>If you don’t have Homebrew intalled yet, then <a class="reference external" href="https://brew.sh">give that a try!</a></p>
+</li>
+<li><p>You can check whether SExtractor is installed or not with the command of:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sex
+</pre></div>
+</div>
+<p>Or if you installed with the <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> (and other possible distributors) then try</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sextractor
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>source-extractor
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="psf-extractor">
+<h4>1.2.3. PSF Extractor<a class="headerlink" href="#psf-extractor" title="Link to this heading">#</a></h4>
+<ul>
+<li><p><strong>For Linux (or Window) users</strong>, please refer to the official documentation: <a class="reference external" href="https://psfex.readthedocs.io/en/latest/Installing.html">Installing the software</a>.
+For Ubuntu users, for example, executing simple command will install this software:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>psfex
+</pre></div>
+</div>
+</li>
+<li><p><strong>For Mac users</strong> (Tested with Apple M1 Pro Ventura 13.2.1),</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>&lt;PathToGitClone&gt;
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/astromatic/psfex.git
+</pre></div>
+</div>
+<p>Check whether required packages are installed: <code class="docutils literal notranslate"><span class="pre">autoconf</span></code>, <code class="docutils literal notranslate"><span class="pre">automake</span></code>, <code class="docutils literal notranslate"><span class="pre">libtool</span></code>.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>info<span class="w"> </span>autoconf
+brew<span class="w"> </span>info<span class="w"> </span>automake
+brew<span class="w"> </span>info<span class="w"> </span>libtool
+</pre></div>
+</div>
+<p>If you are missing one of them, then install with the command <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">install</span> <span class="pre">&lt;MissingPackage&gt;</span></code>.</p>
+<p>Then</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>psfex
+./autogen.sh
+</pre></div>
+</div>
+<p>Check the result and find the pathes of <code class="docutils literal notranslate"><span class="pre">lib</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> directory of the <code class="docutils literal notranslate"><span class="pre">OpenBLAS</span></code> package. You can find their location with command of <code class="docutils literal notranslate"><span class="pre">brew</span> <span class="pre">info</span> <span class="pre">openblas</span></code>, if you installed <code class="docutils literal notranslate"><span class="pre">OpenBLAS</span></code> with Homebrew, which should be the case when you installed SExtractor with Homebrew. Similarly, find <code class="docutils literal notranslate"><span class="pre">lib</span></code> and <code class="docutils literal notranslate"><span class="pre">include</span></code> for <code class="docutils literal notranslate"><span class="pre">FFTW</span></code>, and then try</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./configure<span class="w"> </span>--disable-silent-rules<span class="w"> </span>--enable-openblas<span class="w"> </span>--with-openblas-libdir<span class="o">=</span><span class="s2">&quot;/opt/homebrew/opt/openblas/lib&quot;</span><span class="w"> </span>--with-openblas-incdir<span class="o">=</span><span class="s2">&quot;/opt/homebrew/opt/openblas/include&quot;</span><span class="w"> </span>--with-fftw-libdir<span class="o">=</span><span class="s2">&quot;/opt/homebrew/opt/fftw/lib&quot;</span><span class="w"> </span>--with-fftw-incdir<span class="o">=</span><span class="s2">&quot;/opt/homebrew/opt/fftw/include&quot;</span>
+</pre></div>
+</div>
+<p>Here you should put the <code class="docutils literal notranslate"><span class="pre">libdir</span></code> and <code class="docutils literal notranslate"><span class="pre">incdir</span></code> with your own pathes.</p>
+<p>Finally,</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>make<span class="w"> </span>install
+</pre></div>
+</div>
+<p>and now you are all set.</p>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tutorials">Tutorials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preparation">1. Preparation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clone-this-repository">1.1. Clone this repository</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#software-installations">1.2. Software installations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#python-packages">1.2.1 Python packages</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#source-extractor">1.2.2 Source Extractor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#psf-extractor">1.2.3. PSF Extractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
