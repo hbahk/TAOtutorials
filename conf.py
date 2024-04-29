@@ -22,7 +22,7 @@ extensions = [
     "myst_nb",
     "sphinx_togglebutton",
     "sphinx_copybutton",
-    "sphinx_design"
+    "sphinx_design",
     "sphinx.ext.napoleon",
     "sphinx.ext.githubpages",
 ]
