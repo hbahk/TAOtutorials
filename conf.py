@@ -23,7 +23,8 @@ extensions = [
     "sphinx_togglebutton",
     "sphinx_copybutton",
     "sphinx_design"
-    ""
+    "sphinx.ext.napoleon",
+    "sphinx.ext.githubpages",
 ]
 
 templates_path = ['_templates']
