@@ -10,7 +10,7 @@ tutorials/Preparation
 ```
 
 ```{toctree}
-:maxdepth: 2
+:maxdepth: 1
 :caption: Project Tutorials
 :dropdown: true
 
