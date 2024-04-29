@@ -3,15 +3,17 @@
 Tutorials for Techniques in Astronomical Observation, Seoul National University.
 
 ## Tutorials
-* Tutorial 0: [Preprocessing](https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/Preprocessing.ipynb) (under construction, written by Hyeonguk Bahk)
-* Tutorial 1: [PSF photometry](https://nbviewer.org/github/hbahk/TAOtutorials/blob/main/tutorials/PSF_photometry.ipynb) (written by Hyeonguk Bahk)
-* Tutorial 2: [Running SExtractor](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/data/proj3/run_SExtractor.ipynb) (written by Jeong Hwan Lee, edited by Jae-Hong Jeong and Hyeonguk Bahk)
-* Tutorial 3: [Surface Photometry Using GALFIT](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/GALFIT-Surface_Photometry.ipynb) (written by Hyeonguk Bahk)
-* Tutorial 4: [Spectroscopic data reduction](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/Spectroscopic_data_reduction.ipynb) (under construction, written by Hyeonguk Bahk)
+* Tutorial 0: [Preprocessing](https://hbahk.github.io/TAOtutorials/tutorials/Preprocessing.html) (under construction, written by Hyeonguk Bahk)
+* Tutorial 1: [PSF photometry](https://hbahk.github.io/TAOtutorials/tutorials/PSF_photometry.html) (written by Hyeonguk Bahk)
+* Tutorial 2: [Running SExtractor](https://hbahk.github.io/TAOtutorials/tutorials/data/proj3/run_SExtractor.html) (written by Jeong Hwan Lee, edited by Jae-Hong Jeong and Hyeonguk Bahk)
+* Tutorial 3: [Surface Photometry Using GALFIT](https://hbahk.github.io/TAOtutorials/tutorials/GALFIT-Surface_Photometry.html) (written by Hyeonguk Bahk)
+* Tutorial 4: [Spectroscopic data reduction](https://hbahk.github.io/TAOtutorials/tutorials/Spectroscopic_data_reduction.html) (under construction, written by Hyeonguk Bahk)
 
 
-* Tutorial A1: [Spectroscopic Data Reduction for SNUO 1m](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/SAO-Spectroscopic-Data-Reduction.ipynb) (Fall 2022, written by Hyeonguk Bahk, originally prepared by Jooyeon Geem); This will be updated using the FOCAS data, which will be data needed for the final project.
-* Tutorial A2: [Optical Spectroscopy Using `specutils`](https://github.com/hbahk/TAOtutorials/blob/main/tutorials/Optical%20Spectroscopy.ipynb) (written by Jae-Hong Jeong)
+* Tutorial A1: [Spectroscopic Data Reduction for SNUO 1m](https://hbahk.github.io/TAOtutorials/tutorials/SAO-Spectroscopic-Data-Reduction.html) (Fall 2022, written by Hyeonguk Bahk, originally prepared by Jooyeon Geem); This will be updated using the FOCAS data, which will be data needed for the final project.
+* Tutorial A2: [Optical Spectroscopy Using `specutils`](https://hbahk.github.io/TAOtutorials/tutorials/Optical%20Spectroscopy.html) (written by Jae-Hong Jeong)
+  
+  
 ## 1. Preparation
 
 ### 1.1. Clone this repository
