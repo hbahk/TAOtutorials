@@ -344,10 +344,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-input-data">1. Prepare the Input Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-sdss-mosaic-image-from-sdss-science-archive-server-sas">Download SDSS Mosaic Image from SDSS Science Archive Server (SAS)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m51">M51</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-psf">Getting PSF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-mask-image">Making the Mask Image</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-psf">Getting PSF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-mask-image">Making the Mask Image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-model-and-run-galfit">2. Initialize Model and Run GALFIT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-fit">3. Evaluating the Fit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usefull-references">Usefull References</a></li>
@@ -532,7 +532,7 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png"><img alt="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" class="align-center" src="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" style="width: 712px;" />
+<a class="reference internal image-reference" href="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png"><img alt="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" class="align-center" src="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" style="width: 712px; height: 636px;" />
 </a>
 </div>
 </div>
@@ -618,7 +618,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Sky Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png"><img alt="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" class="align-center" src="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" style="width: 681px;" />
+<a class="reference internal image-reference" href="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png"><img alt="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" class="align-center" src="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" style="width: 681px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -654,7 +654,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png"><img alt="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" class="align-center" src="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" style="width: 670px;" />
+<a class="reference internal image-reference" href="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png"><img alt="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" class="align-center" src="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" style="width: 670px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -702,7 +702,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Error Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png"><img alt="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" class="align-center" src="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" style="width: 670px;" />
+<a class="reference internal image-reference" href="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png"><img alt="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" class="align-center" src="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" style="width: 670px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -811,9 +811,8 @@ package doesn’t provide the average effective gain as usual.</p>
 </div>
 </div>
 </section>
-</section>
 <section id="getting-psf">
-<h2>Getting PSF<a class="headerlink" href="#getting-psf" title="Link to this heading">#</a></h2>
+<h3>Getting PSF<a class="headerlink" href="#getting-psf" title="Link to this heading">#</a></h3>
 <p>Since we need PSF to use GALFIT, we will get PSF of the image using the PSFEx software. If you want more
 information about PSFEx, please check this link: <a class="reference external" href="https://psfex.readthedocs.io/en/latest/GettingStarted.html">PSFEx: Getting Started</a></p>
 <div class="cell docutils container">
@@ -852,8 +851,8 @@ information about PSFEx, please check this link: <a class="reference external" h
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<div class="cell tag_scroll-output tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SExtractor run to feed PSFEx</span>
 <span class="n">PATH_CONV</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/opt/sextractor/share/sextractor/default.conv&quot;</span>
 <span class="n">PATH_NNW</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/opt/sextractor/share/sextractor/default.nnw&quot;</span>
@@ -874,6 +873,11 @@ information about PSFEx, please check this link: <a class="reference external" h
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 
 ----- SExtractor 2.28.0 started on 2024-05-11 at 18:00:36 with 1 thread
@@ -1058,9 +1062,10 @@ Detection+Measurement image: &gt; Setting up background maps
 </pre></div>
 </div>
 </div>
+</details>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<div class="cell tag_scroll-output tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># PSFEx run</span>
 <span class="n">config_psfex</span> <span class="o">=</span> <span class="s1">&#39;config.psfex&#39;</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;psfex -d &gt;&gt; </span><span class="si">{</span><span class="n">config_psfex</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -1068,6 +1073,11 @@ Detection+Measurement image: &gt; Setting up background maps
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; WARNING: This executable has been compiled using a version of the ATLAS library without support for multithreading. Performance will be degraded.
 
@@ -1100,6 +1110,7 @@ J132947.00+471338           82/104     0.83   0.87   3.22  0.01  0.02  0.04
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <p>We obtained <code class="docutils literal notranslate"><span class="pre">J132947.00+471338.0-r.psf</span></code>!</p>
 <div class="cell docutils container">
@@ -1174,13 +1185,13 @@ TDIM1   = &#39;(25, 25, 6)&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png"><img alt="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" class="align-center" src="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" style="width: 451px;" />
+<a class="reference internal image-reference" href="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png"><img alt="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" class="align-center" src="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" style="width: 451px; height: 415px;" />
 </a>
 </div>
 </div>
 </section>
 <section id="making-the-mask-image">
-<h2>Making the Mask Image<a class="headerlink" href="#making-the-mask-image" title="Link to this heading">#</a></h2>
+<h3>Making the Mask Image<a class="headerlink" href="#making-the-mask-image" title="Link to this heading">#</a></h3>
 <p>Let’s obtain the celestial coordinates (RA and DEC) of two objects, M51A and M51B, from the NASA/IPAC Extragalactic Database (NED). From this positions, we will
 determine the center coordinate pixels for each galaxy, and construct models
 individually.</p>
@@ -1208,7 +1219,7 @@ individually.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7faa52057490&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png"><img alt="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" class="align-center" src="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" style="width: 712px;" />
+<a class="reference internal image-reference" href="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png"><img alt="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" class="align-center" src="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" style="width: 712px; height: 636px;" />
 </a>
 </div>
 </div>
@@ -1274,7 +1285,7 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png"><img alt="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" class="align-center" src="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" style="width: 732px;" />
+<a class="reference internal image-reference" href="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png"><img alt="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" class="align-center" src="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" style="width: 732px; height: 690px;" />
 </a>
 </div>
 </div>
@@ -1287,6 +1298,7 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="initialize-model-and-run-galfit">
 <h2>2. Initialize Model and Run GALFIT<a class="headerlink" href="#initialize-model-and-run-galfit" title="Link to this heading">#</a></h2>
@@ -1857,7 +1869,7 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png"><img alt="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" class="align-center" src="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" style="width: 980px;" />
+<a class="reference internal image-reference" href="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png"><img alt="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" class="align-center" src="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" style="width: 980px; height: 352px;" />
 </a>
 </div>
 </div>
@@ -1905,7 +1917,7 @@ carefully set the initial guess of the parameters…</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7faa612311e0&gt;,)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png"><img alt="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" class="align-center" src="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" style="width: 460px;" />
+<a class="reference internal image-reference" href="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png"><img alt="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" class="align-center" src="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" style="width: 460px; height: 431px;" />
 </a>
 </div>
 </div>
@@ -1951,7 +1963,7 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png"><img alt="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" class="align-center" src="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" style="width: 777px;" />
+<a class="reference internal image-reference" href="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png"><img alt="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" class="align-center" src="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" style="width: 777px; height: 377px;" />
 </a>
 </div>
 </div>
@@ -2039,7 +2051,7 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7faa51b95270&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png"><img alt="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" class="align-center" src="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" style="width: 501px;" />
+<a class="reference internal image-reference" href="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png"><img alt="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" class="align-center" src="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" style="width: 501px; height: 414px;" />
 </a>
 </div>
 </div>
@@ -2095,10 +2107,10 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-input-data">1. Prepare the Input Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-sdss-mosaic-image-from-sdss-science-archive-server-sas">Download SDSS Mosaic Image from SDSS Science Archive Server (SAS)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m51">M51</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-psf">Getting PSF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-mask-image">Making the Mask Image</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-psf">Getting PSF</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#making-the-mask-image">Making the Mask Image</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-model-and-run-galfit">2. Initialize Model and Run GALFIT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-the-fit">3. Evaluating the Fit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usefull-references">Usefull References</a></li>
