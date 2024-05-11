@@ -92,6 +92,13 @@ conda install spyder‑kernels=2.2.1
   source-extractor
   ```
 
+:::{tip}
+You can also install SExtractor with `conda`:
+```shell
+conda install -c conda-forge astromatic-sextractor
+```
+:::
+
 ### 2.3. PSF Extractor
 
 * **For Linux (or Window) users**, please refer to the official documentation: [Installing the software](https://psfex.readthedocs.io/en/latest/Installing.html).
@@ -131,6 +138,5 @@ conda install spyder‑kernels=2.2.1
   ```
   and now you are all set.
 
-
-
-
+#### 1.2.4. GALFIT
+Installing GALFIT is an easy task. You can download the compiled execution file from the official website: [GALFIT Homepage](https://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html). Select your operating system and download the file. Then, you can run the program by putting the file in your path, or directly run the program in the directory where the file is located.
