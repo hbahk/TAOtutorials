@@ -6,7 +6,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Surface Photometry Using GALFIT &#8212; TAO Tutorials  documentation</title>
   
@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
@@ -340,6 +340,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-galfit">0. Install GALFIT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-input-data">1. Prepare the Input Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-sdss-mosaic-image-from-sdss-science-archive-server-sas">Download SDSS Mosaic Image from SDSS Science Archive Server (SAS)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m51">M51</a></li>
@@ -365,9 +366,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="surface-photometry-using-galfit">
 <h1>Surface Photometry Using GALFIT<a class="headerlink" href="#surface-photometry-using-galfit" title="Link to this heading">#</a></h1>
-<p>I refered to the <a class="reference external" href="https://github.com/joungh93/JWST_GALFIT/tree/main">JWST_GALFIT</a>
-repository, whose codes are written by <strong>Dr. Jeong Hwan Lee</strong>.</p>
-<p>Multi-component galaxy modeling using GALFIT typically involves the following steps:</p>
+<p>Multi-component galaxy modeling using GALFIT typically involves following steps:</p>
 <ol class="arabic simple">
 <li><p>Prepare the input data: The first step is to prepare the input data for GALFIT. This involves selecting the image(s) to be modeled, determining the PSF (point spread function) of the instrument, and creating a mask to exclude regions that should not be included in the model.</p></li>
 <li><p>Initialize the model: The next step is to initialize the model parameters in GALFIT. This involves specifying the number and type of components to be included in the model (e.g., bulge, disk, bar, etc.), and setting the initial values of the model parameters (e.g., position, size, brightness, etc.).</p></li>
@@ -376,6 +375,10 @@ repository, whose codes are written by <strong>Dr. Jeong Hwan Lee</strong>.</p>
 <li><p>Refine the model: Based on the evaluation of the fit, it may be necessary to refine the model by adjusting the model parameters and/or the mask. This process may need to be repeated several times until an acceptable fit is achieved.</p></li>
 <li><p>Extract results: Once an acceptable fit is achieved, the final model parameters can be extracted from GALFIT and used to generate images or other data products that represent the modeled galaxy. These results can be used for further analysis and interpretation of the observed galaxy.</p></li>
 </ol>
+<section id="install-galfit">
+<h2>0. Install GALFIT<a class="headerlink" href="#install-galfit" title="Link to this heading">#</a></h2>
+<p>Before you start, you might as well need to install GALFIT. You can download the software from the <a class="reference external" href="http://users.obs.carnegiescience.edu/peng/work/galfit/galfit.html">official website</a>. Select the appropriate version for your operating system and download the executable file.</p>
+</section>
 <section id="prepare-the-input-data">
 <h2>1. Prepare the Input Data<a class="headerlink" href="#prepare-the-input-data" title="Link to this heading">#</a></h2>
 <section id="download-sdss-mosaic-image-from-sdss-science-archive-server-sas">
@@ -393,6 +396,11 @@ Then click the “Submit” button.</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>astromatic-swarp
 </pre></div>
 </div>
+<div class="attention admonition">
+<p class="admonition-title">For Mac Apple Silicon Users</p>
+<p>If you specified your architecture as <code class="docutils literal notranslate"><span class="pre">noarch</span></code> or <code class="docutils literal notranslate"><span class="pre">osx-arm64</span></code> for new Apple Silicons, you might get an error message, since the <code class="docutils literal notranslate"><span class="pre">SWarp</span></code> package is not available for <code class="docutils literal notranslate"><span class="pre">osx-arm64</span></code> architecture yet.
+In this case, you need to make a new environment and specify the architecture as <code class="docutils literal notranslate"><span class="pre">osx-64</span></code> instead.</p>
+</div>
 <p>Otherwise you need to install by following <a class="reference external" href="https://www.astromatic.net/software/swarp/">the official website</a> which I didn’t test.</p>
 <ul class="simple">
 <li><p>Useful Resources (If you want to evaluate errors pixel by pixel)</p>
@@ -408,6 +416,40 @@ Then click the “Submit” button.</p>
 <h3>M51<a class="headerlink" href="#m51" title="Link to this heading">#</a></h3>
 <p>In this tutorial, we conduct surface photometry of M51, whose image is downloaded
 from the archival data of SDSS, to reproduce Figure 21. (see below figure) of <a class="reference external" href="https://ui.adsabs.harvard.edu/abs/2010AJ....139.2097P/abstract">Peng et al. (2010)</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Fitting the surface brightness profile of a spiral galaxy like M51 is a challenging task, as it typically requires a multi-component model to account for the different structural components of the galaxy (e.g., bulge, disk, spiral arms, etc.). GALFIT is a powerful tool for this purpose, but it requires careful consideration of the model parameters and fitting strategy to obtain reliable results. For spiral or irregular galaxies, it is very hard to get a result without crash. When GALFIT crashes, it prints a ascii-coded image of a nuclear explosion, which is very annoying when you encounter it over and over again. <strong>So I recommend to avoid spirals or irregulars for your first trial and class project, for your own mental health!</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+                 __/~*##$%@@@******~\-__        
+               /f=r/~_-~ _-_ --_.^-~--\=b\      
+             4fF / */  .o  ._-__.__/~-. \*R\    
+            /fF./  . /- /&#39; /|/|  \_  * *\ *\R\  
+           (iC.I+ &#39;| - *-/00  |-  \  )  ) )|RB  
+           (I| (  [  / -|/^^\ |   )  /_/ | *)B  
+           (I(. \ `` \   \m_m_|~__/ )_ .-~ F/   
+            \b\\=_.\_b`-+-~x-_/ .. ,._/ , F/    
+             ~\_\= =  =-*###%#x==-#  *=- =/     
+                ~\**U/~  | i i | ~~~\===~       
+                        | I I \\                
+                       / // i\ \\               
+                  (   [ (( I@) )))  )           
+                       \_\_VYVU_/               
+                         || * |                 
+                        /* /I\ *~~\              
+                      /~-/*  / \ \ ~~M~\         
+            ____----=~ // /WVW\* \|\ ***===--___ 
+ 
+   Doh!  GALFIT crashed because at least one of the model parameters 
+   is bad.  The most common causes are: effective radius too small/big,
+   component is too far outside of fitting region (also check fitting
+   region), model mag too faint, axis ratio too small, Sersic index
+   too small/big, Nuker powerlaw too small/big.  If frustrated or 
+   problem should persist, email for help or report problem to: 
+                     Chien.Y.Peng@gmail.com 
+
+</pre></div>
+</div>
+</div>
 <p><img alt="" src="../_images/3.png" /></p>
 <p>Let’s make mosaic of M51 field, with the image size of <span class="math notranslate nohighlight">\(18'\)</span>.
 The r-band images of single fields for the mosaics are queried from the above
@@ -438,14 +480,15 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PosixPath(&#39;/Users/hbahk/class/tao23/TAO23/tutorials/data/proj4&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PosixPath(&#39;/Users/hbahk/class/TAOtutorials/tutorials/data/proj4&#39;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J132947.00+471338.0&#39;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this takes a while -- about 10 minutes</span>
+<span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J132947.00+471338.0&#39;</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="s1">&#39;input&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
@@ -453,6 +496,21 @@ the r-band image and its weight image.</p>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;chmod 744 </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.sh&#39;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;./</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.sh&#39;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm *.bz2&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: *.bz2: No such file or directory
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>256
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
 </pre></div>
 </div>
 </div>
@@ -465,7 +523,7 @@ the r-band image and its weight image.</p>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
 
 <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-r.fits&#39;</span><span class="p">)</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
@@ -482,7 +540,8 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/827666505b6dc2906554fa48f69298a7ee1857584d7fa6190e80f07ed38c9185.png" src="../_images/827666505b6dc2906554fa48f69298a7ee1857584d7fa6190e80f07ed38c9185.png" />
+<a class="reference internal image-reference" href="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png"><img alt="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png" src="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png" style="width: 869px; height: 790px;" />
+</a>
 </div>
 </div>
 <p>The detector gain of SDSS images differ by the camera column (CAMCOL) and the
@@ -567,7 +626,8 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Sky Image&#39;)
 </pre></div>
 </div>
-<img alt="../_images/baa5c6d7c23578858d7b4dc44a6071a8375d0f70bc70a706ecf19fc596f17f3b.png" src="../_images/baa5c6d7c23578858d7b4dc44a6071a8375d0f70bc70a706ecf19fc596f17f3b.png" />
+<a class="reference internal image-reference" href="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png"><img alt="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png" src="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png" style="width: 701px; height: 847px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -602,7 +662,8 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Image&#39;)
 </pre></div>
 </div>
-<img alt="../_images/ffb34ef2dafe4c9dfeb745107caad38d01a3e1f7e1b2f4f39b8e56379967b65a.png" src="../_images/ffb34ef2dafe4c9dfeb745107caad38d01a3e1f7e1b2f4f39b8e56379967b65a.png" />
+<a class="reference internal image-reference" href="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png"><img alt="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png" src="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png" style="width: 689px; height: 847px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -649,7 +710,8 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Error Image&#39;)
 </pre></div>
 </div>
-<img alt="../_images/f5e7b4db8cdee5ef1f66d84ab5a445b71c92e128b4a770eba4cc785fce0eba40.png" src="../_images/f5e7b4db8cdee5ef1f66d84ab5a445b71c92e128b4a770eba4cc785fce0eba40.png" />
+<a class="reference internal image-reference" href="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png"><img alt="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png" src="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png" style="width: 688px; height: 847px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -761,7 +823,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <section id="getting-psf">
 <h2>Getting PSF<a class="headerlink" href="#getting-psf" title="Link to this heading">#</a></h2>
 <p>Since we need PSF to use GALFIT, we will get PSF of the image using the PSFEx software. If you want more
-information about PSFEx, please check this link: <a class="reference external" href="https://psfex.readthedocs.io/en/latest/GettingStarted.html">Getting Started</a></p>
+information about PSFEx, please check this link: <a class="reference external" href="https://psfex.readthedocs.io/en/latest/GettingStarted.html">PSFEx: Getting Started</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aperture size for SExtractor run</span>
@@ -801,25 +863,28 @@ information about PSFEx, please check this link: <a class="reference external" h
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SExtractor run to feed PSFEx</span>
-<span class="n">PATH_CONV</span> <span class="o">=</span> <span class="s1">&#39;/opt/homebrew/opt/sextractor/share/sextractor/default.conv&#39;</span>
-<span class="n">PATH_NNW</span> <span class="o">=</span> <span class="s1">&#39;/opt/homebrew/opt/sextractor/share/sextractor/default.nnw&#39;</span>
+<span class="n">PATH_CONV</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/opt/sextractor/share/sextractor/default.conv&quot;</span>
+<span class="n">PATH_NNW</span> <span class="o">=</span> <span class="s2">&quot;/opt/homebrew/opt/sextractor/share/sextractor/default.nnw&quot;</span>
+<span class="n">SEXTRACTOR_COMMAND</span> <span class="o">=</span> <span class="s2">&quot;sex&quot;</span>
 
-<span class="n">catalog_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-r.cat&#39;</span>
+<span class="n">catalog_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-r.cat&quot;</span>
 
-<span class="n">exec_sextractor</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;sex </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-r.fits -c default.sex&#39;</span> <span class="o">+</span> \
-    <span class="sa">f</span><span class="s1">&#39; -CATALOG_NAME </span><span class="si">{</span><span class="n">catalog_name</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> \
-    <span class="sa">f</span><span class="s1">&#39; -PARAMETERS_NAME </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> \
-    <span class="sa">f</span><span class="s1">&#39; -FILTER_NAME </span><span class="si">{</span><span class="n">PATH_CONV</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> \
-    <span class="sa">f</span><span class="s1">&#39; -CATALOG_TYPE FITS_LDAC -PHOT_APERTURES </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">PHOT_APERTURE</span><span class="o">/</span><span class="n">SCALE</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span> 
+<span class="n">exec_sextractor</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">SEXTRACTOR_COMMAND</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-r.fits -c default.sex&quot;</span>
+    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; -CATALOG_NAME </span><span class="si">{</span><span class="n">catalog_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; -PARAMETERS_NAME </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; -FILTER_NAME </span><span class="si">{</span><span class="n">PATH_CONV</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; -CATALOG_TYPE FITS_LDAC -PHOT_APERTURES </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">PHOT_APERTURE</span><span class="o">/</span><span class="n">SCALE</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;sex -d &gt;&gt; default.sex&#39;</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;sex -d &gt;&gt; default.sex&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">exec_sextractor</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 
------ SExtractor 2.28.0 started on 2023-05-14 at 23:26:34 with 1 thread
+----- SExtractor 2.28.0 started on 2024-05-11 at 18:00:36 with 1 thread
 
 &gt; Setting catalog parameters
 &gt; Reading detection filter
@@ -994,7 +1059,7 @@ Detection+Measurement image: &gt; Setting up background maps
 
 &gt; Closing files
 &gt; 
-&gt; All done (in 2.2 s: 1242.1 lines/s , 1030.6 detections/s)
+&gt; All done (in 2.1 s: 1279.5 lines/s , 1061.7 detections/s)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
@@ -1015,7 +1080,7 @@ Detection+Measurement image: &gt; Setting up background maps
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; WARNING: This executable has been compiled using a version of the ATLAS library without support for multithreading. Performance will be degraded.
 
 &gt; 
------ PSFEx 3.24.2 started on 2023-05-14 at 23:26:37 with 8 threads
+----- PSFEx 3.24.2 started on 2024-05-11 at 18:00:38 with 8 threads
 
 &gt; 
 ----- 1 input catalogues:
@@ -1117,7 +1182,8 @@ TDIM1   = &#39;(25, 25, 6)&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/5461b30c29bd0ed2ec0e885f6de2b8a2620a4306e6842b669d79b734cddf4862.png" src="../_images/5461b30c29bd0ed2ec0e885f6de2b8a2620a4306e6842b669d79b734cddf4862.png" />
+<a class="reference internal image-reference" href="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png"><img alt="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png" src="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png" style="width: 460px; height: 417px;" />
+</a>
 </div>
 </div>
 </section>
@@ -1147,10 +1213,11 @@ individually.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f90c0d2e8c0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f7ef91ffca0&gt;
 </pre></div>
 </div>
-<img alt="../_images/a87b10ddfec2de401a99884764b2c69e801fa6b3c2dd96b17ae3602f85ec1389.png" src="../_images/a87b10ddfec2de401a99884764b2c69e801fa6b3c2dd96b17ae3602f85ec1389.png" />
+<a class="reference internal image-reference" href="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png"><img alt="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png" src="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png" style="width: 869px; height: 790px;" />
+</a>
 </div>
 </div>
 <p>Two red and blue circular markers are plotted on the image at the pixel coordinates of M51A and M51B, respectively.</p>
@@ -1215,7 +1282,8 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/07d0c39cce553eda536438b5d8d993fdabec70c2ba58e4808c07332e67ac9bf7.png" src="../_images/07d0c39cce553eda536438b5d8d993fdabec70c2ba58e4808c07332e67ac9bf7.png" />
+<a class="reference internal image-reference" href="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png"><img alt="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png" src="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png" style="width: 904px; height: 856px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1663,6 +1731,7 @@ all possible funtional type and basic information about them.</p>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;5) </span><span class="si">{</span><span class="mf">0.89</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                 <span class="c1"># Sersic exponent</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;9) </span><span class="si">{</span><span class="mf">0.62</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                 <span class="c1"># Axis ratio (b/a)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;10) </span><span class="si">{</span><span class="n">PA_GUESS</span><span class="o">-</span><span class="mf">72.22</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                <span class="c1"># Position angle (PA) [deg: Up=0, Left=90]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Z) 0</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>  
 
 <span class="c1"># M51B -  compound bulge 2</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0) sersic</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                        <span class="c1"># Object type</span>
@@ -1672,6 +1741,7 @@ all possible funtional type and basic information about them.</p>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;5) </span><span class="si">{</span><span class="mf">1.06</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                 <span class="c1"># Sersic exponent</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;9) </span><span class="si">{</span><span class="mf">0.81</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                 <span class="c1"># Axis ratio (b/a)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;10) </span><span class="si">{</span><span class="n">PA_GUESS</span><span class="o">-</span><span class="mf">2.79</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                       <span class="c1"># Position angle (PA) [deg: Up=0, Left=90]</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Z) 0</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>  
 
 <span class="c1"># # M51B -  tidal structure</span>
 <span class="c1"># f.write(&quot;0) sersic\n&quot;)                                        # Object type</span>
@@ -1687,6 +1757,7 @@ all possible funtional type and basic information about them.</p>
 <span class="c1"># f.write(f&quot;F3) {-0.25:.2f} {PA_GUESS+32.55:.2f} 1 1\n&quot;)        # Az. Fourier mode 3, amplitude and phase angle</span>
 <span class="c1"># f.write(f&quot;F4) {0.14:.2f} {PA_GUESS-3.73:.2f} 1 1\n&quot;)          # Az. Fourier mode 4, amplitude and phase angle</span>
 <span class="c1"># f.write(f&quot;F5) {0.03:.2f} {PA_GUESS+7.32:.2f} 1 1\n&quot;)          # Az. Fourier mode 5, amplitude and phase angle</span>
+<span class="c1"># f.write(&quot;Z) 0\n\n&quot;)  </span>
 
 <span class="c1"># M51B -  bar and spiral</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0) sersic</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                        <span class="c1"># Object type</span>
@@ -1707,6 +1778,7 @@ all possible funtional type and basic information about them.</p>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F3) </span><span class="si">{</span><span class="mf">0.05</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">PA_GUESS</span><span class="o">+</span><span class="mf">28.79</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 1 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>         <span class="c1"># Az. Fourier mode 3, amplitude and phase angle</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F4) </span><span class="si">{</span><span class="mf">0.01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">PA_GUESS</span><span class="o">-</span><span class="mf">0.11</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 1 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>          <span class="c1"># Az. Fourier mode 4, amplitude and phase angle</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;F5) </span><span class="si">{</span><span class="mf">0.01</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">PA_GUESS</span><span class="o">+</span><span class="mf">23.12</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 1 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>         <span class="c1"># Az. Fourier mode 5, amplitude and phase angle</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;Z) 0</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>  
 
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;0) sky</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;1) 0.00 1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                        <span class="c1"># Sky background</span>
@@ -1733,14 +1805,26 @@ all possible funtional type and basic information about them.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run GALFIT! (!! I recommend you to run GALFIT in the terminal !!)</span>
-<span class="n">PATH_GALFIT</span> <span class="o">=</span> <span class="s2">&quot;~/class/tao23/galfit/galfit&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">PATH_GALFIT</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.feedme&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run GALFIT! (I recommend you to run GALFIT in the terminal)</span>
+<span class="n">PATH_GALFIT</span> <span class="o">=</span> <span class="s2">&quot;~/Downloads/galfit&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PATH_GALFIT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.feedme&quot;</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mv -v fit.log &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="n">DIR_OUTPUT</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot;/Result_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">)</span>
 <span class="c1"># os.system(&quot;rm -rfv galfit.*&quot;)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PATH_GALFIT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.feedme&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mv -v fit.log </span><span class="si">{</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="n">DIR_OUTPUT</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">/Result_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>~/Downloads/galfit J132947.00+471338.0.feedme
+mv -v fit.log /Users/hbahk/class/TAOtutorials/tutorials/data/proj4/output/Result_J132947.00+471338.0.log
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>The GALFIT process above takes a long time to converge, and it is not guaranteed that it will converge. It may show the same parameters for some first iterations, and then suddenly change the parameters. So you need to be patient and check the results carefully.</p>
 </div>
 <p>I tried the tidal tail feature, but it crashes… I am not sure why.</p>
 <p>So I tried the fitting without the tidal tail.
@@ -1778,7 +1862,8 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/31a732808493659b76ae3e04d10eee4917f4be54b3c38ea4afeec6a9ad72ff09.png" src="../_images/31a732808493659b76ae3e04d10eee4917f4be54b3c38ea4afeec6a9ad72ff09.png" />
+<a class="reference internal image-reference" href="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png"><img alt="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png" src="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png" style="width: 1475px; height: 484px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1806,11 +1891,11 @@ carefully set the initial guess of the parameters…</p>
 </pre></div>
 </div>
 <div class="output text_html"><div><i>QTable length=1</i>
-<table id="table140259447367152" class="table-striped table-bordered table-condensed">
+<table id="table140183048196288" class="table-striped table-bordered table-condensed">
 <thead><tr><th>id</th><th>xcentroid</th><th>ycentroid</th><th>sky_centroid</th><th>sum</th><th>sum_err</th><th>sum_aper_area</th><th>center_aper_area</th><th>min</th><th>max</th><th>mean</th><th>median</th><th>mode</th><th>std</th><th>mad_std</th><th>var</th><th>biweight_location</th><th>biweight_midvariance</th><th>fwhm</th><th>semimajor_sigma</th><th>semiminor_sigma</th><th>orientation</th><th>eccentricity</th></tr></thead>
 <thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th>pix2</th><th>pix2</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>pix</th><th>pix</th><th>pix</th><th>deg</th><th></th></tr></thead>
 <thead><tr><th>int64</th><th>float64</th><th>float64</th><th>object</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th></tr></thead>
-<tr><td>1</td><td>1179.7744549906656</td><td>1013.375021812803</td><td>None</td><td>30293.330702551862</td><td>996.9138142269663</td><td>113907.13841942974</td><td>113896.0</td><td>-0.011959891766309738</td><td>51.8526496887207</td><td>0.26595197190906444</td><td>0.2565868943929672</td><td>0.23785673936077278</td><td>0.4181465178505515</td><td>0.13795405321574528</td><td>0.1748465103905416</td><td>0.25196249655561587</td><td>0.015597976063318315</td><td>715.9875134342707</td><td>337.7763582994452</td><td>266.0869217548677</td><td>-51.391266086358776</td><td>0.6159814662565373</td></tr>
+<tr><td>1</td><td>1179.7744549906656</td><td>1013.375021812803</td><td>None</td><td>30293.330702551862</td><td>9.96913814243584</td><td>113907.13841942974</td><td>113896.0</td><td>-0.011959891766309738</td><td>51.8526496887207</td><td>0.26595197190906444</td><td>0.2565868943929672</td><td>0.23785673936077278</td><td>0.4181465178505515</td><td>0.13795405321574528</td><td>0.1748465103905416</td><td>0.25196249655561587</td><td>0.015597976063318315</td><td>715.9875134342707</td><td>337.7763582994452</td><td>266.0869217548677</td><td>-51.391266086358776</td><td>0.6159814662565373</td></tr>
 </table></div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1822,10 +1907,11 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7f90e4c31690&gt;,)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7f7edb7fea40&gt;,)
 </pre></div>
 </div>
-<img alt="../_images/6cab836bc7da7f60f1708c0c7484b1303e797e3792299c57363da9158c86c4e8.png" src="../_images/6cab836bc7da7f60f1708c0c7484b1303e797e3792299c57363da9158c86c4e8.png" />
+<a class="reference internal image-reference" href="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png"><img alt="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png" src="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png" style="width: 467px; height: 434px;" />
+</a>
 </div>
 </div>
 <div class="cell docutils container">
@@ -1876,7 +1962,8 @@ carefully set the initial guess of the parameters…</p>
   maxy = np.nanmax(masked_verts[..., 1])
 </pre></div>
 </div>
-<img alt="../_images/6cdccb6590c1840636d3ef2d3e149645254e150b466594b2653a80cb710ba423.png" src="../_images/6cdccb6590c1840636d3ef2d3e149645254e150b466594b2653a80cb710ba423.png" />
+<a class="reference internal image-reference" href="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png"><img alt="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png" src="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png" style="width: 970px; height: 471px;" />
+</a>
 </div>
 </div>
 </section>
@@ -1960,10 +2047,11 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f95110545b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f7ebb7acfa0&gt;
 </pre></div>
 </div>
-<img alt="../_images/863ad730a6942c4d0d025197f901bf63a3aaffd8cbf5d97c2a03ebc27d8c1ee8.png" src="../_images/863ad730a6942c4d0d025197f901bf63a3aaffd8cbf5d97c2a03ebc27d8c1ee8.png" />
+<a class="reference internal image-reference" href="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png"><img alt="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png" src="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png" style="width: 513px; height: 418px;" />
+</a>
 </div>
 </div>
 </section>
@@ -2014,6 +2102,7 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-galfit">0. Install GALFIT</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-input-data">1. Prepare the Input Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-sdss-mosaic-image-from-sdss-science-archive-server-sas">Download SDSS Mosaic Image from SDSS Science Archive Server (SAS)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#m51">M51</a></li>
