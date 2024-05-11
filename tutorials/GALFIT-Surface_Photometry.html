@@ -485,8 +485,8 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this takes a while -- about 10 minutes</span>
 <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J132947.00+471338.0&#39;</span>
 
@@ -499,13 +499,20 @@ the r-band image and its weight image.</p>
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: *.bz2: No such file or directory
+</pre></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>256
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -516,6 +523,7 @@ the r-band image and its weight image.</p>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">300</span>
 
 <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-r.fits&#39;</span><span class="p">)</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
@@ -532,8 +540,7 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png"><img alt="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" class="align-center" src="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" style="width: 712px; height: 636px;" />
-</a>
+<img alt="../_images/6871a53003274da272bab1d6f3494041f801c6f9c219272f0a5aa6c9aa06e38c.png" class="align-center" src="../_images/6871a53003274da272bab1d6f3494041f801c6f9c219272f0a5aa6c9aa06e38c.png" />
 </div>
 </div>
 <p>The detector gain of SDSS images differ by the camera column (CAMCOL) and the
@@ -618,8 +625,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Sky Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png"><img alt="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" class="align-center" src="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" style="width: 681px; height: 841px;" />
-</a>
+<img alt="../_images/825a4b4c01fea69f4d6d8380608773796621fda83bebdbe5e1e5488a1973f55b.png" class="align-center" src="../_images/825a4b4c01fea69f4d6d8380608773796621fda83bebdbe5e1e5488a1973f55b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -654,8 +660,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png"><img alt="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" class="align-center" src="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" style="width: 670px; height: 841px;" />
-</a>
+<img alt="../_images/f3072282f7fe7fbd14424370a4dbdcab8191caf8c4e8212addd9100b0e949860.png" class="align-center" src="../_images/f3072282f7fe7fbd14424370a4dbdcab8191caf8c4e8212addd9100b0e949860.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -702,8 +707,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Error Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png"><img alt="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" class="align-center" src="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" style="width: 670px; height: 841px;" />
-</a>
+<img alt="../_images/a16cb8e52adf7387f1488c4aef0ee72fa2a35317e284341a8c85c81886aeb9a6.png" class="align-center" src="../_images/a16cb8e52adf7387f1488c4aef0ee72fa2a35317e284341a8c85c81886aeb9a6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -880,7 +884,7 @@ information about PSFEx, please check this link: <a class="reference external" h
 </summary>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; 
------ SExtractor 2.28.0 started on 2024-05-11 at 18:00:36 with 1 thread
+----- SExtractor 2.28.0 started on 2024-05-12 at 08:17:24 with 1 thread
 
 &gt; Setting catalog parameters
 &gt; Reading detection filter
@@ -1055,7 +1059,7 @@ Detection+Measurement image: &gt; Setting up background maps
 
 &gt; Closing files
 &gt; 
-&gt; All done (in 2.1 s: 1279.5 lines/s , 1061.7 detections/s)
+&gt; All done (in 2.2 s: 1254.2 lines/s , 1040.7 detections/s)
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0
@@ -1082,7 +1086,7 @@ Detection+Measurement image: &gt; Setting up background maps
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&gt; WARNING: This executable has been compiled using a version of the ATLAS library without support for multithreading. Performance will be degraded.
 
 &gt; 
------ PSFEx 3.24.2 started on 2024-05-11 at 18:00:38 with 8 threads
+----- PSFEx 3.24.2 started on 2024-05-12 at 08:17:26 with 8 threads
 
 &gt; 
 ----- 1 input catalogues:
@@ -1185,8 +1189,7 @@ TDIM1   = &#39;(25, 25, 6)&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png"><img alt="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" class="align-center" src="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" style="width: 451px; height: 415px;" />
-</a>
+<img alt="../_images/1436a0f91e199926ec5801ed939f58d3497b8c4f297ef33865c23aa99c7d719e.png" class="align-center" src="../_images/1436a0f91e199926ec5801ed939f58d3497b8c4f297ef33865c23aa99c7d719e.png" />
 </div>
 </div>
 </section>
@@ -1216,11 +1219,10 @@ individually.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7faa52057490&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7fc6f31a6140&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png"><img alt="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" class="align-center" src="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" style="width: 712px; height: 636px;" />
-</a>
+<img alt="../_images/5741537db80eb7dd8473688a7eafc464cc5809dfbbbd1056e1380bdf2f4078e2.png" class="align-center" src="../_images/5741537db80eb7dd8473688a7eafc464cc5809dfbbbd1056e1380bdf2f4078e2.png" />
 </div>
 </div>
 <p>Two red and blue circular markers are plotted on the image at the pixel coordinates of M51A and M51B, respectively.</p>
@@ -1285,8 +1287,7 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png"><img alt="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" class="align-center" src="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" style="width: 732px; height: 690px;" />
-</a>
+<img alt="../_images/c78d0b71e85d336b997c801d895803d39e17b1538f3e6f299094f2aeb8c76f35.png" class="align-center" src="../_images/c78d0b71e85d336b997c801d895803d39e17b1538f3e6f299094f2aeb8c76f35.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1869,8 +1870,7 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png"><img alt="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" class="align-center" src="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" style="width: 980px; height: 352px;" />
-</a>
+<img alt="../_images/dd296bdf3d01a489fa8277eae975c3e73809da805b0a9decab4bc3f2635653b4.png" class="align-center" src="../_images/dd296bdf3d01a489fa8277eae975c3e73809da805b0a9decab4bc3f2635653b4.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1898,7 +1898,7 @@ carefully set the initial guess of the parameters…</p>
 </pre></div>
 </div>
 <div class="output text_html"><div><i>QTable length=1</i>
-<table id="table140370272003712" class="table-striped table-bordered table-condensed">
+<table id="table140492462693952" class="table-striped table-bordered table-condensed">
 <thead><tr><th>id</th><th>xcentroid</th><th>ycentroid</th><th>sky_centroid</th><th>sum</th><th>sum_err</th><th>sum_aper_area</th><th>center_aper_area</th><th>min</th><th>max</th><th>mean</th><th>median</th><th>mode</th><th>std</th><th>mad_std</th><th>var</th><th>biweight_location</th><th>biweight_midvariance</th><th>fwhm</th><th>semimajor_sigma</th><th>semiminor_sigma</th><th>orientation</th><th>eccentricity</th></tr></thead>
 <thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th>pix2</th><th>pix2</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>pix</th><th>pix</th><th>pix</th><th>deg</th><th></th></tr></thead>
 <thead><tr><th>int64</th><th>float64</th><th>float64</th><th>object</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th></tr></thead>
@@ -1914,11 +1914,10 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7faa612311e0&gt;,)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7fc704471db0&gt;,)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png"><img alt="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" class="align-center" src="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" style="width: 460px; height: 431px;" />
-</a>
+<img alt="../_images/6a34473e2362ed9f1de26913ab25036e1e43438db85fe70bb281a6235725bb21.png" class="align-center" src="../_images/6a34473e2362ed9f1de26913ab25036e1e43438db85fe70bb281a6235725bb21.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1963,8 +1962,13 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png"><img alt="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" class="align-center" src="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" style="width: 777px; height: 377px;" />
-</a>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/tao23/lib/python3.10/site-packages/matplotlib/axes/_axes.py:1148: RuntimeWarning: All-NaN axis encountered
+  miny = np.nanmin(masked_verts[..., 1])
+/opt/anaconda3/envs/tao23/lib/python3.10/site-packages/matplotlib/axes/_axes.py:1149: RuntimeWarning: All-NaN axis encountered
+  maxy = np.nanmax(masked_verts[..., 1])
+</pre></div>
+</div>
+<img alt="../_images/82cb3472a93cda0f260623fc2926c26b90d776e869be1894ba02145834a0a95c.png" class="align-center" src="../_images/82cb3472a93cda0f260623fc2926c26b90d776e869be1894ba02145834a0a95c.png" />
 </div>
 </div>
 </section>
@@ -2048,11 +2052,10 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7faa51b95270&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7fc66695b7c0&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png"><img alt="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" class="align-center" src="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" style="width: 501px; height: 414px;" />
-</a>
+<img alt="../_images/b568c048a0aca05403a6c664268f73eb3ff64f5db1d022a6f232db173484af5e.png" class="align-center" src="../_images/b568c048a0aca05403a6c664268f73eb3ff64f5db1d022a6f232db173484af5e.png" />
 </div>
 </div>
 </section>
