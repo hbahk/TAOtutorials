@@ -54,7 +54,8 @@ myst_enable_extensions = [
 ]
 
 jupyter_execute_notebooks = "off"
-    
+
+nb_render_image_options = {"align": "center"}
     
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
