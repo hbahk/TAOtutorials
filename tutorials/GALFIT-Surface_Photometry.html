@@ -499,14 +499,6 @@ the r-band image and its weight image.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>rm: *.bz2: No such file or directory
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>256
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -523,14 +515,14 @@ the r-band image and its weight image.</p>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span>
 
 <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-r.fits&#39;</span><span class="p">)</span>
 <span class="n">image</span> <span class="o">=</span> <span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
 <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">hdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
 
 <span class="n">norm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">AsymmetricPercentileInterval</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">99.0</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">AsinhStretch</span><span class="p">())</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">wcs</span><span class="p">)</span>
 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
@@ -540,7 +532,7 @@ the r-band image and its weight image.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png"><img alt="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png" src="../_images/c94e8092be5c75d62cb68e5fa365f07991536f763db97e25d3e8b4099889c68c.png" style="width: 869px; height: 790px;" />
+<a class="reference internal image-reference" href="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png"><img alt="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" class="align-center" src="../_images/381e5c456158969fd2272b1239432a97c7b650668293f4a56c5c81d85d17b257.png" style="width: 712px; height: 636px;" />
 </a>
 </div>
 </div>
@@ -626,7 +618,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Reconstructed Sky Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png"><img alt="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png" src="../_images/96127ef73a95a573788df4b3e9a433306bcadab89377a7c1b4270a75faa774c4.png" style="width: 701px; height: 847px;" />
+<a class="reference internal image-reference" href="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png"><img alt="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" class="align-center" src="../_images/7816db65c48bca2003bcde8efaeb78aed66c3867c2bfccc5c12fcfe21ad1b0ec.png" style="width: 681px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -662,7 +654,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png"><img alt="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png" src="../_images/eb06af79330c63d1e0dc9b94b4e6af4e4f2332ac975ca9a26f437f485f5f703f.png" style="width: 689px; height: 847px;" />
+<a class="reference internal image-reference" href="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png"><img alt="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" class="align-center" src="../_images/4e8d2c5b2f157226cbd89810242b4010a445bc52978a1a86cec2075486cecf13.png" style="width: 670px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -710,7 +702,7 @@ package doesn’t provide the average effective gain as usual.</p>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Calibration Error Image&#39;)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png"><img alt="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png" src="../_images/15c9bf3bf1a2f3898d1a2dbc2933a05bd175624c3f572f8bbfb04ceb8e8f0f26.png" style="width: 688px; height: 847px;" />
+<a class="reference internal image-reference" href="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png"><img alt="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" class="align-center" src="../_images/1de36e7bd2a72a03e156276dc8cb1e084b061f30801bea73fc4b4a3f51104149.png" style="width: 670px; height: 841px;" />
 </a>
 </div>
 </div>
@@ -1182,7 +1174,7 @@ TDIM1   = &#39;(25, 25, 6)&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png"><img alt="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png" src="../_images/b0b51aa09ad6c106f74d51bd5e67ba1557e990ff9596089c3b60f1c14879b383.png" style="width: 460px; height: 417px;" />
+<a class="reference internal image-reference" href="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png"><img alt="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" class="align-center" src="../_images/bd7c59489a460b545bcc9c7d3cd6fcae98c735b71278e718e356923140f202c4.png" style="width: 451px; height: 415px;" />
 </a>
 </div>
 </div>
@@ -1201,7 +1193,7 @@ individually.</p>
 <span class="n">x_a</span><span class="p">,</span> <span class="n">y_a</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">all_world2pix</span><span class="p">(</span><span class="n">ra_a</span><span class="p">,</span> <span class="n">dec_a</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">x_b</span><span class="p">,</span> <span class="n">y_b</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">all_world2pix</span><span class="p">(</span><span class="n">ra_b</span><span class="p">,</span> <span class="n">dec_b</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">wcs</span><span class="p">)</span>
 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
@@ -1213,10 +1205,10 @@ individually.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7f7ef91ffca0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x7faa52057490&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png"><img alt="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png" src="../_images/5274d2427d72a14046c9a524474b50eec52f26a8d3160b4a08e36e43f51f9128.png" style="width: 869px; height: 790px;" />
+<a class="reference internal image-reference" href="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png"><img alt="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" class="align-center" src="../_images/71fdfdb6a81d5091a86741a9a78925f7f857befef4b4af2cc890cdadc5b0f89a.png" style="width: 712px; height: 636px;" />
 </a>
 </div>
 </div>
@@ -1273,7 +1265,7 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="n">wcs</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;RA&#39;</span><span class="p">)</span>
@@ -1282,7 +1274,7 @@ labels: [  1   2   3   4   5 ... 643 644 645 646 647]
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png"><img alt="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png" src="../_images/02efb6d189a21049d20a6e6d7df2ff2578f3f8c5975d7f30f0f611b996162408.png" style="width: 904px; height: 856px;" />
+<a class="reference internal image-reference" href="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png"><img alt="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" class="align-center" src="../_images/b61bf9d502c3b4775e8b22029bc63efcc95f637f6fe8eafa6e03f28b0fc4948d.png" style="width: 732px; height: 690px;" />
 </a>
 </div>
 </div>
@@ -1641,7 +1633,7 @@ all possible funtional type and basic information about them.</p>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;G) </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.constrain</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                           <span class="c1"># File with parameter constraints</span>
 <span class="c1"># f.write(&quot;G) none\n&quot;)                                          # File with parameter constraints</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H) </span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Image region to fit (xmin xmax ymin ymax)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I) </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                          <span class="c1"># Size of the convolution box (x y)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I) </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                          <span class="c1"># Size of the convolution box (x y) https://users.obs.carnegiescience.edu/peng/work/galfit/TFAQ.html#convbox</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;J) 22.5</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                          <span class="c1"># Magnitude photometric zeropoint</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;K) </span><span class="si">{</span><span class="n">SCALE</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">SCALE</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                              <span class="c1"># Plate scale (dx dy) [arcsec per pixel]</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;O) regular</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                       <span class="c1"># Display type (regular, curses, both)</span>
@@ -1807,8 +1799,8 @@ all possible funtional type and basic information about them.</p>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run GALFIT! (I recommend you to run GALFIT in the terminal)</span>
 <span class="n">PATH_GALFIT</span> <span class="o">=</span> <span class="s2">&quot;~/Downloads/galfit&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PATH_GALFIT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.feedme&quot;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mv -v fit.log &quot;</span><span class="o">+</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="n">DIR_OUTPUT</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="o">+</span><span class="sa">f</span><span class="s2">&quot;/Result_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">)</span>
+<span class="c1"># os.system(f&quot;{PATH_GALFIT} {name}.feedme&quot;)</span>
+<span class="c1"># os.system(&quot;mv -v fit.log &quot;+(cwd/DIR_OUTPUT).as_posix()+f&quot;/Result_{name}.log&quot;)</span>
 <span class="c1"># os.system(&quot;rm -rfv galfit.*&quot;)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">PATH_GALFIT</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.feedme&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;mv -v fit.log </span><span class="si">{</span><span class="p">(</span><span class="n">cwd</span><span class="o">/</span><span class="n">DIR_OUTPUT</span><span class="p">)</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">/Result_</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.log&quot;</span><span class="p">)</span>
@@ -1848,7 +1840,7 @@ carefully set the initial guess of the parameters…</p>
 <span class="n">mnorm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">AsymmetricPercentileInterval</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">99.0</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">AsinhStretch</span><span class="p">())</span>
 <span class="n">rnorm</span> <span class="o">=</span> <span class="n">ImageNormalize</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="n">AsymmetricPercentileInterval</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">99.0</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="n">AsinhStretch</span><span class="p">())</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">inorm</span><span class="p">)</span>
 <span class="n">mm</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">inorm</span><span class="p">)</span>
 <span class="n">rm</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">inorm</span><span class="p">)</span>
@@ -1857,12 +1849,15 @@ carefully set the initial guess of the parameters…</p>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Model image&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Residual image&quot;</span><span class="p">)</span>
 
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ax</span><span class="p">:</span>
+    <span class="n">a</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<a class="reference internal image-reference" href="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png"><img alt="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png" src="../_images/a9ebafd5ffb00ed1fe7d2b9fec62be854731d6d50eddbf31f8d073820755d305.png" style="width: 1475px; height: 484px;" />
+<a class="reference internal image-reference" href="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png"><img alt="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" class="align-center" src="../_images/10cbac2ef3544a0f37a70a047b3af1570b9d439fe355e93085353004bf7ffd21.png" style="width: 980px; height: 352px;" />
 </a>
 </div>
 </div>
@@ -1891,7 +1886,7 @@ carefully set the initial guess of the parameters…</p>
 </pre></div>
 </div>
 <div class="output text_html"><div><i>QTable length=1</i>
-<table id="table140183048196288" class="table-striped table-bordered table-condensed">
+<table id="table140370272003712" class="table-striped table-bordered table-condensed">
 <thead><tr><th>id</th><th>xcentroid</th><th>ycentroid</th><th>sky_centroid</th><th>sum</th><th>sum_err</th><th>sum_aper_area</th><th>center_aper_area</th><th>min</th><th>max</th><th>mean</th><th>median</th><th>mode</th><th>std</th><th>mad_std</th><th>var</th><th>biweight_location</th><th>biweight_midvariance</th><th>fwhm</th><th>semimajor_sigma</th><th>semiminor_sigma</th><th>orientation</th><th>eccentricity</th></tr></thead>
 <thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th>pix2</th><th>pix2</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>pix</th><th>pix</th><th>pix</th><th>deg</th><th></th></tr></thead>
 <thead><tr><th>int64</th><th>float64</th><th>float64</th><th>object</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th><th>float64</th></tr></thead>
@@ -1907,10 +1902,10 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7f7edb7fea40&gt;,)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(&lt;matplotlib.patches.PathPatch at 0x7faa612311e0&gt;,)
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png"><img alt="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png" src="../_images/c69f1fad35e2d11b541341cf064283c1182f24027fd3536a6b62888fc53f5fd7.png" style="width: 467px; height: 434px;" />
+<a class="reference internal image-reference" href="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png"><img alt="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" class="align-center" src="../_images/12129de8a412a845d8705d36684146c2bc35ef9de614fb05f020745fdfa660d9.png" style="width: 460px; height: 431px;" />
 </a>
 </div>
 </div>
@@ -1919,7 +1914,7 @@ carefully set the initial guess of the parameters…</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ZP</span> <span class="o">=</span> <span class="mf">22.5</span>
 <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">0.08</span><span class="o">*</span><span class="mi">60</span><span class="o">/</span><span class="n">SCALE</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">20.0</span><span class="o">*</span><span class="mi">60</span><span class="o">/</span><span class="n">SCALE</span><span class="p">),</span> <span class="mi">40</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">inorm</span><span class="p">)</span>
 <span class="n">mu</span><span class="p">,</span> <span class="n">muerr</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 <span class="n">mu_mod</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1956,13 +1951,7 @@ carefully set the initial guess of the parameters…</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/tao23/lib/python3.10/site-packages/matplotlib/axes/_axes.py:1148: RuntimeWarning: All-NaN axis encountered
-  miny = np.nanmin(masked_verts[..., 1])
-/opt/anaconda3/envs/tao23/lib/python3.10/site-packages/matplotlib/axes/_axes.py:1149: RuntimeWarning: All-NaN axis encountered
-  maxy = np.nanmax(masked_verts[..., 1])
-</pre></div>
-</div>
-<a class="reference internal image-reference" href="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png"><img alt="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png" src="../_images/83677242b6396f99c5c1498da79d7f09cefc916856797497c6272350da4fc846.png" style="width: 970px; height: 471px;" />
+<a class="reference internal image-reference" href="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png"><img alt="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" class="align-center" src="../_images/49bc5abce41c02b0dc6f56b7892938ed9da480fc9779478e495efae665e2791f.png" style="width: 777px; height: 377px;" />
 </a>
 </div>
 </div>
@@ -2047,10 +2036,10 @@ to get simple GALFIT run examples, which are made by Dr. Jeong Hwan Lee.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f7ebb7acfa0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x7faa51b95270&gt;
 </pre></div>
 </div>
-<a class="reference internal image-reference" href="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png"><img alt="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png" src="../_images/032e84b52fd9fbe53d6f57f09f0b2b94b170cd4b7ef7b5517bf65538cc4785ce.png" style="width: 513px; height: 418px;" />
+<a class="reference internal image-reference" href="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png"><img alt="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" class="align-center" src="../_images/05b17ded4fccc456355f5d58bbcab8462ae64069506a08657d6f21edd13df6a6.png" style="width: 501px; height: 414px;" />
 </a>
 </div>
 </div>
