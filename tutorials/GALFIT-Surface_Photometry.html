@@ -1646,8 +1646,8 @@ all possible funtional type and basic information about them.</p>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;G) </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.constrain</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                           <span class="c1"># File with parameter constraints</span>
 <span class="c1"># f.write(&quot;G) none\n&quot;)                                          # File with parameter constraints</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;H) </span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mi">1</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">image</span><span class="p">)</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>    <span class="c1"># Image region to fit (xmin xmax ymin ymax)</span>
-<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I) </span><span class="si">{</span><span class="n">PHOT_APERTURE_PIX</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">PHOT_APERTURE_PIX</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Size of the convolution box (x y)</span>
-<span class="c1"># f.write(f&quot;I) {50*fwhm:.0f} {50*fwhm:.0f}\n&quot;)                          # Size of the convolution box (x y) https://users.obs.carnegiescience.edu/peng/work/galfit/TFAQ.html#convbox</span>
+<span class="c1"># f.write(f&quot;I) {PHOT_APERTURE_PIX:d} {PHOT_APERTURE_PIX:d}\n&quot;)  # Size of the convolution box (x y)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;I) </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="mi">50</span><span class="o">*</span><span class="n">fwhm</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                          <span class="c1"># Size of the convolution box (x y) https://users.obs.carnegiescience.edu/peng/work/galfit/TFAQ.html#convbox</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;J) 22.5</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                          <span class="c1"># Magnitude photometric zeropoint</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;K) </span><span class="si">{</span><span class="n">SCALE</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">SCALE</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                              <span class="c1"># Plate scale (dx dy) [arcsec per pixel]</span>
 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;O) regular</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                                       <span class="c1"># Display type (regular, curses, both)</span>
@@ -1972,6 +1972,24 @@ carefully set the initial guess of the parameters…</p>
 </div>
 <img alt="../_images/3720ca3d5671abdcda1626a59c9d4b39eecdb0c3bf189ce2dcc32063dd67d9c2.png" class="align-center" src="../_images/3720ca3d5671abdcda1626a59c9d4b39eecdb0c3bf189ce2dcc32063dd67d9c2.png" />
 </div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>You can separately get the sub-components of the model by running GALFIT with the result parameter files (or with your inital parameter file, <code class="docutils literal notranslate"><span class="pre">XXX.feedme</span></code>).
+After you run GALFIT with Item P=0 (optimization), you will get the result parameter file, for example, <code class="docutils literal notranslate"><span class="pre">galfit.01</span></code>.
+Then you can run GALFIT with Item P=1 (model only), P=2 (standard img block), P=3 (sub-components) to get the sub-components of the model.
+This can be also done by running GALFIT with output arguments on the command line:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>galfit<span class="w"> </span>-o1<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Model only</span>
+galfit<span class="w"> </span>-o2<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Standard img block</span>
+galfit<span class="w"> </span>-o3<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Sub-components</span>
+</pre></div>
+</div>
+<p>This is useful to check the fitting results and to see how each component contributes to the total model.
+You can find the detailed information in Section 8, the <a class="reference external" href="https://users.obs.carnegiescience.edu/peng/work/galfit/README.pdf">GALFIT User Manual</a>.</p>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Fitting M51 with GALFIT is very precarious, and I found that it fails to converge when I re-run the exact same initial parameters (supposedly) and the same data. If you want to test whether your GALFIT installation is working properly, I recommend you to try fitting a simple galaxy components like a single Sersic profile. The simple GALFIT run below will suffice to check whether your GALFIT is working properly.</p>
 </div>
 </section>
 <section id="usefull-references">
