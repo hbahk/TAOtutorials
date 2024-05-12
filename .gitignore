@@ -27,6 +27,7 @@ config.txt
 sephot.sh
 *.cat
 *_aper.fits
+galfit
 #_internal/
 
 # Byte-compiled / optimized / DLL files
