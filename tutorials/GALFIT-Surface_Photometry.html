@@ -1977,11 +1977,11 @@ carefully set the initial guess of the parameters…</p>
 <p class="admonition-title">See also</p>
 <p>You can separately get the sub-components of the model by running GALFIT with the result parameter files (or with your inital parameter file, <code class="docutils literal notranslate"><span class="pre">XXX.feedme</span></code>).
 After you run GALFIT with Item P=0 (optimization), you will get the result parameter file, for example, <code class="docutils literal notranslate"><span class="pre">galfit.01</span></code>.
-Then you can run GALFIT with Item P=1 (model only), P=2 (standard img block), P=3 (sub-components) to get the sub-components of the model.
+Then you can run GALFIT with Item P=1 (model only), P=2 (standard img block), or P=3 (sub-components) to get the sub-components of the model.
 This can be also done by running GALFIT with output arguments on the command line:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>galfit<span class="w"> </span>-o1<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Model only</span>
-galfit<span class="w"> </span>-o2<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Standard img block</span>
-galfit<span class="w"> </span>-o3<span class="w"> </span>&lt;Your<span class="w"> </span>Feedme<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Sub-components</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>galfit<span class="w"> </span>-o1<span class="w"> </span>&lt;Your<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Model only</span>
+galfit<span class="w"> </span>-o2<span class="w"> </span>&lt;Your<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Standard img block</span>
+galfit<span class="w"> </span>-o3<span class="w"> </span>&lt;Your<span class="w"> </span>File&gt;<span class="w">    </span><span class="c1"># Sub-components</span>
 </pre></div>
 </div>
 <p>This is useful to check the fitting results and to see how each component contributes to the total model.
