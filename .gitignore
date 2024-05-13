@@ -11,6 +11,7 @@ frame*.fits.bz2
 *J1329*.psf
 *J1329*.constrain
 *J1329*.feedme
+*J1329*.initout
 output.param
 psfex.xml
 config.psfex
