@@ -59,7 +59,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Spectroscopic_data_reduction';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Preprocessing the CCD images" href="Preprocessing.html" />
+    <link rel="next" title="Project 5: Spectroscopic Data Analysis" href="Proj5_Spectroscopic_Data_Analysis.html" />
     <link rel="prev" title="Surface Photometry Using GALFIT" href="GALFIT-Surface_Photometry.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -171,6 +171,10 @@
 <li class="toctree-l1"><a class="reference internal" href="data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Proj5_Spectroscopic_Data_Analysis.html">Project 5: Spectroscopic Data Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
 <ul class="nav bd-sidenav">
@@ -365,7 +369,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="spectroscopic-data-reduction">
 <h1>Spectroscopic Data Reduction<a class="headerlink" href="#spectroscopic-data-reduction" title="Link to this heading">#</a></h1>
 <p>Spectroscopic data reduction is the process of converting raw spectroscopic images from a spectrograph into a calibrated spectrum. This process involves several steps, including bias subtraction, flat fielding, wavelength calibration, and extraction of the spectrum. In this notebook, we will go through the process of reducing a spectroscopic image using Python.</p>
-<p>The CCD pre-processing steps are as usual: bias/dark subtraction, flat fielding, and cosmic ray removal. The spectroscopic data reduction steps are: extraction of the spectrum, wavelength calibration and flux calibration. Here we will focus mostly on the spectroscopic data reduction steps. After the data reduction, the spectrum can be used for scientific analysis, such as measuring redshifts, line identifications, and measuring line fluxes. In this notebook, we will reduce a 2D spectrum of an afterglow of a gamma-ray burst (GRB). Since this tutorial is prepared for the <a class="reference internal" href="#tutorials/Proj5_Spectroscopic_Data_Analysis"><span class="xref myst">Project No. 5 of our TAO class</span></a> I leave the scientific analysis of the spectrum for readers to explore.</p>
+<p>The CCD pre-processing steps are as usual: bias/dark subtraction, flat fielding, and cosmic ray removal. The spectroscopic data reduction steps are: extraction of the spectrum, wavelength calibration and flux calibration. Here we will focus mostly on the spectroscopic data reduction steps. After the data reduction, the spectrum can be used for scientific analysis, such as measuring redshifts, line identifications, and measuring line fluxes. In this notebook, we will reduce a 2D spectrum of an afterglow of a gamma-ray burst (GRB). Since this tutorial is prepared for the <a class="reference external" href="https://hbahk.github.io/TAOtutorials/tutorials/Proj5_Spectroscopic_Data_Analysis">Project No. 5 of our TAO class</a> I leave the scientific analysis of the spectrum for readers to explore.</p>
 <p>The data used in this notebook is from the Subaru Telescope’s Faint Object Camera and Spectrograph (FOCAS). The data is a 2D image of a spectrum of an afterglow of a GRB, GRB 130606A, which is a significantly redshifted source at <span class="math notranslate nohighlight">\(z\sim5.9\)</span>. The data was taken on June 7, 2013, using the VPH900 grism, which covers the wavelength range of 7500-10450 Angstroms (<a class="reference external" href="https://www.naoj.org/Observing/Instruments/FOCAS/index.html">Subaru FOCAS Hompage</a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1214,11 +1218,11 @@ Done: pFCSA00141878.fits
       </div>
     </a>
     <a class="right-next"
-       href="Preprocessing.html"
+       href="Proj5_Spectroscopic_Data_Analysis.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Preprocessing the CCD images</p>
+        <p class="prev-next-title">Project 5: Spectroscopic Data Analysis</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -59,6 +59,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Proj5_Spectroscopic_Data_Analysis';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Preprocessing the CCD images" href="Preprocessing.html" />
+    <link rel="prev" title="Spectroscopic Data Reduction" href="Spectroscopic_data_reduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -120,8 +122,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -171,6 +171,10 @@
 <li class="toctree-l1"><a class="reference internal" href="data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Projects</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Project 5: Spectroscopic Data Analysis</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
 <ul class="nav bd-sidenav">
@@ -371,28 +375,28 @@ Prepared by Hyeonguk Bahk<br></p>
 </li>
 <li><p>Measure the redshift of this source <span class="math notranslate nohighlight">\(z_{\rm s}=5.9131\)</span>, by identifying metal lines Si II <span class="math notranslate nohighlight">\(\lambda\)</span>1260.42, O I <span class="math notranslate nohighlight">\(\lambda\)</span>1302.17, and C II <span class="math notranslate nohighlight">\(\lambda\)</span>1334.53. Does your result match the provided value?</p></li>
 <li><p>The continuum of GRB afterglow can be represented by the power-law model, as</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e7201fca-0662-4b63-8a21-852d080156fe">
-<span class="eqno">(1)<a class="headerlink" href="#equation-e7201fca-0662-4b63-8a21-852d080156fe" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-39970d54-0f45-4576-aa61-637a397c340a">
+<span class="eqno">(1)<a class="headerlink" href="#equation-39970d54-0f45-4576-aa61-637a397c340a" title="Permalink to this equation">#</a></span>\[\begin{equation}
    \log f_{\nu} = \alpha + \nu \log \beta,    
    \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(f_\nu\)</span> is flux density at specific frequency <span class="math notranslate nohighlight">\(\nu\)</span>. The absorption profile due to the damped Ly <span class="math notranslate nohighlight">\(\alpha\)</span> (DLA) region in host galaxy or in intervening IGM, can be obtained from the optical depth</p>
-<div class="amsmath math notranslate nohighlight" id="equation-204632b2-e49f-474b-8d83-bf0a515250ae">
-<span class="eqno">(2)<a class="headerlink" href="#equation-204632b2-e49f-474b-8d83-bf0a515250ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c66e338c-d9ea-468d-a2bd-030f418e0bb0">
+<span class="eqno">(2)<a class="headerlink" href="#equation-c66e338c-d9ea-468d-a2bd-030f418e0bb0" title="Permalink to this equation">#</a></span>\[\begin{equation}
    \tau_{DLA}(\nu) = N_{HI} \sigma(\nu(1 + z_{DLA})),
    \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_{\rm HI}\)</span> is the column density of the neutral hydrogen, <span class="math notranslate nohighlight">\(\sigma(\nu)\)</span> is the Ly <span class="math notranslate nohighlight">\(\alpha\)</span> cross-section for the rest frame and <span class="math notranslate nohighlight">\(z_{\rm DLA}\)</span> is the redshift of the intervening DLA region. The exact formula for <span class="math notranslate nohighlight">\(\sigma(\nu)\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-acb74347-1c02-4467-a8f3-a206c9c4f647">
-<span class="eqno">(3)<a class="headerlink" href="#equation-acb74347-1c02-4467-a8f3-a206c9c4f647" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9c6e5f5d-565a-4095-9039-4ac6adc1cb07">
+<span class="eqno">(3)<a class="headerlink" href="#equation-9c6e5f5d-565a-4095-9039-4ac6adc1cb07" title="Permalink to this equation">#</a></span>\[\begin{equation}
    \sigma(\nu) = \frac{3\lambda_{\alpha}^2{\Lambda_{\alpha}^2}}{8\pi} \frac{(\nu/\nu_{\alpha})^4}{4\pi^2(\nu - \nu_{\alpha})^2 + (\Lambda_{\alpha}^2/4)(\nu/\nu_{\alpha})^6},
    \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\lambda_{\alpha} = 1215.67\)</span>Å is the wavelength of the rest frame Ly <span class="math notranslate nohighlight">\(\alpha\)</span> emission line, and <span class="math notranslate nohighlight">\(\Lambda_\alpha = 6.25 \times 10^8 {\rm \ s}^{-1}\)</span> is the decay constant for Ly <span class="math notranslate nohighlight">\(\alpha\)</span>. Finally, the GP effect due to the IGM at the damping wing with optical depth at observed wavelength <span class="math notranslate nohighlight">\(\lambda = \lambda_\alpha (1 + z_{\rm s}) + \Delta \lambda\)</span> is</p>
-<div class="amsmath math notranslate nohighlight" id="equation-14a13259-ccdb-4501-97a8-c40042f645e8">
-<span class="eqno">(4)<a class="headerlink" href="#equation-14a13259-ccdb-4501-97a8-c40042f645e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-75253f64-cec4-4022-be09-7f50a6006f56">
+<span class="eqno">(4)<a class="headerlink" href="#equation-75253f64-cec4-4022-be09-7f50a6006f56" title="Permalink to this equation">#</a></span>\[\begin{equation}
    \tau(\Delta\lambda) = \tau_{GP} R_{\alpha} \left(\frac{1 + \delta}{\pi}\right)^{3/2} (I(x_2) - I(x_1)),
    \end{equation}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\delta = \lambda/[\lambda_\alpha (1+z_{\rm s})\)</span>, <span class="math notranslate nohighlight">\(x_1 = (1+z_{\rm IGM,l})/[(1+z_{\rm s})(1+\delta)]\)</span>, <span class="math notranslate nohighlight">\(x_2 = (1+z_{\rm IGM,u})/[(1+ z_{\rm s})(1 + \delta)]\)</span>, <span class="math notranslate nohighlight">\(R_\alpha = \Lambda_\alpha/(4\pi\nu_\alpha)\)</span>, <span class="math notranslate nohighlight">\(\tau_{\rm GP}=3.97 \times10^5f_{\rm HI}[(1 + z_{\rm s})/7]^{3/2}\)</span>,  and</p>
-<div class="amsmath math notranslate nohighlight" id="equation-862e48c8-7a19-4f05-a3d0-05aa9f029f48">
-<span class="eqno">(5)<a class="headerlink" href="#equation-862e48c8-7a19-4f05-a3d0-05aa9f029f48" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-1d93f1c4-e77b-47c0-a0b3-5877b94f33a3">
+<span class="eqno">(5)<a class="headerlink" href="#equation-1d93f1c4-e77b-47c0-a0b3-5877b94f33a3" title="Permalink to this equation">#</a></span>\[\begin{equation}
    I(x) = \frac{x^{9/2}}{1 - x} + \frac{9}{7}x^{7/2} + \frac{9}{5}x^{5/2} + 3x^{3/2} + 9x^{1/2} - \frac{9}{2} \ln\left(\frac{1 + x^{1/2}}{1 - x^{1/2}}\right).
    \end{equation}\]</div>
 <p>Here IGM is assumed to extend in a redshift range from <span class="math notranslate nohighlight">\(z_{\rm IGM,l}\)</span> to <span class="math notranslate nohighlight">\(z_{\rm IGM,u}\)</span> with the neutral hydrogen fraction <span class="math notranslate nohighlight">\(f_{\rm HI}\)</span>.</p>
@@ -430,6 +434,24 @@ Totani, T., et al. 2006, PASJ, 58, 485 <br></p>
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Spectroscopic_data_reduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Spectroscopic Data Reduction</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Preprocessing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Preprocessing the CCD images</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
