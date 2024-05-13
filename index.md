@@ -22,6 +22,14 @@ tutorials/Spectroscopic_data_reduction
 
 ```{toctree}
 :maxdepth: 1
+:caption: Projects
+:dropdown: true
+
+tutorials/Proj5_Spectroscopic_Data_Analysis
+```
+
+```{toctree}
+:maxdepth: 1
 :caption: Additional Tutorials
 
 tutorials/Preprocessing
