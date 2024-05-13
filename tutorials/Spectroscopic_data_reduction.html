@@ -57,6 +57,7 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Spectroscopic_data_reduction';</script>
+    <link rel="canonical" href="https://hbahk.github.io/TAOTutorials/tutorials/Spectroscopic_data_reduction.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Project 5: Spectroscopic Data Analysis" href="Proj5_Spectroscopic_Data_Analysis.html" />
@@ -374,41 +375,43 @@ document.write(`
 <p>Let’s start by organizing the data and displaying the 2D spectral images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">ascii</span><span class="p">,</span> <span class="n">fits</span>
-<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span><span class="n">Column</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
-<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">median_filter</span>
-<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
-<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
-<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
-<span class="kn">from</span> <span class="nn">astropy.stats</span> <span class="kn">import</span> <span class="n">sigma_clip</span><span class="p">,</span> <span class="n">gaussian_fwhm_to_sigma</span>
-<span class="kn">from</span> <span class="nn">numpy.polynomial.chebyshev</span> <span class="kn">import</span> <span class="n">chebfit</span><span class="p">,</span> <span class="n">chebval</span>
-<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">CCDData</span>
-<span class="kn">from</span> <span class="nn">astropy.modeling.models</span> <span class="kn">import</span> <span class="n">Gaussian1D</span><span class="p">,</span> <span class="n">Chebyshev2D</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">preproc</span>  <span class="c1"># custom module for data reduction</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">ascii</span><span class="p">,</span> <span class="n">fits</span>
 <span class="kn">from</span> <span class="nn">astropy.modeling.fitting</span> <span class="kn">import</span> <span class="n">LevMarLSQFitter</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling.models</span> <span class="kn">import</span> <span class="n">Chebyshev2D</span><span class="p">,</span> <span class="n">Gaussian1D</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">CCDData</span>
+<span class="kn">from</span> <span class="nn">astropy.stats</span> <span class="kn">import</span> <span class="n">gaussian_fwhm_to_sigma</span><span class="p">,</span> <span class="n">sigma_clip</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Table</span>
 <span class="kn">from</span> <span class="nn">astropy.visualization</span> <span class="kn">import</span> <span class="n">ZScaleInterval</span>
-<span class="kn">from</span> <span class="nn">ccdproc</span> <span class="kn">import</span> <span class="n">combine</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">gridspec</span><span class="p">,</span> <span class="n">rcParams</span><span class="p">,</span> <span class="n">rc</span>
+<span class="kn">from</span> <span class="nn">ccdproc</span> <span class="kn">import</span> <span class="n">combine</span><span class="p">,</span> <span class="n">cosmicray_lacosmic</span><span class="p">,</span> <span class="n">gain_correct</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span> <span class="nn">preproc</span> <span class="c1"># custom module for data reduction</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">gridspec</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span><span class="p">,</span> <span class="n">rcParams</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">from</span> <span class="nn">numpy.polynomial.chebyshev</span> <span class="kn">import</span> <span class="n">chebfit</span><span class="p">,</span> <span class="n">chebval</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">median_filter</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
 
 <span class="c1"># plt.rcParams[&#39;axes.linewidth&#39;] = 2</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.labelsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;font.size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span>
 
-<span class="n">WD</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;./data/proj5&#39;</span><span class="p">)</span>
-<span class="n">RAWDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s1">&#39;raw&#39;</span> <span class="o">/</span> <span class="s1">&#39;P03hbahk0304145443GZ_data&#39;</span>
-<span class="n">OUTDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s1">&#39;out&#39;</span>
+<span class="n">WD</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./data/proj5&quot;</span><span class="p">)</span>
+<span class="n">RAWDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s2">&quot;raw&quot;</span> <span class="o">/</span> <span class="s2">&quot;P03hbahk0304145443GZ_data&quot;</span>
+<span class="n">OUTDIR</span> <span class="o">=</span> <span class="n">WD</span> <span class="o">/</span> <span class="s2">&quot;out&quot;</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">OUTDIR</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
     <span class="n">OUTDIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -469,7 +472,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=60</i>
-<table id="table4594558160" class="table-striped table-bordered table-condensed">
+<table id="table4557531920" class="table-striped table-bordered table-condensed">
 <thead><tr><th>filename</th><th>date-obs</th><th>object</th><th>ra</th><th>dec</th><th>type</th><th>exptime</th><th>airmass</th><th>altitude</th><th>disperser</th><th>slit-width</th><th>slit-pa</th><th>slit</th><th>filter1</th><th>filter2</th><th>filter3</th><th>ut-str</th><th>ut-end</th></tr></thead>
 <thead><tr><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>float64</th><th>float64</th><th>float64</th><th>str50</th><th>float64</th><th>float64</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th></tr></thead>
 <tr><td>FCSA00141794.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:17:48.038</td><td>+19:54:08.26</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:37:11.906</td><td>04:37:15.139</td></tr>
@@ -767,7 +770,7 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16fec0d50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16da399d0&gt;
 </pre></div>
 </div>
 <img alt="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" class="align-center" src="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" />
@@ -930,7 +933,7 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16ffc8d50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16dbcb710&gt;
 </pre></div>
 </div>
 <img alt="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" class="align-center" src="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" />
@@ -1013,6 +1016,10 @@ INFO: An exception happened while extracting WCS information from the Header.
 InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PC001001= 1.00000000 / Pixel Coordinate translation matrix 
@@ -1034,15 +1041,7 @@ WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 
 Set DATE-END to &#39;2013-06-07T05:51:12.249&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
 Set DATE-END to &#39;2013-06-06T04:52:48.140&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/main/lib/python3.11/site-packages/ccdproc/combiner.py:548: RuntimeWarning: Mean of empty slice
+/opt/anaconda3/envs/main/lib/python3.11/site-packages/ccdproc/combiner.py:548: RuntimeWarning: Mean of empty slice
   mean = scale_func(data, axis=0)
 /opt/anaconda3/envs/main/lib/python3.11/site-packages/numpy/lib/nanfunctions.py:1879: RuntimeWarning: Degrees of freedom &lt;= 0 for slice.
   var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
@@ -1123,6 +1122,52 @@ Done: pFCSA00141878.fits
 <li><p><strong>Aperture Summation</strong>: Sum the flux along the trace to extract the 1D spectrum.</p></li>
 </ol>
 <p>Let’s extract the 1D spectra of the standard star first, because it is brighter and easier to extract.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s trim the images to the region of interest</span>
+<span class="n">TRIM</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4220</span><span class="p">,</span> <span class="mi">620</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span> <span class="c1"># y_lower, y_upper, x_lower, x_upper</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">std_list_f110</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="n">stdhdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">stdtrim</span> <span class="o">=</span> <span class="n">stdhdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">TRIM</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">TRIM</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">TRIM</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="n">TRIM</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span>
+<span class="n">exptime</span> <span class="o">=</span> <span class="n">stdhdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPTIME&#39;</span><span class="p">]</span>
+<span class="n">stdhdr</span> <span class="o">=</span> <span class="n">stdhdu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span> <span class="o">=</span> <span class="n">interval</span><span class="o">.</span><span class="n">get_limits</span><span class="p">(</span><span class="n">stdtrim</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">stdtrim</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Preprocessed Feige110 Image (Trimmed)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Preprocessed Feige110 Image (Trimmed)&#39;)
+</pre></div>
+</div>
+<img alt="../_images/4a8c17c0da775ad96bbbacb926dbe27155140c21c44551e41cd56d651807f6b2.png" class="align-center" src="../_images/4a8c17c0da775ad96bbbacb926dbe27155140c21c44551e41cd56d651807f6b2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stdhdr</span><span class="p">[</span><span class="s1">&#39;GAIN&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.082
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cosmic ray removal</span>
+<span class="n">stdccd</span> <span class="o">=</span> <span class="n">CCDData</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">stdtrim</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">stdhdr</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;adu&#39;</span><span class="p">)</span>
+<span class="n">gcorr</span> <span class="o">=</span> <span class="n">gain_correct</span><span class="p">(</span><span class="n">stdccd</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="n">stdhdr</span><span class="p">[</span><span class="s1">&#39;GAIN&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
