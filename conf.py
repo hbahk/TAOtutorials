@@ -25,6 +25,7 @@ extensions = [
     "sphinx_design",
     "sphinx.ext.napoleon",
     "sphinx.ext.githubpages",
+    "sphinx_sitemap",
 ]
 
 templates_path = ['_templates']
@@ -75,3 +76,5 @@ html_theme_options = {
         "alt_text": "TAO Tutorials - Home",
     }
 }
+
+html_baseurl = "https://hbahk.github.io/TAOTutorials/"
