@@ -369,8 +369,9 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="spectroscopic-data-reduction">
 <h1>Spectroscopic Data Reduction<a class="headerlink" href="#spectroscopic-data-reduction" title="Link to this heading">#</a></h1>
 <p>Spectroscopic data reduction is the process of converting raw spectroscopic images from a spectrograph into a calibrated spectrum. This process involves several steps, including bias subtraction, flat fielding, wavelength calibration, and extraction of the spectrum. In this notebook, we will go through the process of reducing a spectroscopic image using Python.</p>
-<p>The CCD pre-processing steps are as usual: bias/dark subtraction, flat fielding, and cosmic ray removal. The spectroscopic data reduction steps are: extraction of the spectrum, wavelength calibration and flux calibration. Here we will focus mostly on the spectroscopic data reduction steps. After the data reduction, the spectrum can be used for scientific analysis, such as measuring redshifts, line identifications, and measuring line fluxes. In this notebook, we will reduce a 2D spectrum of an afterglow of a gamma-ray burst (GRB). Since this tutorial is prepared for the <a class="reference external" href="https://hbahk.github.io/TAOtutorials/tutorials/Proj5_Spectroscopic_Data_Analysis">Project No. 5 of our TAO class</a> I leave the scientific analysis of the spectrum for readers to explore.</p>
-<p>The data used in this notebook is from the Subaru Telescope’s Faint Object Camera and Spectrograph (FOCAS). The data is a 2D image of a spectrum of an afterglow of a GRB, GRB 130606A, which is a significantly redshifted source at <span class="math notranslate nohighlight">\(z\sim5.9\)</span>. The data was taken on June 7, 2013, using the VPH900 grism, which covers the wavelength range of 7500-10450 Angstroms (<a class="reference external" href="https://www.naoj.org/Observing/Instruments/FOCAS/index.html">Subaru FOCAS Hompage</a>).</p>
+<p>The CCD pre-processing steps are as usual: bias/dark subtraction, flat fielding, and cosmic ray removal. The spectroscopic data reduction steps are: extraction of the spectrum, wavelength calibration and flux calibration. Here we will focus mostly on the spectroscopic data reduction steps. After the data reduction, the spectrum can be used for scientific analysis, such as measuring redshifts, line identifications, and measuring line fluxes. In this notebook, we will reduce a 2D spectrum of an afterglow of a gamma-ray burst (GRB). Since this tutorial is prepared for the <a class="reference external" href="https://hbahk.github.io/TAOtutorials/tutorials/Proj5_Spectroscopic_Data_Analysis">Project No. 5 of our TAO class</a>, I leave the scientific analysis of the spectrum to readers.</p>
+<p>The data used in this notebook is from the Subaru Telescope’s Faint Object Camera and Spectrograph (FOCAS). The data is 2D images of a spectrum of an afterglow of a GRB, GRB 130606A, which is a significantly redshifted source at <span class="math notranslate nohighlight">\(z\sim5.9\)</span>. The data was taken on June 7, 2013, using the VPH900 grism, which covers the wavelength range of 7500-10450 Angstroms (<a class="reference external" href="https://www.naoj.org/Observing/Instruments/FOCAS/index.html">Subaru FOCAS Hompage</a>).</p>
+<p>Let’s start by organizing the data and displaying the 2D spectral images.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -460,9 +461,9 @@ document.write(`
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_scroll-output docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_table</span><span class="o">.</span><span class="n">show_in_notebook</span><span class="p">(</span><span class="n">display_length</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_table</span>
 </pre></div>
 </div>
 </div>
@@ -872,6 +873,12 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 <h4>Checking for Flat Image Shift<a class="headerlink" href="#checking-for-flat-image-shift" title="Link to this heading">#</a></h4>
 <p>The flat image may shift slightly depending on the telescope’s pointing direction. Since different images might require different flats, it can be risky to median combine all the flat images taken overnight. We should perform a quick and rough check to see if there is a shift in the flat images.</p>
 <p>To avoid bias might arise from this shift, it is recommended to take flat images at the same pointing direction as the science images. However, if the shift is small, we can still use the median combined flat image for calibration.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>With the same reason, we should be careful when we reduce the arc frames. The location of the lines in the arc spectrum may shift slightly depending on the telescope’s pointing direction. Therefore, it is strongly recommended to take arc frames at the same pointing direction as the science frames.</p>
+<p>We should check for the shift in the arc frames, but we will skip this process for simplicity.</p>
+<p>However, unlike the flat fielding, the wavelength calibration is of critical importance in the spectroscopic data reduction process, since few percent of errors in the wavelength calibration can introduce systematic errors in the scientific analysis, such as the measurement of the redshift of galaxies. Therefore, we should always check for the shift in the arc frames before wavelength calibration.</p>
+</div>
 <p>In this notebook, we will skip this process for simplicity, but you should always check for flat image shift in your own data. We will assume that the flat images are already aligned, and we will proceed to combine them.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -893,8 +900,8 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </section>
 <section id="comparing-with-the-standard-star-profile">
 <h4>Comparing with the Standard Star Profile<a class="headerlink" href="#comparing-with-the-standard-star-profile" title="Link to this heading">#</a></h4>
-<p>Typical flat spectra shows many wiggles and bumps. Yet, we don’t know if these features are originated from the grating, which in turn will affect our science frame equally. If they are not due to the grating, such as filters in front of the flat-field lamp, the extreme difference in color temperature between the lamps and the object of interest, or wavelength-dependent variations in the reflectivity of the paint used for the flat-field screen (<a class="reference external" href="https://arxiv.org/abs/1010.5270">Massey &amp; Hansen, 2010</a>), they are not going to present on the science frame.</p>
-<p>Let’s see if a supposedly smooth source (in this case, a standard star) has same “wiggles” and “bumps” on its spectrum. If this is the case, we should model the flat lamp with “high order” and normalize the flat image with this model. If not, we should adopt “low-order” model or constant to normalize our flat field.</p>
+<p>Typical flat spectra shows many wiggles and bumps. Yet, we don’t know if these features are originated from the grating (as a representation of common instruments that can affect the both flat and science frames), which in turn will affect our science frame equally. If they are not due to the grating, such as filters in front of the flat-field lamp, the extreme difference in color temperature between the lamps and the object of interest, or wavelength-dependent variations in the reflectivity of the paint used for the flat-field screen (<a class="reference external" href="https://arxiv.org/abs/1010.5270">Massey &amp; Hansen, 2010</a>), they are not going to present on the science frame.</p>
+<p>Let’s see if a supposedly smooth source (in this case, a standard star) has same “wiggles” and “bumps” on its spectrum. If this is the case, we should normalize the flat spectrum with a constant value (or a “low-order” functional model). If not, we should adopt “high-order” model or constant to normalize our flat field. For more information, please refer to <a class="reference external" href="https://arxiv.org/abs/1010.5270">Section 3.1., Massey &amp; Hansen (2010)</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -951,6 +958,10 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 <p>Although we can see some tiny wiggles in the flat spectrum, this is not significant enough to adopt higher-order polynomials to model the flat spectrum, as opposed to the case if we have significant fringe patterns. If you closely examine the flat spectrum, you will see that the wiggles are not random, but rather located at the atmospheric absorption lines. This is because the flat image is taken with a lamp, and the lamp light is absorbed by the atmosphere at these absorption lines. Since the absorption lines are not random, we can safely ignore them when modeling the flat spectrum.</p>
 <p>Here we model the flat spectrum with median filtering, which is a simple and effective way to remove noise while preserving the shape of the spectrum. We will use a median filter in the dispersion direction to model the flat spectrum, with a window size of 100 pixels. This is a good starting point, but you may need to adjust the window size depending on the complexity of the flat spectrum.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although I compared the horizontal profile of the standard star and the flat image for convenience, it might as well natural to compare the final extracted spectra of the standard star after applying both the high-order and low-order model of the flat field.</p>
+</div>
 <p>For simplicity, we will only use the combined flat image taken with the exposure time of 3 seconds. In practice, you may use all the flat images taken with different exposure times to make a master flat, or you can use the flat images taken with long and short exposure times to make a bad pixel map.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1021,16 +1032,13 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 </div>
 </div>
-<p>With the same reason, we should be careful when we reduce the arc frames. The location of the lines in the arc spectrum may shift slightly depending on the telescope’s pointing direction. Therefore, it is strongly recommended to take arc frames at the same pointing direction as the science frames.</p>
-<p>We should check for the shift in the arc frames, but we will skip this process for simplicity.</p>
-<p>However, unlike the flat fielding, the wavelength calibration is of critical importance in the spectroscopic data reduction process, since few percent of errors in the wavelength calibration can introduce systematic errors in the scientific analysis, such as the measurement of the redshift of galaxies. Therefore, we should always check for the shift in the arc frames before wavelength calibration.</p>
 </section>
 </section>
 <section id="preprocessing-the-raw-images">
 <h3>Preprocessing the Raw Images<a class="headerlink" href="#preprocessing-the-raw-images" title="Link to this heading">#</a></h3>
 <p>Now we will preprocess the raw images. We will subtract the master bias and divide the master flat from the raw science frames. These preprocessed science frames will not be combined, since the spatial location of the object is different in each frame. We will combine the light from the object after extracting the 1D spectrum.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<div class="cell tag_scroll-output tag_hide-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mbias</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;MBias.fits&#39;</span>
 <span class="n">mflat</span> <span class="o">=</span> <span class="n">OUTDIR</span> <span class="o">/</span> <span class="s1">&#39;nMFlat03.0.fits&#39;</span>
 <span class="c1"># preprocessing the arc image</span>
@@ -1065,6 +1073,11 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Preprocessing arc images...
 Done: pFCSA00141840.fits
@@ -1149,6 +1162,7 @@ Done: pFCSA00141878.fits
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
