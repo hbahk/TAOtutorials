@@ -1220,9 +1220,9 @@ Iteration 4:
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import plotly.io as pio</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
-<span class="c1"># import plotly.offline as py</span>
+<span class="kn">import</span> <span class="nn">plotly.offline</span> <span class="k">as</span> <span class="nn">py</span>
 
 <span class="n">peak_pix</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">,</span> <span class="n">num_peaks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_distance</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">threshold_abs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">)),</span> <span class="n">y</span><span class="o">=</span><span class="n">apall_probe</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Aperture Sum&#39;</span><span class="p">,</span>
