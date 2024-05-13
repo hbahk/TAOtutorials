@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Project 5: Spectroscopic Data Analysis &#8212; TAO Tutorials  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=3c32ad28" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Proj5_Spectroscopic_Data_Analysis';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">TAO Tutorials</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">SNU TAO Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preparation.html">Preparation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Project Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="PSF_photometry.html">PSF photometry of NGC 2210</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/proj3/run_SExtractor.html">SExtractor Photometry of MACS 0717</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GALFIT-Surface_Photometry.html">Surface Photometry Using GALFIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Spectroscopic_data_reduction.html">Spectroscopic Data Reduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Tutorials</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Preprocessing.html">Preprocessing the CCD images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SAO-Spectroscopic-Data-Reduction.html">Concept of spectroscopy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Optical%20Spectroscopy.html">Specutils: An Astropy package for spectroscopy</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/hbahk/TAOTutorials" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/Proj5_Spectroscopic_Data_Analysis.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project 5: Spectroscopic Data Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usefil-links">Usefil Links</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project-5-spectroscopic-data-analysis">
+<h1>Project 5: Spectroscopic Data Analysis<a class="headerlink" href="#project-5-spectroscopic-data-analysis" title="Link to this heading">#</a></h1>
+<p>Techniques in Astronomical Observation Project #5<br>
+Term: 1.5 week<br>
+Prepared by Hyeonguk Bahk<br></p>
+<p>After the Big Bang, hydrogen underwent two significant phase changes. Recombination occurred at redshift <span class="math notranslate nohighlight">\(z \approx 1100\)</span>, allowing protons and electrons to combine into neutral hydrogen as the universe cooled down. Subsequently, reionization took place at <span class="math notranslate nohighlight">\(6 &lt; z &lt; 20\)</span>, driven by the emergence of the first stars and quasars. The study of the reionization era is crucial for understanding the early phase of star/galaxy formation. This era is characterized by the condensation of matter and the emission of high-energy photons, which ionize the surrounding neutral hydrogen. To investigate reionization at <span class="math notranslate nohighlight">\(z \approx 6\)</span>, we examine the fraction of neutral hydrogen in the diffuse intergalactic medium (IGM) using the absorption strength near the Lyman-alpha (Ly <span class="math notranslate nohighlight">\(\alpha\)</span>) line: i.e. <strong>the Gunn-Peterson trough</strong>. Gamma-ray burst (GRB) afterglows, with their bright luminosities detectable at <span class="math notranslate nohighlight">\(z \approx 6\)</span>, provide unique advantages for this analysis. GRBs have non-thermal synchrotron spectra with a simple power law, are located in less biased regions, and have short durations. Therefore, they are excellent tools for probing the ionization fraction during this critical period of the universe.</p>
+<ol class="arabic">
+<li><p>Download the provided raw spectral data of GRB 130606A or a similar astronomical target. The data should include the spectra of the target and a standard star for calibration. Then obtain a flux-calibrated 1D spectrum as follows.</p>
+<ul class="simple">
+<li><p>a. Apply standard data reduction steps to the raw spectrum, including bias correction, flat fielding, and cosmic ray removal.</p></li>
+<li><p>b. Extract the 1D spectrum from the 2D spectral image. This involves tracing the spectrum on the CCD, summing or averaging the flux in the spatial direction, and subtracting the background.</p></li>
+<li><p>c. Perform wavelength calibration using known spectral lines from the calibration lamp images.</p></li>
+<li><p>d. Flux-calibrate the extracted 1D spectrum using observations of a standard star. Convert the observed pixel counts to physical flux units.</p></li>
+<li><p>e. Are there any additional steps required before applying scientific analysis to this target?</p></li>
+</ul>
+</li>
+<li><p>Measure the redshift of this source <span class="math notranslate nohighlight">\(z_{\rm s}=5.9131\)</span>, by identifying metal lines Si II <span class="math notranslate nohighlight">\(\lambda\)</span>1260.42, O I <span class="math notranslate nohighlight">\(\lambda\)</span>1302.17, and C II <span class="math notranslate nohighlight">\(\lambda\)</span>1334.53. Does your result match the provided value?</p></li>
+<li><p>The continuum of GRB afterglow can be represented by the power-law model, as</p>
+<div class="amsmath math notranslate nohighlight" id="equation-e7201fca-0662-4b63-8a21-852d080156fe">
+<span class="eqno">(1)<a class="headerlink" href="#equation-e7201fca-0662-4b63-8a21-852d080156fe" title="Permalink to this equation">#</a></span>\[\begin{equation}
+   \log f_{\nu} = \alpha + \nu \log \beta,    
+   \end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f_\nu\)</span> is flux density at specific frequency <span class="math notranslate nohighlight">\(\nu\)</span>. The absorption profile due to the damped Ly <span class="math notranslate nohighlight">\(\alpha\)</span> (DLA) region in host galaxy or in intervening IGM, can be obtained from the optical depth</p>
+<div class="amsmath math notranslate nohighlight" id="equation-204632b2-e49f-474b-8d83-bf0a515250ae">
+<span class="eqno">(2)<a class="headerlink" href="#equation-204632b2-e49f-474b-8d83-bf0a515250ae" title="Permalink to this equation">#</a></span>\[\begin{equation}
+   \tau_{DLA}(\nu) = N_{HI} \sigma(\nu(1 + z_{DLA})),
+   \end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_{\rm HI}\)</span> is the column density of the neutral hydrogen, <span class="math notranslate nohighlight">\(\sigma(\nu)\)</span> is the Ly <span class="math notranslate nohighlight">\(\alpha\)</span> cross-section for the rest frame and <span class="math notranslate nohighlight">\(z_{\rm DLA}\)</span> is the redshift of the intervening DLA region. The exact formula for <span class="math notranslate nohighlight">\(\sigma(\nu)\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-acb74347-1c02-4467-a8f3-a206c9c4f647">
+<span class="eqno">(3)<a class="headerlink" href="#equation-acb74347-1c02-4467-a8f3-a206c9c4f647" title="Permalink to this equation">#</a></span>\[\begin{equation}
+   \sigma(\nu) = \frac{3\lambda_{\alpha}^2{\Lambda_{\alpha}^2}}{8\pi} \frac{(\nu/\nu_{\alpha})^4}{4\pi^2(\nu - \nu_{\alpha})^2 + (\Lambda_{\alpha}^2/4)(\nu/\nu_{\alpha})^6},
+   \end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda_{\alpha} = 1215.67\)</span>Å is the wavelength of the rest frame Ly <span class="math notranslate nohighlight">\(\alpha\)</span> emission line, and <span class="math notranslate nohighlight">\(\Lambda_\alpha = 6.25 \times 10^8 {\rm \ s}^{-1}\)</span> is the decay constant for Ly <span class="math notranslate nohighlight">\(\alpha\)</span>. Finally, the GP effect due to the IGM at the damping wing with optical depth at observed wavelength <span class="math notranslate nohighlight">\(\lambda = \lambda_\alpha (1 + z_{\rm s}) + \Delta \lambda\)</span> is</p>
+<div class="amsmath math notranslate nohighlight" id="equation-14a13259-ccdb-4501-97a8-c40042f645e8">
+<span class="eqno">(4)<a class="headerlink" href="#equation-14a13259-ccdb-4501-97a8-c40042f645e8" title="Permalink to this equation">#</a></span>\[\begin{equation}
+   \tau(\Delta\lambda) = \tau_{GP} R_{\alpha} \left(\frac{1 + \delta}{\pi}\right)^{3/2} (I(x_2) - I(x_1)),
+   \end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\delta = \lambda/[\lambda_\alpha (1+z_{\rm s})\)</span>, <span class="math notranslate nohighlight">\(x_1 = (1+z_{\rm IGM,l})/[(1+z_{\rm s})(1+\delta)]\)</span>, <span class="math notranslate nohighlight">\(x_2 = (1+z_{\rm IGM,u})/[(1+ z_{\rm s})(1 + \delta)]\)</span>, <span class="math notranslate nohighlight">\(R_\alpha = \Lambda_\alpha/(4\pi\nu_\alpha)\)</span>, <span class="math notranslate nohighlight">\(\tau_{\rm GP}=3.97 \times10^5f_{\rm HI}[(1 + z_{\rm s})/7]^{3/2}\)</span>,  and</p>
+<div class="amsmath math notranslate nohighlight" id="equation-862e48c8-7a19-4f05-a3d0-05aa9f029f48">
+<span class="eqno">(5)<a class="headerlink" href="#equation-862e48c8-7a19-4f05-a3d0-05aa9f029f48" title="Permalink to this equation">#</a></span>\[\begin{equation}
+   I(x) = \frac{x^{9/2}}{1 - x} + \frac{9}{7}x^{7/2} + \frac{9}{5}x^{5/2} + 3x^{3/2} + 9x^{1/2} - \frac{9}{2} \ln\left(\frac{1 + x^{1/2}}{1 - x^{1/2}}\right).
+   \end{equation}\]</div>
+<p>Here IGM is assumed to extend in a redshift range from <span class="math notranslate nohighlight">\(z_{\rm IGM,l}\)</span> to <span class="math notranslate nohighlight">\(z_{\rm IGM,u}\)</span> with the neutral hydrogen fraction <span class="math notranslate nohighlight">\(f_{\rm HI}\)</span>.</p>
+<ul class="simple">
+<li><p>a. Measure the neutral fraction <span class="math notranslate nohighlight">\(f_{\rm HI}\)</span> of IGM, considering two components of DLA absorption from the host galaxy and IGM extended in the redshift range of <span class="math notranslate nohighlight">\(5.67&lt;z&lt;z_{\rm s}\)</span>. Use the maximum likelihood estimation technique, or equivalently, the least square minimization technique. You are encouraged to try other methods, of course.</p></li>
+<li><p>b. Discuss the constraining power on the value of <span class="math notranslate nohighlight">\(f_{\rm HI}\)</span> and possible systematics of this analysis.</p></li>
+<li><p>c. Discuss the implications of the obtained result.</p></li>
+</ul>
+</li>
+</ol>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>Madau, P., &amp; Rees, M. J. 2000 ApJ, 542, L69 <br>
+Miralda-Escude, J. 1998, ApJ, 501, 15 <br>
+Gunn, J. E., &amp; Peterson, B. A. 1965, ApJ, 142, 1633 <br>
+Peebles, P. J. E. 1993, Principles of Physical Cosmology (Princeton: Princeton University Press) <br>
+Schutz, B. 2009, A First Course in General Relativity (Cambridge University Press) <br>
+Spergel, D. N., et al. 2003, ApJS, 148, 175 <br>
+Totani, T., et al. 2006, PASJ, 58, 485 <br></p>
+</section>
+<section id="usefil-links">
+<h2>Usefil Links<a class="headerlink" href="#usefil-links" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://astro.snu.ac.kr/~hhwang/as_mon_1.pdf">An introduction to analysis of single dispersion spectra with IRAF</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#usefil-links">Usefil Links</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hyeonguk Bahk
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024, Hyeonguk Bahk.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

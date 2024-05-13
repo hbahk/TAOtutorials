@@ -54,6 +54,8 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/Spectroscopic_data_reduction';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -362,13 +364,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="spectroscopic-data-reduction">
 <h1>Spectroscopic Data Reduction<a class="headerlink" href="#spectroscopic-data-reduction" title="Link to this heading">#</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
-</pre></div>
-</div>
-</div>
-</div>
+<p>Spectroscopic data reduction is the process of converting raw spectroscopic images from a spectrograph into a calibrated spectrum. This process involves several steps, including bias subtraction, flat fielding, wavelength calibration, and extraction of the spectrum. In this notebook, we will go through the process of reducing a spectroscopic image using Python.</p>
+<p>The CCD pre-processing steps are as usual: bias/dark subtraction, flat fielding, and cosmic ray removal. The spectroscopic data reduction steps are: extraction of the spectrum, wavelength calibration and flux calibration. Here we will focus mostly on the spectroscopic data reduction steps. After the data reduction, the spectrum can be used for scientific analysis, such as measuring redshifts, line identifications, and measuring line fluxes. In this notebook, we will reduce a 2D spectrum of an afterglow of a gamma-ray burst (GRB). Since this tutorial is prepared for the <a class="reference internal" href="#tutorials/Proj5_Spectroscopic_Data_Analysis"><span class="xref myst">Project No. 5 of our TAO class</span></a> I leave the scientific analysis of the spectrum for readers to explore.</p>
+<p>The data used in this notebook is from the Subaru Telescope’s Faint Object Camera and Spectrograph (FOCAS). The data is a 2D image of a spectrum of an afterglow of a GRB, GRB 130606A, which is a significantly redshifted source at <span class="math notranslate nohighlight">\(z\sim5.9\)</span>. The data was taken on June 7, 2013, using the VPH900 grism, which covers the wavelength range of 7500-10450 Angstroms (<a class="reference external" href="https://www.naoj.org/Observing/Instruments/FOCAS/index.html">Subaru FOCAS Hompage</a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -465,8 +463,15 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: AstropyDeprecationWarning: show_in_notebook() is deprecated as of 6.1 and to create
+         interactive tables it is recommended to use dedicated tools like:
+         - https://github.com/bloomberg/ipydatagrid
+         - https://docs.bokeh.org/en/latest/docs/user_guide/interaction/widgets.html#datatable
+         - https://dash.plotly.com/datatable [warnings]
+</pre></div>
+</div>
 <div class="output text_html"><i>Table length=60</i>
-<table id="table5412181808-836028" class="table-striped table-bordered table-condensed">
+<table id="table4594558160-66873" class="table-striped table-bordered table-condensed">
 <thead><tr><th>idx</th><th>filename</th><th>date-obs</th><th>object</th><th>ra</th><th>dec</th><th>type</th><th>exptime</th><th>airmass</th><th>altitude</th><th>disperser</th><th>slit-width</th><th>slit-pa</th><th>slit</th><th>filter1</th><th>filter2</th><th>filter3</th><th>ut-str</th><th>ut-end</th></tr></thead>
 <tr><td>0</td><td>FCSA00141794.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:17:48.038</td><td>+19:54:08.26</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:37:11.906</td><td>04:37:15.139</td></tr>
 <tr><td>1</td><td>FCSA00141920.fits.gz</td><td>2013-06-07</td><td>GRB 130606A</td><td>16:37:41.157</td><td>+29:47:45.71</td><td>OBJECT</td><td>1200.0</td><td>1.136</td><td>61.6129</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>07:59:00.676</td><td>08:19:01.117</td></tr>
@@ -551,14 +556,14 @@ require.config({paths: {
     datatables: 'https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min'
 }});
 require(["datatables"], function(){
-    console.log("$('#table5412181808-836028').dataTable()");
+    console.log("$('#table4594558160-66873').dataTable()");
     
 jQuery.extend( jQuery.fn.dataTableExt.oSort, {
     "optionalnum-asc": astropy_sort_num,
     "optionalnum-desc": function (a,b) { return -astropy_sort_num(a, b); }
 });
 
-    $('#table5412181808-836028').dataTable({
+    $('#table4594558160-66873').dataTable({
         order: [],
         pageLength: 10,
         lengthMenu: [[10, 25, 50, 100, 500, 1000, -1], [10, 25, 50, 100, 500, 1000, 'All']],
@@ -610,7 +615,7 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/b7a6f4f7a85e5d53a8bc8d99932b9a5fb6b8ab544737641224b31f329b70c164.png" class="align-center" src="../_images/b7a6f4f7a85e5d53a8bc8d99932b9a5fb6b8ab544737641224b31f329b70c164.png" />
+<img alt="../_images/6b647f7859f0dd31069988cfc76ed8e76465206e7ca9550de42bc432039edc4e.png" class="align-center" src="../_images/6b647f7859f0dd31069988cfc76ed8e76465206e7ca9550de42bc432039edc4e.png" />
 </div>
 </div>
 <section id="preprocessing-of-the-raw-images">
@@ -628,31 +633,35 @@ jQuery.extend( jQuery.fn.dataTableExt.oSort, {
 <h3>Making the Master Bias<a class="headerlink" href="#making-the-master-bias" title="Link to this heading">#</a></h3>
 <p>Before making the master bias, we need to check the bias images for any defects. We skip this step here, but it is important to check since the bias images are used to calibrate all the other images. If there are defects in the bias images, they will be propagated to all the other images.</p>
 <p>The master bias is made by combining all the bias images. The master bias will be subtracted from all the images to remove the bias level. For combining the bias images, the sigma-clipping algorithm is used to reject outliers and then the average of the remaining images is calculated.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
+<div class="cell tag_hide-output tag_scroll-output docutils container">
+<div class="cell_input above-output-prompt docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biaslist</span> <span class="o">=</span> <span class="p">[</span><span class="n">RAWDIR</span> <span class="o">/</span> <span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">biastab</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]]</span>
 <span class="n">_</span> <span class="o">=</span> <span class="n">preproc</span><span class="o">.</span><span class="n">combine_bias</span><span class="p">(</span><span class="n">biaslist</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="n">OUTDIR</span><span class="p">,</span> <span class="n">outname</span><span class="o">=</span><span class="s1">&#39;MBias.fits&#39;</span><span class="p">)</span>
 <span class="k">del</span> <span class="n">_</span>
 </pre></div>
 </div>
 </div>
+<details class="hide below-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell output</span>
+<span class="expanded">Hide code cell output</span>
+</summary>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PC001001= 1.00000000 / Pixel Coordinate translation matrix 
@@ -674,106 +683,126 @@ WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 
 Set DATE-END to &#39;2013-06-06T14:53:03.880&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
 Set DATE-END to &#39;2013-06-06T04:56:58.652&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T04:59:35.780&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T15:06:35.545&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T05:00:00.751&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-06T04:56:34.054&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T15:07:00.686&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T15:07:53.456&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-06T04:56:09.042&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-06T14:53:29.035&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T15:06:10.558&#39; from MJD-END&#39;. [astropy.wcs.wcs]
-WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-06T04:55:19.314&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+Set DATE-END to &#39;2013-06-07T04:59:35.780&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-07T04:58:45.726&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+Set DATE-END to &#39;2013-06-07T15:06:35.545&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T05:00:00.751&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
-Set DATE-END to &#39;2013-06-06T14:52:38.925&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+Set DATE-END to &#39;2013-06-06T04:56:34.054&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:07:00.686&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:07:53.456&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:56:09.042&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:53:29.035&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T15:06:10.558&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T04:55:19.314&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-07T04:58:45.726&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
+Set DATE-END to &#39;2013-06-06T14:52:38.925&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56450.000000 from DATE-OBS.
 Set DATE-END to &#39;2013-06-07T15:07:26.756&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
 Set DATE-END to &#39;2013-06-06T14:52:13.481&#39; from MJD-END&#39;. [astropy.wcs.wcs]
@@ -783,22 +812,12 @@ Set DATE-END to &#39;2013-06-07T05:00:25.744&#39; from MJD-END&#39;. [astropy.wc
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 </pre></div>
@@ -809,14 +828,8 @@ WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 
 Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: using the unit adu passed to the FITS reader instead of the unit adu in the FITS file. [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-</pre></div>
 </div>
-</div>
+</details>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -834,10 +847,10 @@ Unmatched celestial axes.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x148a756a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16fec0d50&gt;
 </pre></div>
 </div>
-<img alt="../_images/d8b47c7782f452b710a4e944c426dfd6099a72d53a0cab173ef4a508f8bf8f3a.png" class="align-center" src="../_images/d8b47c7782f452b710a4e944c426dfd6099a72d53a0cab173ef4a508f8bf8f3a.png" />
+<img alt="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" class="align-center" src="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" />
 </div>
 </div>
 </section>
@@ -907,9 +920,9 @@ Unmatched celestial axes.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Feige34 (Standard Star)&#39;)
 </pre></div>
 </div>
-<img alt="../_images/bb9f070865eabb5202ea9404c48368656a37401ac81f08c377b769827b54b073.png" class="align-center" src="../_images/bb9f070865eabb5202ea9404c48368656a37401ac81f08c377b769827b54b073.png" />
-<img alt="../_images/80c5fd4f6922c0f787990f1b92ce91726ec984527f895ab2702e741d6b3d334d.png" class="align-center" src="../_images/80c5fd4f6922c0f787990f1b92ce91726ec984527f895ab2702e741d6b3d334d.png" />
-<img alt="../_images/c156af81afcdca91d3113399b7007ed84123b7b3faa2018581181ff2ef9f2225.png" class="align-center" src="../_images/c156af81afcdca91d3113399b7007ed84123b7b3faa2018581181ff2ef9f2225.png" />
+<img alt="../_images/0d9489f6864161c7cab87eec30fdce2bf45f9450a6cbd3f7856cca2fb84d7c18.png" class="align-center" src="../_images/0d9489f6864161c7cab87eec30fdce2bf45f9450a6cbd3f7856cca2fb84d7c18.png" />
+<img alt="../_images/7b79e4ede2ad792a301bfc9a930aebbb033c6472aaf8e29bc14c7203ab20c86c.png" class="align-center" src="../_images/7b79e4ede2ad792a301bfc9a930aebbb033c6472aaf8e29bc14c7203ab20c86c.png" />
+<img alt="../_images/b06bf9ae6cca6024c34aa258decf6bc9add0e98656c2e79e44019bb0803300f6.png" class="align-center" src="../_images/b06bf9ae6cca6024c34aa258decf6bc9add0e98656c2e79e44019bb0803300f6.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -929,7 +942,7 @@ Unmatched celestial axes.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/f2aca338350f3b3a8b09ee2e7f118dd141279aae2572117c66180fd02a33396d.png" class="align-center" src="../_images/f2aca338350f3b3a8b09ee2e7f118dd141279aae2572117c66180fd02a33396d.png" />
+<img alt="../_images/8f6ce0de6fc34a475c3ee540b4409adeea25240f63111cda4cfffd60fed6639f.png" class="align-center" src="../_images/8f6ce0de6fc34a475c3ee540b4409adeea25240f63111cda4cfffd60fed6639f.png" />
 </div>
 </div>
 <p>Although we can see some tiny wiggles in the flat spectrum, this is not significant enough to adopt higher-order polynomials to model the flat spectrum, as opposed to the case if we have significant fringe patterns. If you closely examine the flat spectrum, you will see that the wiggles are not random, but rather located at the atmospheric absorption lines. This is because the flat image is taken with a lamp, and the lamp light is absorbed by the atmosphere at these absorption lines. Since the absorption lines are not random, we can safely ignore them when modeling the flat spectrum.</p>
@@ -987,11 +1000,11 @@ Unmatched celestial axes.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x148eaf950&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16ffc8d50&gt;
 </pre></div>
 </div>
-<img alt="../_images/df70195304712f26036b6445046dacc330fe27de3ee33981ce6630a6d996b0ed.png" class="align-center" src="../_images/df70195304712f26036b6445046dacc330fe27de3ee33981ce6630a6d996b0ed.png" />
-<img alt="../_images/01725bca3b2819b85209ae459502685cf50316d6661ca88927adc09a4e32601b.png" class="align-center" src="../_images/01725bca3b2819b85209ae459502685cf50316d6661ca88927adc09a4e32601b.png" />
+<img alt="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" class="align-center" src="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" />
+<img alt="../_images/9cc5a21c501eb8e2eecbb89af4fa76b3ec881d8e3ad7ad132115638d1802f96e.png" class="align-center" src="../_images/9cc5a21c501eb8e2eecbb89af4fa76b3ec881d8e3ad7ad132115638d1802f96e.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1061,15 +1074,11 @@ Done: pFCSA00141840.fits
 Done: pFCSA00141580.fits
 Combining the preprocessed arc images...
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3105 of file cextern/wcslib/C/wcs.c:
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
 </pre></div>
@@ -1093,6 +1102,18 @@ WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 
 Set DATE-END to &#39;2013-06-07T05:51:12.249&#39; from MJD-END&#39;. [astropy.wcs.wcs]
 WARNING: FITSFixedWarning: &#39;datfix&#39; made the change &#39;Set MJD-OBS to 56449.000000 from DATE-OBS.
 Set DATE-END to &#39;2013-06-06T04:52:48.140&#39; from MJD-END&#39;. [astropy.wcs.wcs]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/main/lib/python3.11/site-packages/ccdproc/combiner.py:548: RuntimeWarning: Mean of empty slice
+  mean = scale_func(data, axis=0)
+/opt/anaconda3/envs/main/lib/python3.11/site-packages/numpy/lib/nanfunctions.py:1879: RuntimeWarning: Degrees of freedom &lt;= 0 for slice.
+  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The combined arc image is saved as cArc.fits
@@ -1153,9 +1174,9 @@ Done: pFCSA00141878.fits
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Preprocessed Feige110 Image&#39;)
 </pre></div>
 </div>
-<img alt="../_images/3bfe7dbca7dd3b185cfc95f63aeb2cc9f88efeff6bbdf91b9ed2bf5fdb570b31.png" class="align-center" src="../_images/3bfe7dbca7dd3b185cfc95f63aeb2cc9f88efeff6bbdf91b9ed2bf5fdb570b31.png" />
-<img alt="../_images/d542b707fb3ac9ebd81843fe590fed1478ec0c21e499c59b44552db8dbc576f3.png" class="align-center" src="../_images/d542b707fb3ac9ebd81843fe590fed1478ec0c21e499c59b44552db8dbc576f3.png" />
-<img alt="../_images/2d406fd5a5c9c397490658376f04d33a37f12f4754b072adac116c13c47d9168.png" class="align-center" src="../_images/2d406fd5a5c9c397490658376f04d33a37f12f4754b072adac116c13c47d9168.png" />
+<img alt="../_images/54102e9aec5b969dbd9ac26e49ba748d5ef12ef5ec236657921e1f0a509ea43e.png" class="align-center" src="../_images/54102e9aec5b969dbd9ac26e49ba748d5ef12ef5ec236657921e1f0a509ea43e.png" />
+<img alt="../_images/25c812e0f10109564e95dfca392cc078ed1ed29ab3bd3135ba3d2a6342f0a4f0.png" class="align-center" src="../_images/25c812e0f10109564e95dfca392cc078ed1ed29ab3bd3135ba3d2a6342f0a4f0.png" />
+<img alt="../_images/810447622afd39c50bb8122d59b9f8db5ef73554c9898cbfd93d6de46f406b61.png" class="align-center" src="../_images/810447622afd39c50bb8122d59b9f8db5ef73554c9898cbfd93d6de46f406b61.png" />
 </div>
 </div>
 </section>
