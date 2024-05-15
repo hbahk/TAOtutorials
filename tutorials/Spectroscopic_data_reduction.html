@@ -358,6 +358,8 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-1d-spectra">Extracting 1D Spectra</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source-identification">1. Source Identification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aperture-tracing">2. Aperture Tracing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aperture-summation">3. Aperture Summation</a></li>
 </ul>
 </li>
 </ul>
@@ -402,6 +404,7 @@ document.write(`
 <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">UnivariateSpline</span>
 <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">median_filter</span>
 <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">peak_widths</span>
 <span class="kn">from</span> <span class="nn">skimage.feature</span> <span class="kn">import</span> <span class="n">peak_local_max</span>
 <span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">units</span> <span class="k">as</span> <span class="n">u</span>
 
@@ -531,7 +534,7 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_html"><div><i>Table length=60</i>
-<table id="table4631700752" class="table-striped table-bordered table-condensed">
+<table id="table4602611216" class="table-striped table-bordered table-condensed">
 <thead><tr><th>filename</th><th>date-obs</th><th>object</th><th>ra</th><th>dec</th><th>type</th><th>exptime</th><th>airmass</th><th>altitude</th><th>disperser</th><th>slit-width</th><th>slit-pa</th><th>slit</th><th>filter1</th><th>filter2</th><th>filter3</th><th>ut-str</th><th>ut-end</th></tr></thead>
 <thead><tr><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>float64</th><th>float64</th><th>float64</th><th>str50</th><th>float64</th><th>float64</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th><th>str50</th></tr></thead>
 <tr><td>FCSA00141794.fits.gz</td><td>2013-06-07</td><td>DOMEFLAT</td><td>11:17:48.038</td><td>+19:54:08.26</td><td>DOMEFLAT</td><td>3.0</td><td>1.0</td><td>89.9361</td><td>SCFCGRHD90</td><td>0.5</td><td>-90.3</td><td>SCFCSLLC08</td><td>NONE</td><td>SCFCFLSO58</td><td>NONE</td><td>04:37:11.906</td><td>04:37:15.139</td></tr>
@@ -840,9 +843,6 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16ddebe90&gt;
-</pre></div>
-</div>
 <img alt="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" class="align-center" src="../_images/9f46beaf25df9ec57c69ae77eb83e18b24672b2deb632d7f1ae3f2dbdbd4020d.png" />
 </div>
 </div>
@@ -1023,9 +1023,6 @@ Set DATE-END to &#39;2013-06-06T14:51:48.267&#39; from MJD-END&#39;. [astropy.wc
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x16e10d190&gt;
-</pre></div>
-</div>
 <img alt="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" class="align-center" src="../_images/e419a45987536ab789deff391e609e1e5aa775d8ba57ca55f0b1853ac680bbed.png" />
 <img alt="../_images/9cc5a21c501eb8e2eecbb89af4fa76b3ec881d8e3ad7ad132115638d1802f96e.png" class="align-center" src="../_images/9cc5a21c501eb8e2eecbb89af4fa76b3ec881d8e3ad7ad132115638d1802f96e.png" />
 </div>
@@ -1109,10 +1106,6 @@ INFO: An exception happened while extracting WCS information from the Header.
 InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
-INFO: An exception happened while extracting WCS information from the Header.
-InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
-Unmatched celestial axes.
- [astropy.nddata.ccddata]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: FITSFixedWarning: PC001001= 1.00000000 / Pixel Coordinate translation matrix 
@@ -1140,15 +1133,11 @@ Set DATE-END to &#39;2013-06-06T04:52:48.140&#39; from MJD-END&#39;. [astropy.wc
 InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
 Unmatched celestial axes.
  [astropy.nddata.ccddata]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/anaconda3/envs/main/lib/python3.11/site-packages/ccdproc/combiner.py:548: RuntimeWarning: Mean of empty slice
-  mean = scale_func(data, axis=0)
-/opt/anaconda3/envs/main/lib/python3.11/site-packages/numpy/lib/nanfunctions.py:1879: RuntimeWarning: Degrees of freedom &lt;= 0 for slice.
-  var = nanvar(a, axis=axis, dtype=dtype, out=out, ddof=ddof,
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The combined arc image is saved as cArc.fits
+INFO: An exception happened while extracting WCS information from the Header.
+InconsistentAxisTypesError: ERROR 4 in wcs_types() at line 3140 of file cextern/wcslib/C/wcs.c:
+Unmatched celestial axes.
+ [astropy.nddata.ccddata]
+The combined arc image is saved as cArc.fits
 Preprocessing science images...
 Done: pFCSA00141920.fits
 </pre></div>
@@ -1247,6 +1236,8 @@ Done: pFCSA00141878.fits
 <img alt="../_images/8dd01f813f706c20491a5099e25eeed0783c25b493880b5d94b6ca169edd03fb.png" class="align-center" src="../_images/8dd01f813f706c20491a5099e25eeed0783c25b493880b5d94b6ca169edd03fb.png" />
 </div>
 </div>
+<p>The <code class="docutils literal notranslate"><span class="pre">TRIM</span></code> parameter is used to trim the images to the region of interest. The elements of the <code class="docutils literal notranslate"><span class="pre">TRIM</span></code> parameter is determined by examining the 2D science frame, to make the source centered in the image.</p>
+<p>Cosmic ray removal often takes a long time. Hence, we will apply cosmic ray removal on the trimmed images to save unnecessary computation. To get reliable removal of cosmic rays, we need to mask bad pixels, but here we will skip this step for simplicity. For more information on cosmic ray removal, please refer to the <a class="reference external" href="https://www.astropy.org/ccd-reduction-and-photometry-guide/v/dev/notebooks/08-03-Cosmic-ray-removal.html">CCD Data Reduction Guide</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cosmic ray removal</span>
@@ -1272,7 +1263,12 @@ Iteration 4:
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
@@ -1283,10 +1279,12 @@ Iteration 4:
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <img alt="../_images/88535ceacdf7587bc270babadd8476df17d5192c67bc42097c63d688918abccc.png" class="align-center" src="../_images/88535ceacdf7587bc270babadd8476df17d5192c67bc42097c63d688918abccc.png" />
 </div>
 </div>
+<p>Looks good. Now we will identify the source position.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Slice the image in the spatial direction</span>
@@ -1294,6 +1292,7 @@ Iteration 4:
 <span class="n">rcut</span> <span class="o">=</span> <span class="mi">1050</span>  <span class="c1"># right cut (dispersion direction)</span>
 
 <span class="n">apall_probe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">crrej</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">lcut</span><span class="p">:</span><span class="n">rcut</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">x_probe</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">apall_probe</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 <span class="n">peak_pix</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span>
     <span class="n">apall_probe</span><span class="p">,</span> <span class="n">num_peaks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_distance</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">threshold_abs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">)</span>
 <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -1307,11 +1306,35 @@ Iteration 4:
 </div>
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_probe</span><span class="p">,</span> <span class="n">apall_probe</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">peak_pix</span><span class="p">,</span> <span class="n">peak_pix</span><span class="p">),</span>
+    <span class="p">(</span>
+        <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">],</span>
+        <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="n">peak_pix</span><span class="p">,</span>
+    <span class="p">(</span><span class="n">peak_pix</span><span class="p">,</span> <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">apall_probe</span><span class="p">[</span><span class="n">peak_pix</span><span class="p">]),</span>
+    <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span>
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;left&quot;</span><span class="p">,</span>
+    <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span>
+    <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;small&quot;</span><span class="p">,</span>
+    <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Aperture Sum&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts [e-]&quot;</span><span class="p">)</span>
@@ -1319,23 +1342,222 @@ Iteration 4:
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
-<img alt="../_images/e9b74697bf3eeabfc13452a0c0c9f7fd02ccc69a77f6d254aab0472b4fea4454.png" class="align-center" src="../_images/e9b74697bf3eeabfc13452a0c0c9f7fd02ccc69a77f6d254aab0472b4fea4454.png" />
+<img alt="../_images/1ef95ee35a3dfc2bcd176a01f4a1f0f820b85117957477abcd124d4e95963e67.png" class="align-center" src="../_images/1ef95ee35a3dfc2bcd176a01f4a1f0f820b85117957477abcd124d4e95963e67.png" />
+</div>
+</div>
+<p>Here we crop the image in the dispersion direction, from <code class="docutils literal notranslate"><span class="pre">lcut</span></code> to <code class="docutils literal notranslate"><span class="pre">rcut</span></code>. We sum the counts in the dispersion direction to get the 1D spatial profile of the source. We then use the <code class="docutils literal notranslate"><span class="pre">peak_local_max</span></code> function to identify the source position in the spatial profile. The <code class="docutils literal notranslate"><span class="pre">peak_local_max</span></code> function finds the local maxima in the 1D profile, which can be used to identify the source position. Then we can also estimate the full width at half maximum (FWHM) of the source, using the <code class="docutils literal notranslate"><span class="pre">peak_widths</span></code> function from the <code class="docutils literal notranslate"><span class="pre">scipy.signal</span></code> module.</p>
+<p>From the above figure, we were able to get the pixel position of the peak of the source. However, the peak position is not always the center of the source, since it is an integer value.
+Therefore, we need some centering algorithm to get the center of the source to properly trace the spatial position of the source along the dispersion axis.</p>
+<p>Here we use the <code class="docutils literal notranslate"><span class="pre">centroid_com</span></code> function from the <code class="docutils literal notranslate"><span class="pre">photutils</span></code> package to get the center of the source. The <code class="docutils literal notranslate"><span class="pre">centroid_com</span></code> function calculates the center of mass of the source, which is a good approximation of the center of the source. This function originally calculate the centroid of the source in the 2D image, but we will use them to calculate the center of the source in the 1D spatial profile. For more information on centroiding, please refer to the <a class="reference external" href="https://photutils.readthedocs.io/en/stable/centroids.html">photutils documentation</a>.</p>
+<p>Before we estimate the center of the source, we need to estimate the background level. The background level is estimated by fitting a polynomial to the 1D spatial profile of the source. The background level is then subtracted from the 1D spatial profile to get the background-subtracted profile. The background-subtracted profile is then used to estimate the center of the source.</p>
+<p>Let’s estimate the background level and subtract it from the 1D spatial profile. Here we use a Chebyshev polynomial of degree 3. The degree of the polynomial can be adjusted depending on the complexity of the background. To model the background, we should set the sky region where the source is not present. The sky region should be chosen carefully to avoid any contamination from the source.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select the sky region for the background estimation</span>
+<span class="n">sky_limit_peak</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># pixel limit from the peak pixel</span>
+
+<span class="n">mask_sky</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+<span class="n">mask_sky</span><span class="p">[</span><span class="n">peak_pix</span> <span class="o">-</span> <span class="n">sky_limit_peak</span> <span class="p">:</span> <span class="n">peak_pix</span> <span class="o">+</span> <span class="n">sky_limit_peak</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">x_probe_sky</span> <span class="o">=</span> <span class="n">x_probe</span><span class="p">[</span><span class="n">mask_sky</span><span class="p">]</span>
+<span class="n">apall_probe_sky</span> <span class="o">=</span> <span class="n">apall_probe</span><span class="p">[</span><span class="n">mask_sky</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_probe</span><span class="p">,</span> <span class="n">apall_probe</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_probe</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">mask_sky</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis_transform</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts [e-]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Counts [e-]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/8a5ee1af8f6be03c59e7e9c353aee75373d4af63fe655ce5a007b3c819ecc602.png" class="align-center" src="../_images/8a5ee1af8f6be03c59e7e9c353aee75373d4af63fe655ce5a007b3c819ecc602.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fit the sky background with a Chebyshev polynomial</span>
+<span class="c1"># define function for background fitting</span>
+<span class="k">def</span> <span class="nf">fit_background</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">apall</span><span class="p">,</span> <span class="n">fitmask</span><span class="p">,</span> <span class="n">sigma_sigclip</span><span class="p">,</span> <span class="n">order_skymodel</span><span class="p">):</span>
+    <span class="n">x_sky</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">fitmask</span><span class="p">]</span>
+    <span class="n">apall_sky</span> <span class="o">=</span> <span class="n">apall</span><span class="p">[</span><span class="n">fitmask</span><span class="p">]</span>
+    <span class="c1"># sigma clipping</span>
+    <span class="n">mask_sigclip</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span><span class="n">apall_sky</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_sigclip</span><span class="p">,</span> <span class="n">masked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span>
+
+    <span class="c1"># fitting the sky background</span>
+    <span class="n">coeffs_sky</span><span class="p">,</span> <span class="n">fitfull_sky</span> <span class="o">=</span> <span class="n">chebfit</span><span class="p">(</span>
+        <span class="n">x_sky</span><span class="p">[</span><span class="o">~</span><span class="n">mask_sigclip</span><span class="p">],</span>
+        <span class="n">apall_sky</span><span class="p">[</span><span class="o">~</span><span class="n">mask_sigclip</span><span class="p">],</span>
+        <span class="n">deg</span><span class="o">=</span><span class="n">order_skymodel</span><span class="p">,</span>
+        <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># sky background model</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">apall</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+    <span class="n">skymodel</span> <span class="o">=</span> <span class="n">chebval</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">coeffs_sky</span><span class="p">)</span>
+
+    <span class="c1"># calculating the rms</span>
+    <span class="n">residual_skymodel</span> <span class="o">=</span> <span class="n">fitfull_sky</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">rms_skymodel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">residual_skymodel</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_sky</span><span class="p">[</span><span class="o">~</span><span class="n">mask_sigclip</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">skymodel</span><span class="p">,</span> <span class="n">rms_skymodel</span><span class="p">,</span> <span class="n">mask_sigclip</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># setting the parameters</span>
+<span class="n">sigma_sigclip</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">order_skymodel</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># fitting the sky background</span>
+<span class="n">skymodel</span><span class="p">,</span> <span class="n">rms_skymodel</span><span class="p">,</span> <span class="n">mask_sigclip</span> <span class="o">=</span> <span class="n">fit_background</span><span class="p">(</span>
+    <span class="n">x_probe</span><span class="p">,</span>
+    <span class="n">apall_probe</span><span class="p">,</span>
+    <span class="n">mask_sky</span><span class="p">,</span>
+    <span class="n">sigma_sigclip</span><span class="o">=</span><span class="n">sigma_sigclip</span><span class="p">,</span>
+    <span class="n">order_skymodel</span><span class="o">=</span><span class="n">order_skymodel</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># number of pixels</span>
+<span class="n">npix_sky</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_probe_sky</span><span class="p">)</span>
+<span class="n">npix_skymodel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">mask_sigclip</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_probe</span><span class="p">,</span> <span class="n">apall_probe</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">x_probe</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">mask_sky</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xaxis_transform</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_probe</span><span class="p">,</span>
+    <span class="n">skymodel</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Chebyshev Sky Model (</span><span class="si">{</span><span class="n">npix_skymodel</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">npix_sky</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_probe_sky</span><span class="p">[</span><span class="n">mask_sigclip</span><span class="p">],</span>
+    <span class="n">apall_probe_sky</span><span class="p">[</span><span class="n">mask_sigclip</span><span class="p">],</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Sigma-clipped (</span><span class="si">{</span><span class="n">sigma_sigclip</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">-sigma)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">resax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_probe</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span>
+    <span class="n">x_probe</span><span class="p">,</span> <span class="n">apall_probe</span> <span class="o">-</span> <span class="n">skymodel</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;RMS=</span><span class="si">{</span><span class="n">rms_skymodel</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">x_probe</span><span class="p">,</span>
+    <span class="mi">0</span><span class="p">,</span>
+    <span class="mi">1</span><span class="p">,</span>
+    <span class="n">where</span><span class="o">=</span><span class="n">mask_sky</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tab:blue&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">resax</span><span class="o">.</span><span class="n">get_xaxis_transform</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">x_probe_sky</span><span class="p">[</span><span class="n">mask_sigclip</span><span class="p">],</span>
+    <span class="n">apall_probe_sky</span><span class="p">[</span><span class="n">mask_sigclip</span><span class="p">]</span> <span class="o">-</span> <span class="n">skymodel</span><span class="p">[</span><span class="n">mask_sky</span><span class="p">][</span><span class="n">mask_sigclip</span><span class="p">],</span>
+    <span class="s2">&quot;x&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:orange&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals [e-]&quot;</span><span class="p">)</span>
+<span class="c1"># ylim_ax = ax.get_ylim()</span>
+<span class="n">ylim_resax</span> <span class="o">=</span> <span class="n">rms_skymodel</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">10</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim_resax</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">title_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Skyfit: Chebyshev order </span><span class="si">{</span><span class="n">order_skymodel</span><span class="si">:</span><span class="s2">d</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">sigma_sigclip</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">-sigma)&quot;</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">labelbottom</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Counts [e-]&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title_str</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">aa</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">x_probe</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/7b2a73f4854b16c5747b066dc900117c980ee69be172128792da713fe46e32e4.png" class="align-center" src="../_images/7b2a73f4854b16c5747b066dc900117c980ee69be172128792da713fe46e32e4.png" />
+</div>
+</div>
+<p>From the sigma clipping, we can see some rejected points near the source. This indicates that the sky region we set is not sufficiently far from the source. We should set the sky region further away from the source to avoid any contamination from the source. Sigma clipping will also reject any cosmic rays or bad pixels in the sky region, which will affect the background estimation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">photutils.centroids</span> <span class="kn">import</span> <span class="n">centroid_com</span>
+
+<span class="n">apall_probe_skysub</span> <span class="o">=</span> <span class="n">apall_probe</span> <span class="o">-</span> <span class="n">skymodel</span>
+
+<span class="n">center_probe_com</span> <span class="o">=</span> <span class="n">centroid_com</span><span class="p">(</span><span class="n">apall_probe_skysub</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Center without sky subtraction:&quot;</span><span class="p">,</span> <span class="n">centroid_com</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Center after sky subtraction:&quot;</span><span class="p">,</span> <span class="n">center_probe_com</span><span class="p">)</span>
+
+<span class="n">pwresult</span> <span class="o">=</span> <span class="n">peak_widths</span><span class="p">(</span><span class="n">apall_probe_skysub</span><span class="p">,</span> <span class="p">[</span><span class="n">peak_pix</span><span class="p">],</span> <span class="n">rel_height</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">fwhm_probe</span> <span class="o">=</span> <span class="n">pwresult</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">left_ips</span><span class="p">,</span> <span class="n">right_ips</span> <span class="o">=</span> <span class="n">pwresult</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pwresult</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fwhm_hight</span> <span class="o">=</span> <span class="n">pwresult</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FWHM:&quot;</span><span class="p">,</span> <span class="n">fwhm_probe</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Left and right interpolated positions:&quot;</span><span class="p">,</span> <span class="n">left_ips</span><span class="p">,</span> <span class="n">right_ips</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Center without sky subtraction: 69.17432126256182
+Center after sky subtraction: 68.6240922497308
+FWHM: 4.185116626865096
+Left and right interpolated positions: 66.61110717831241 70.7962238051775
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.io</span> <span class="k">as</span> <span class="nn">pio</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">plotly.offline</span> <span class="k">as</span> <span class="nn">py</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
 
 <span class="n">pio</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="s2">&quot;notebook&quot;</span>
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">)),</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">apall_probe_skysub</span><span class="p">)),</span>
     <span class="n">y</span><span class="o">=</span><span class="n">apall_probe</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Aperture Sum&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sky Subtracted Sum&quot;</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;Counts [e-]&quot;</span><span class="p">},</span>
+    <span class="n">line_shape</span><span class="o">=</span><span class="s2">&quot;hvh&quot;</span>
 <span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span>
@@ -1346,10 +1568,29 @@ Iteration 4:
     <span class="n">annotation_position</span><span class="o">=</span><span class="s2">&quot;top right&quot;</span><span class="p">,</span>
     <span class="n">line_width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_vline</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">center_probe_com</span><span class="p">,</span>
+    <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dash&quot;</span><span class="p">,</span>
+    <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="n">annotation_text</span><span class="o">=</span><span class="s2">&quot;Center&quot;</span><span class="p">,</span>
+    <span class="n">annotation_position</span><span class="o">=</span><span class="s2">&quot;top left&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">left_ips</span><span class="p">,</span> <span class="n">right_ips</span><span class="p">],</span>
+    <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">fwhm_hight</span><span class="p">,</span> <span class="n">fwhm_hight</span><span class="p">],</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines+markers&quot;</span><span class="p">,</span>
+    <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.5</span><span class="p">),</span>
+    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;FWHM=</span><span class="si">{</span><span class="n">fwhm_probe</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="p">))</span>
+
 <span class="n">fig</span>
 </pre></div>
 </div>
 </div>
+</details>
 <div class="cell_output docutils container">
 <div class="output text_html">        <script type="text/javascript">
         window.PlotlyConfig = {MathJaxConfig: 'local'};
@@ -1371,9 +1612,9 @@ Iteration 4:
         });
         }
         </script>
-        </div><div class="output text_html"><div>                            <div id="058488cd-d184-4b22-9914-f2590c243279" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("058488cd-d184-4b22-9914-f2590c243279")) {                    Plotly.newPlot(                        "058488cd-d184-4b22-9914-f2590c243279",                        [{"hovertemplate":"Pixel Number (Spatial Direction)=%{x}\u003cbr\u003eCounts [e-]=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],"xaxis":"x","y":[11272.7275390625,11117.23828125,11151.107421875,11468.2392578125,11503.3681640625,11389.03515625,11367.3994140625,11594.56640625,11381.68359375,11497.9208984375,11298.375,11570.8369140625,11497.943359375,11540.2900390625,11455.615234375,11528.2333984375,11490.4443359375,11483.330078125,11488.9052734375,11551.1630859375,11679.439453125,11310.3203125,11462.66796875,11344.8544921875,11528.212890625,11242.626953125,11435.146484375,11574.0224609375,11726.5576171875,11362.6826171875,11670.814453125,11579.6826171875,11585.146484375,11536.263671875,11380.869140625,11530.5732421875,11579.4375,11702.35546875,11676.7861328125,11408.001953125,11519.5302734375,11444.8671875,11663.6279296875,11582.912109375,11770.640625,11873.861328125,11841.798828125,11664.66015625,11899.138671875,12170.939453125,12187.2431640625,12272.857421875,12542.9765625,12559.2607421875,12773.5869140625,13260.677734375,13878.21484375,14330.212890625,15196.1142578125,16237.927734375,18071.88671875,21208.2109375,25526.751953125,33476.96484375,48503.1015625,76201.734375,127511.140625,212933.59375,311563.3125,347890.25,269588.71875,156722.09375,84865.7890625,50687.93359375,34055.80078125,25772.990234375,20603.412109375,18015.193359375,16158.765625,15125.5361328125,14177.095703125,13726.2353515625,13292.880859375,12976.9521484375,12306.4638671875,12414.7470703125,12221.9951171875,12344.0,12214.134765625,11973.53125,11630.2138671875,11705.150390625,11577.3017578125,11956.169921875,11817.8212890625,11823.3310546875,11765.6796875,11810.146484375,11615.3876953125,11795.06640625,11765.337890625,11609.6943359375,11692.9853515625,12008.3583984375,11935.443359375,11690.6015625,11648.029296875,11899.1279296875,11658.2763671875,11507.7705078125,11958.873046875,11581.517578125,11751.7109375,11457.87109375,11595.6591796875,11736.65234375,11706.7626953125,11592.1220703125,11529.9423828125,11756.08984375,11698.9990234375,11787.4541015625,11575.2744140625,11592.4638671875,11762.6904296875,11691.140625,11583.1513671875,11630.9775390625,11718.072265625,11629.6875,11515.1806640625,11677.234375,11574.60546875,11711.23828125,11637.6064453125,11601.8798828125,11718.076171875,11356.3134765625,11619.884765625,11487.833984375],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Pixel Number (Spatial Direction)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Counts [e-]"}},"legend":{"tracegroupgap":0},"title":{"text":"Aperture Sum"},"shapes":[{"line":{"color":"red","dash":"dash","width":0.8},"type":"line","x0":69,"x1":69,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"annotations":[{"showarrow":false,"text":"Peak","x":69,"xanchor":"left","xref":"x","y":1,"yanchor":"top","yref":"y domain"}]},                        {"responsive": true}                    ).then(function(){
+        </div><div class="output text_html"><div>                            <div id="c71ee3d8-ea27-41a2-bebd-550903970a87" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c71ee3d8-ea27-41a2-bebd-550903970a87")) {                    Plotly.newPlot(                        "c71ee3d8-ea27-41a2-bebd-550903970a87",                        [{"hovertemplate":"Pixel Number (Spatial Direction)=%{x}\u003cbr\u003eCounts [e-]=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid","shape":"hvh"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139],"xaxis":"x","y":[11272.7275390625,11117.23828125,11151.107421875,11468.2392578125,11503.3681640625,11389.03515625,11367.3994140625,11594.56640625,11381.68359375,11497.9208984375,11298.375,11570.8369140625,11497.943359375,11540.2900390625,11455.615234375,11528.2333984375,11490.4443359375,11483.330078125,11488.9052734375,11551.1630859375,11679.439453125,11310.3203125,11462.66796875,11344.8544921875,11528.212890625,11242.626953125,11435.146484375,11574.0224609375,11726.5576171875,11362.6826171875,11670.814453125,11579.6826171875,11585.146484375,11536.263671875,11380.869140625,11530.5732421875,11579.4375,11702.35546875,11676.7861328125,11408.001953125,11519.5302734375,11444.8671875,11663.6279296875,11582.912109375,11770.640625,11873.861328125,11841.798828125,11664.66015625,11899.138671875,12170.939453125,12187.2431640625,12272.857421875,12542.9765625,12559.2607421875,12773.5869140625,13260.677734375,13878.21484375,14330.212890625,15196.1142578125,16237.927734375,18071.88671875,21208.2109375,25526.751953125,33476.96484375,48503.1015625,76201.734375,127511.140625,212933.59375,311563.3125,347890.25,269588.71875,156722.09375,84865.7890625,50687.93359375,34055.80078125,25772.990234375,20603.412109375,18015.193359375,16158.765625,15125.5361328125,14177.095703125,13726.2353515625,13292.880859375,12976.9521484375,12306.4638671875,12414.7470703125,12221.9951171875,12344.0,12214.134765625,11973.53125,11630.2138671875,11705.150390625,11577.3017578125,11956.169921875,11817.8212890625,11823.3310546875,11765.6796875,11810.146484375,11615.3876953125,11795.06640625,11765.337890625,11609.6943359375,11692.9853515625,12008.3583984375,11935.443359375,11690.6015625,11648.029296875,11899.1279296875,11658.2763671875,11507.7705078125,11958.873046875,11581.517578125,11751.7109375,11457.87109375,11595.6591796875,11736.65234375,11706.7626953125,11592.1220703125,11529.9423828125,11756.08984375,11698.9990234375,11787.4541015625,11575.2744140625,11592.4638671875,11762.6904296875,11691.140625,11583.1513671875,11630.9775390625,11718.072265625,11629.6875,11515.1806640625,11677.234375,11574.60546875,11711.23828125,11637.6064453125,11601.8798828125,11718.076171875,11356.3134765625,11619.884765625,11487.833984375],"yaxis":"y","type":"scatter"},{"line":{"color":"red","width":1.5},"mode":"lines+markers","name":"FWHM=4.19","x":[66.61110717831241,70.7962238051775],"y":[167897.40268255526,167897.40268255526],"type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Pixel Number (Spatial Direction)"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Counts [e-]"}},"legend":{"tracegroupgap":0},"title":{"text":"Sky Subtracted Sum"},"shapes":[{"line":{"color":"red","dash":"dash","width":0.8},"type":"line","x0":69,"x1":69,"xref":"x","y0":0,"y1":1,"yref":"y domain"},{"line":{"color":"green","dash":"dash","width":0.8},"type":"line","x0":68.6240922497308,"x1":68.6240922497308,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"annotations":[{"showarrow":false,"text":"Peak","x":69,"xanchor":"left","xref":"x","y":1,"yanchor":"top","yref":"y domain"},{"showarrow":false,"text":"Center","x":68.6240922497308,"xanchor":"right","xref":"x","y":1,"yanchor":"top","yref":"y domain"}]},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('058488cd-d184-4b22-9914-f2590c243279');
+var gd = document.getElementById('c71ee3d8-ea27-41a2-bebd-550903970a87');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -1396,6 +1637,181 @@ if (outputEl) {{
 }}
 
                         })                };                });            </script>        </div></div></div>
+</div>
+<p>Zoom in to see the subtle difference between the peak position and the center position.</p>
+</section>
+<section id="aperture-tracing">
+<h3>2. Aperture Tracing<a class="headerlink" href="#aperture-tracing" title="Link to this heading">#</a></h3>
+<p>We have identified the source position in the spatial direction by collapsing a slice of the 2D science frame along the dispersion direction. Next, we will trace the spatial position of the source along the dispersion direction. This involves changing the location of the slices in the dispersion direction and identifying the source position in each slice.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the function for determining the center of the source for given slice range</span>
+<span class="k">def</span> <span class="nf">find_center</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">lcut</span><span class="p">,</span> <span class="n">rcut</span><span class="p">,</span> <span class="n">sky_limit_peak</span><span class="p">,</span> <span class="n">sigma_sigclip</span><span class="p">,</span> <span class="n">order_skymodel</span><span class="p">):</span>
+    <span class="n">apall</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">lcut</span><span class="p">:</span><span class="n">rcut</span><span class="p">,</span> <span class="p">:],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">apall</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="c1"># initial identification of the peak pixel</span>
+    <span class="n">peak_pix</span> <span class="o">=</span> <span class="n">peak_local_max</span><span class="p">(</span>
+        <span class="n">apall</span><span class="p">,</span>
+        <span class="n">num_peaks</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">min_distance</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">threshold_abs</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">apall</span><span class="p">),</span>
+    <span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># select the sky region for the background estimation</span>
+    <span class="n">mask_sky</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">apall_probe</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+    <span class="n">mask_sky</span><span class="p">[</span><span class="n">peak_pix</span> <span class="o">-</span> <span class="n">sky_limit_peak</span> <span class="p">:</span> <span class="n">peak_pix</span> <span class="o">+</span> <span class="n">sky_limit_peak</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># fitting the sky background</span>
+    <span class="n">skymodel</span><span class="p">,</span> <span class="n">rms_skymodel</span><span class="p">,</span> <span class="n">mask_sigclip</span> <span class="o">=</span> <span class="n">fit_background</span><span class="p">(</span>
+        <span class="n">x</span><span class="p">,</span>
+        <span class="n">apall</span><span class="p">,</span>
+        <span class="n">mask_sky</span><span class="p">,</span>
+        <span class="n">sigma_sigclip</span><span class="o">=</span><span class="n">sigma_sigclip</span><span class="p">,</span>
+        <span class="n">order_skymodel</span><span class="o">=</span><span class="n">order_skymodel</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">apall_skysub</span> <span class="o">=</span> <span class="n">apall</span> <span class="o">-</span> <span class="n">skymodel</span>
+
+    <span class="c1"># center of the source</span>
+    <span class="n">center_com</span> <span class="o">=</span> <span class="n">centroid_com</span><span class="p">(</span><span class="n">apall_skysub</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># fwhm of the source</span>
+
+    <span class="n">pwresult</span> <span class="o">=</span> <span class="n">peak_widths</span><span class="p">(</span><span class="n">apall_skysub</span><span class="p">,</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">peak_pix</span><span class="p">)],</span> <span class="n">rel_height</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">fwhm</span> <span class="o">=</span> <span class="n">pwresult</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">center_com</span><span class="p">,</span> <span class="n">fwhm</span>
+
+
+<span class="c1"># Find the center of the source for all the slices</span>
+<span class="n">slice_width</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">midpoints</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">aptrace</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">aptrace_fwhm</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lcut</span><span class="p">,</span> <span class="n">rcut</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">slice_width</span>
+<span class="k">while</span> <span class="n">rcut</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">crrej</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">rcut</span> <span class="o">=</span> <span class="n">lcut</span> <span class="o">+</span> <span class="n">slice_width</span>
+    <span class="n">midpoints</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lcut</span> <span class="o">+</span> <span class="n">rcut</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">center</span><span class="p">,</span> <span class="n">fwhm</span> <span class="o">=</span> <span class="n">find_center</span><span class="p">(</span>
+        <span class="n">crrej</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">lcut</span><span class="p">,</span> <span class="n">rcut</span><span class="p">,</span> <span class="n">sky_limit_peak</span><span class="p">,</span> <span class="n">sigma_sigclip</span><span class="p">,</span> <span class="n">order_skymodel</span>
+    <span class="p">)</span>
+    <span class="n">aptrace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+    <span class="n">aptrace_fwhm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fwhm</span><span class="p">)</span>
+    <span class="n">lcut</span> <span class="o">+=</span> <span class="n">slice_width</span>
+    <span class="n">rcut</span> <span class="o">+=</span> <span class="n">slice_width</span>
+
+<span class="n">aptrace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">aptrace</span><span class="p">)</span>
+<span class="n">midpoints</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">midpoints</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s fit the aperture trace</span>
+<span class="n">order_aptrace</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">sigma_clip_aptrace</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># fitting the trace line</span>
+<span class="n">coeffs_aptrace_init</span> <span class="o">=</span> <span class="n">chebfit</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">aptrace</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="n">order_aptrace</span><span class="p">)</span>
+
+<span class="c1"># sigma clipping</span>
+<span class="n">mask_aptrace</span> <span class="o">=</span> <span class="n">sigma_clip</span><span class="p">(</span>
+    <span class="n">aptrace</span> <span class="o">-</span> <span class="n">chebval</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">coeffs_aptrace_init</span><span class="p">),</span>
+    <span class="n">sigma</span><span class="o">=</span><span class="n">sigma_clip_aptrace</span><span class="p">,</span>
+    <span class="n">masked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">mask</span>
+
+<span class="c1"># fitting the trace line again</span>
+<span class="n">coeffs_aptrace</span> <span class="o">=</span> <span class="n">chebfit</span><span class="p">(</span>
+    <span class="n">midpoints</span><span class="p">[</span><span class="o">~</span><span class="n">mask_aptrace</span><span class="p">],</span> <span class="n">aptrace</span><span class="p">[</span><span class="o">~</span><span class="n">mask_aptrace</span><span class="p">],</span> <span class="n">deg</span><span class="o">=</span><span class="n">order_aptrace</span>
+<span class="p">)</span>
+<span class="n">residuals_aptrace</span> <span class="o">=</span> <span class="n">aptrace</span> <span class="o">-</span> <span class="n">chebval</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">coeffs_aptrace</span><span class="p">)</span>
+<span class="n">rejected</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">midpoints</span><span class="p">[</span><span class="o">~</span><span class="n">mask_aptrace</span><span class="p">])</span>
+<span class="n">rms_aptrace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">residuals_aptrace</span><span class="p">[</span><span class="o">~</span><span class="n">mask_aptrace</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="c1"># aperture trace model</span>
+<span class="n">ximg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">crrej</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">aptrace_model</span> <span class="o">=</span> <span class="n">chebval</span><span class="p">(</span><span class="n">ximg</span><span class="p">,</span> <span class="n">coeffs_aptrace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the aperture trace</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">gridspec_kw</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height_ratios&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]})</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">crrej</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">aptrace</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;dodgerblue&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Data&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">midpoints</span><span class="p">[</span><span class="n">rejected</span><span class="p">],</span>
+    <span class="n">aptrace</span><span class="p">[</span><span class="n">rejected</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;salmon&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rejected&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ximg</span><span class="p">,</span> <span class="n">aptrace_model</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;tab:red&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Chebyshev Trace Model&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Aperture Trace&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Spatial Direction)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">resax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">ximg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">midpoints</span><span class="p">,</span> <span class="n">residuals_aptrace</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;dodgerblue&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+    <span class="n">midpoints</span><span class="p">[</span><span class="n">rejected</span><span class="p">],</span>
+    <span class="n">residuals_aptrace</span><span class="p">[</span><span class="n">rejected</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;salmon&quot;</span><span class="p">,</span>
+    <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Pixel Number (Dispersion Direction)&quot;</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Residuals [pix]&quot;</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="s2">&quot;on&quot;</span><span class="p">)</span>
+<span class="n">resax_ylim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">residuals_aptrace</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">resax_ylim</span><span class="p">)</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ximg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">resax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+    <span class="mf">0.99</span><span class="p">,</span>
+    <span class="mf">0.95</span><span class="p">,</span>
+    <span class="sa">f</span><span class="s2">&quot;RMS=</span><span class="si">{</span><span class="n">rms_aptrace</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">transform</span><span class="o">=</span><span class="n">resax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+    <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">,</span>
+    <span class="n">va</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/d47f475a6532a394bb8582fb204f2b9df77dd0d09d4e3878fd08b2ac6488f87f.png" class="align-center" src="../_images/d47f475a6532a394bb8582fb204f2b9df77dd0d09d4e3878fd08b2ac6488f87f.png" />
+</div>
+</div>
+</section>
+<section id="aperture-summation">
+<h3>3. Aperture Summation<a class="headerlink" href="#aperture-summation" title="Link to this heading">#</a></h3>
+<p>Now we have traced the spatial position of the source along the dispersion direction. We will sum the flux along the trace to extract the 1D spectrum. The aperture size should be chosen carefully to avoid any contamination from the sky or other sources. The aperture size should be large enough to capture sufficient amount of the flux from the source but small enough to avoid any contamination from the sky or other sources.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>The type of aperture used for the extraction can affect the signal-to-noise ratio of the extracted spectrum. One can use a simple aperture, which sums the flux within a fixed aperture size, or an optimal extraction (<a class="reference external" href="https://ui.adsabs.harvard.edu/abs/1986PASP...98..609H/abstract">Horne 1986</a>), which weights the flux based on the spatial profile of the source. The optimal extraction can improve the signal-to-noise ratio of the extracted spectrum, especially when the source is extended or the background is not uniform. In this tutorial, we will use a simple aperture for the extraction, but you can try the optimal extraction for better results.</p>
+</div>
+<p>Let’s make a simple aperture summation to extract the 1D spectrum!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">apsum_sigma</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -1458,6 +1874,8 @@ if (outputEl) {{
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extracting-1d-spectra">Extracting 1D Spectra</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source-identification">1. Source Identification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aperture-tracing">2. Aperture Tracing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aperture-summation">3. Aperture Summation</a></li>
 </ul>
 </li>
 </ul>
