@@ -81,6 +81,103 @@ def make_summary_table_sao_port1(rawdir, suffix='.fit'):
     return stab
 
 
+def make_summary_table_focas(rawdir, suffix=".fits.gz"):
+    """Make a summary table of the raw data in the directory. This function is
+    specifically designed for the data taken with the FOCAS instrument.
+
+    Args:
+        rawdir (pathlib.Path): The directory containing the raw data.
+        suffix (str, optional): The suffix of the raw data files. Defaults to
+            '.fits.gz'.
+
+    Returns:
+        stab (astropy.table.Table): The summary table of the raw data in the directory.
+
+    """
+    # making a summary table
+    summary = []
+    for f in rawdir.glob("*" + suffix):
+        hdr = fits.getheader(f)
+
+        # getting the filter information from the header
+        filt1 = hdr["FILTER01"]
+        filt2 = hdr["FILTER02"]
+        filt3 = hdr["FILTER03"]
+
+        X = hdr["AIRMASS"]  # airmass
+        disp = hdr["DISPERSR"]  # disperser
+
+        # appending the data to the summary list
+        summary.append(
+            [
+                f.name,
+                hdr["DATE-OBS"],
+                hdr["OBJECT"],
+                hdr["RA"],
+                hdr["DEC"],
+                hdr["DATA-TYP"],
+                hdr["EXPTIME"],
+                X,
+                hdr["ALTITUDE"],
+                disp,
+                hdr["SLT-WID"],
+                hdr["SLT-PA"],
+                hdr["SLIT"],
+                filt1,
+                filt2,
+                filt3,
+                hdr["UT-STR"],
+                hdr["UT-END"],
+            ]
+        )
+
+    # creating the summary table
+    stab = Table(
+        rows=summary,
+        names=[
+            "filename",
+            "date-obs",
+            "object",
+            "ra",
+            "dec",
+            "type",
+            "exptime",
+            "airmass",
+            "altitude",
+            "disperser",
+            "slit-width",
+            "slit-pa",
+            "slit",
+            "filter1",
+            "filter2",
+            "filter3",
+            "ut-str",
+            "ut-end",
+        ],
+        dtype=[
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+            "f8",
+            "f8",
+            "f8",
+            "U50",
+            "f8",
+            "f8",
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+            "U50",
+        ],
+    )
+    return stab
+
+
 def combine_bias(biaslist, outdir, outname, unit='adu'):
     """Combine the bias frames in the directory to make a master bias frame.
 
