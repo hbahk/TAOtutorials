@@ -25,6 +25,24 @@ from skimage.feature import peak_local_max
 from photutils.centroids import centroid_com
 
 
+def get_skymask(apall, sky_limit_peak, center=None):
+    if center is None:
+        peak_pix = peak_local_max(
+            apall,
+            num_peaks=1,
+            min_distance=10,
+            exclude_border=True,
+            # threshold_abs=np.mean(apall),
+        )[0][0]
+    else:
+        peak_pix = round(center)
+
+    mask_sky = np.ones_like(apall, dtype=bool)
+    mask_sky[peak_pix - sky_limit_peak : peak_pix + sky_limit_peak] = False
+
+    return mask_sky, peak_pix
+
+
 def fit_background(x, apall, fitmask, sigma_sigclip, order_skymodel):
     x_sky = x[fitmask]
     apall_sky = apall[fitmask]
@@ -50,23 +68,6 @@ def fit_background(x, apall, fitmask, sigma_sigclip, order_skymodel):
     return skymodel, rms_skymodel, mask_sigclip
 
 
-def get_skymask(apall, sky_limit_peak, center=None):
-    if center is None:
-        peak_pix = peak_local_max(
-            apall,
-            num_peaks=1,
-            min_distance=10,
-            threshold_abs=np.mean(apall),
-        )[0][0]
-    else:
-        peak_pix = round(center)
-
-    mask_sky = np.ones_like(apall, dtype=bool)
-    mask_sky[peak_pix - sky_limit_peak : peak_pix + sky_limit_peak] = False
-
-    return mask_sky, peak_pix
-
-
 def find_center(data, lcut, rcut, sky_limit_peak, sigma_sigclip, order_skymodel):
     apall = np.sum(data[lcut:rcut, :], axis=0)
     x = np.arange(apall.size)
@@ -84,12 +85,17 @@ def find_center(data, lcut, rcut, sky_limit_peak, sigma_sigclip, order_skymodel)
     )
 
     apall_skysub = apall - skymodel
+    
+    # limit the peak region
+    apall_skysub[:peak_pix - sky_limit_peak] = 0
+    apall_skysub[peak_pix + sky_limit_peak:] = 0
 
     # center of the source
     center_com = centroid_com(apall_skysub)[0]
 
     # fwhm of the source
-    pwresult = peak_widths(apall_skysub, [round(peak_pix)], rel_height=0.5)
+    _, peak_pix = get_skymask(apall_skysub, sky_limit_peak)
+    pwresult = peak_widths(apall_skysub, [peak_pix], rel_height=0.5)
     fwhm = pwresult[0][0]
 
     return center_com, fwhm
@@ -168,7 +174,10 @@ class InstrumentalSpectrum:
             verbose=False,
         )
 
-    def set_aptrace(self):
+    def set_aptrace(self, masking_windows=None):
+        
+        self.apsum_mask_windows = masking_windows
+        
         slice_width = self.SLICE_WIDTH_APTRACE
         lcut, rcut = 0, slice_width
         midpoints = []
@@ -176,17 +185,36 @@ class InstrumentalSpectrum:
         aptrace_fwhm = []
         while rcut < len(self.crrej.data):
             rcut = lcut + slice_width
-            midpoints.append((lcut + rcut) / 2)
-            center, fwhm = find_center(
-                self.crrej.data,
-                lcut,
-                rcut,
-                self.SKY_LIMIT_PEAK,
-                self.SIGMA_SIGCLIP,
-                self.ORDER_SKYMODEL,
-            )
-            aptrace.append(center)
-            aptrace_fwhm.append(fwhm)
+            mid = (lcut + rcut) / 2
+            if masking_windows is None:
+                append_here = True
+            else:
+                for window in masking_windows:
+                    if mid > window[0] and mid < window[1]:
+                        append_here = False
+                        break
+                    else:
+                        append_here = True
+            
+            if append_here:
+                try:
+                    center, fwhm = find_center(
+                        self.crrej.data,
+                        lcut,
+                        rcut,
+                        self.SKY_LIMIT_PEAK,
+                        self.SIGMA_SIGCLIP,
+                        self.ORDER_SKYMODEL,
+                    )
+                    midpoints.append(mid)
+                    aptrace.append(center)
+                    aptrace_fwhm.append(fwhm)
+                except IndexError:
+                    # center, fwhm = np.nan, np.nan
+                    pass
+                except Exception as e:
+                    raise e
+                
             lcut += slice_width
             rcut += slice_width
 
@@ -254,7 +282,7 @@ class InstrumentalSpectrum:
         interval = ZScaleInterval()
         vmin, vmax = interval.get_limits(self.crrej.data)
         im = ax.imshow(self.crrej.data.T, cmap="gray", origin="lower", vmin=vmin, vmax=vmax)
-        ax.set_title("Cosmic Ray Removed Feige34 Image")
+        ax.set_title(f"Cosmic Ray Removed: {self.fname}")
         fig.show()
         return fig
 
@@ -340,10 +368,11 @@ class InstrumentalSpectrum:
             lw=0.8,
             ls="-",
         )
-        ax.set_title("Aperture Trace")
+        ax.set_title(f"Aperture Trace: {self.fname}")
         ax.set_ylabel("Pixel Number (Spatial Direction)")
         ax.set_xticks([])
         ax.legend()
+        ax.set_ylim(0, self.crrej.data.shape[1])
 
         resax = axes[1]
         resax.plot([0, ximg[-1]], [0, 0], c="k", ls="--", lw=0.8)
@@ -377,6 +406,10 @@ class InstrumentalSpectrum:
             ha="right",
             va="top",
         )
+        # masking windows
+        if self.apsum_mask_windows is not None:
+            for window in self.apsum_mask_windows:
+                resax.axvspan(window[0], window[1], color="gray", alpha=0.3)
 
         fig.subplots_adjust(hspace=0)
         return fig
