@@ -23,6 +23,7 @@ from scipy.ndimage import median_filter
 from scipy.signal import peak_widths
 from skimage.feature import peak_local_max
 from photutils.centroids import centroid_com
+from scipy.ndimage import map_coordinates
 
 
 def get_skymask(apall, sky_limit_peak, center=None):
@@ -69,7 +70,7 @@ def fit_background(x, apall, fitmask, sigma_sigclip, order_skymodel):
 
 
 def find_center(data, lcut, rcut, sky_limit_peak, sigma_sigclip, order_skymodel):
-    apall = np.sum(data[lcut:rcut, :], axis=0)
+    apall = np.sum(data[:, lcut:rcut], axis=1)
     x = np.arange(apall.size)
 
     # mask for the sky region and initial peak pixel
@@ -173,6 +174,11 @@ class InstrumentalSpectrum:
             readnoise=self.hdr["RDNOISE"] * u.electron,
             verbose=False,
         )
+        
+    def get_rectified(self, xycoords, shape, wavegrid):
+        # Flip and Rectify the image
+        self.rectified = map_coordinates(self.crrej.data[::-1,:], xycoords, mode="constant", cval=0).reshape(shape)
+        self.wavelength = wavegrid
 
     def set_aptrace(self, masking_windows=None):
         
@@ -183,7 +189,7 @@ class InstrumentalSpectrum:
         midpoints = []
         aptrace = []
         aptrace_fwhm = []
-        while rcut < len(self.crrej.data):
+        while rcut < self.rectified.shape[1]:
             rcut = lcut + slice_width
             mid = (lcut + rcut) / 2
             if masking_windows is None:
@@ -199,7 +205,7 @@ class InstrumentalSpectrum:
             if append_here:
                 try:
                     center, fwhm = find_center(
-                        self.crrej.data,
+                        self.rectified,
                         lcut,
                         rcut,
                         self.SKY_LIMIT_PEAK,
@@ -246,7 +252,7 @@ class InstrumentalSpectrum:
         self.rms_aptrace = np.sqrt(np.mean(self.residuals_aptrace[~mask_aptrace] ** 2))
 
         # aperture trace model
-        ximg = np.arange(self.crrej.data.shape[0])
+        ximg = np.arange(self.rectified.shape[1])
         self.aptrace_model = chebval(ximg, self.coeffs_aptrace)
         self.aptrace_model_midpoints = chebval(midpoints, self.coeffs_aptrace)
 
@@ -256,8 +262,8 @@ class InstrumentalSpectrum:
         self.ap_fwhm = np.median(self.aptrace_fwhm[~self.mask_aptrace])
         self.ap_sigma = self.ap_fwhm * gaussian_fwhm_to_sigma
 
-        for i in range(self.crrej.data.shape[0]):
-            cut_i = self.crrej.data[i, :]
+        for i in range(self.rectified.shape[1]):
+            cut_i = self.rectified[:, i]
             center_i = self.aptrace_model[i]
 
             ap_sum_i, ap_sig_i = aperture_sum(
@@ -285,6 +291,18 @@ class InstrumentalSpectrum:
         ax.set_title(f"Cosmic Ray Removed: {self.fname}")
         fig.show()
         return fig
+    
+    
+    def draw_rectified_img(self):
+        fig = plt.figure(figsize=(12, 6))
+        ax = fig.add_subplot(111)
+        interval = ZScaleInterval()
+        vmin, vmax = interval.get_limits(self.rectified)
+        im = ax.imshow(self.rectified, cmap="gray", origin="lower", vmin=vmin, vmax=vmax)
+        ax.set_title(f"Cosmic Ray Removed: {self.fname}")
+        fig.show()
+        return fig
+
 
     def plot_aptrace(self):
         fig, axes = plt.subplots(
@@ -292,9 +310,9 @@ class InstrumentalSpectrum:
         )
         ax = axes[0]
         interval = ZScaleInterval()
-        vmin, vmax = interval.get_limits(self.crrej.data)
+        vmin, vmax = interval.get_limits(self.rectified)
         ax.imshow(
-            self.crrej.data.T,
+            self.rectified,
             cmap="gray",
             origin="lower",
             vmin=vmin,
@@ -319,7 +337,7 @@ class InstrumentalSpectrum:
             lw=1,
             label="Rejected",
         )
-        ximg = np.arange(self.crrej.data.shape[0])
+        ximg = np.arange(self.rectified.shape[1])
         ax.plot(
             ximg, self.aptrace_model, c="tab:red", lw=1, label="Chebyshev Trace Model"
         )
@@ -372,7 +390,7 @@ class InstrumentalSpectrum:
         ax.set_ylabel("Pixel Number (Spatial Direction)")
         ax.set_xticks([])
         ax.legend()
-        ax.set_ylim(0, self.crrej.data.shape[1])
+        ax.set_ylim(0, self.rectified.shape[0])
 
         resax = axes[1]
         resax.plot([0, ximg[-1]], [0, 0], c="k", ls="--", lw=0.8)

@@ -30,6 +30,7 @@ sephot.sh
 *_aper.fits
 galfit
 specdash-data.json
+bkp_*
 #_internal/
 
 # Byte-compiled / optimized / DLL files
